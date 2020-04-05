@@ -1,0 +1,70 @@
+---
+# Page settings
+layout: homepage
+keywords:
+left_illustration: illustrations/homepage_left_side.png
+right_illustration: illustrations/homepage_right_side.png
+permalink: /
+
+# Hero section
+title: R for Plant Physiologists
+description: Add Description.
+buttons:
+    - content: Syllabus
+      url: '/syllabus'
+      external_url: false
+      # icon: home
+    - content: Resources
+      url: '/resources'
+      external_url: false
+    - icon: github
+      content: GitHub
+      url: 'https://github.com/https://github.com/TeachingResources'
+      external_url: true
+
+# Author box
+author:
+    title: Contact
+    title_url: 'team'
+    external_url: false
+    description: Contact information 
+
+# Grid navigation
+grid_navigation:
+    - title: Course Introduction
+      excerpt: Section description
+      cta: Get started
+      url: './u1'
+    - title: Project Management 
+      excerpt: Section description
+      cta: Get started
+      url: './u2'
+    - title: Intro R
+      excerpt: Section description
+      cta: Get started
+      url: './u3'
+    - title: Explore Data
+      excerpt: Section description
+      cta: Get started
+      url: './u4'
+    - title: Anova
+      excerpt: Section description
+      cta: Get started
+      url: './u5'
+    - title: Post Hoc Tests
+      excerpt: Section description
+      cta: Get started
+      url: './u6'
+    - title: Multivariate Statistical Analysis 
+      excerpt: Section description
+      cta: Get started
+      url: './u7'
+    - title: Graphics and Visualization
+      excerpt: Section description
+      cta: Get started
+      url: './u8'
+    - title: Project
+      excerpt: Section description
+      cta: Get started
+      url: './project'
+---

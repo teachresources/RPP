@@ -1,0 +1,46 @@
+---
+title: "HW1"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Step1: Open RStudio
+
+# Step 2: Install swirl
+Type the following into the console:
+
+```{r, eval=FALSE}
+install.packages("swirl")
+```
+
+# Step 3: Start swirl
+This is the only step that you will repeat every time you want to run swirl. First, you will load the package using the ```library()``` function. Then you will call the function that starts the magic! 
+
+Type the following, pressing Enter after each line:
+
+```{r, eval=FALSE}
+library("swirl")
+install_course("R Programming")
+```
+
+If it does not work, you can install manually:
+
+* Download [this](http://swirlstats.com/scn/R_Programming.swc) file. 
+* Save this file on your RPP Directory:
+* Select the file you just downloaded: *R_Programming.swc*.
+Run:
+```{r, eval=FALSE}
+swirl::install_course() 
+```
+
+# Step4: Have fun!
+
+
+```{r, eval=FALSE}
+swirl()
+```
+
+
