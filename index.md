@@ -35,11 +35,11 @@ grid_navigation:
       excerpt: Section description
       cta: Get started
       url: './u1'
-    - title: Project Management 
+    - title: Getting started with R and RStudio 
       excerpt: Section description
       cta: Get started
       url: './u2'
-    - title: Intro R
+    - title: Project Management - Git
       excerpt: Section description
       cta: Get started
       url: './u3'
