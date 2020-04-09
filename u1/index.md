@@ -22,4 +22,4 @@ page_nav:
 
 # Course Introduction 
 
-<iframe  width="1000" height="900"  src="https://docs.google.com/document/d/e/2PACX-1vTXSH7mhnN2Mf_E8SE4R4OOLh1-vgLWpF9Lv8vxhcCHOBbhJlIURQZNCHjSO8QVA2yXbMuleOeiA7YJ/pub?embedded=true"></iframe>
+All the information related to the Course introduction can be found [here](https://docs.google.com/document/d/1kuDPPmrWJj74NYrWp9P-CC4vJnrmm83L6X7kML4cWsc/edit?usp=sharing). 
