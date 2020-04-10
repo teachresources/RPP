@@ -165,9 +165,13 @@ You are now ready to start making changes and documenting them through Github!  
 
 You can open some of the files you made online earlier - for example if you click on your `README.md` file, it will open in `RStudio` and you can make changes. Add some more text just for the sake of exemplifying how version control works. Save the file in the same location (i.e., your repository). 
 
+![Git check](img/diff.png)
+
 If you click on the `Git` tab you will see that now your `README.md` file is listed there. Add a tick next to it. Now it has an `M` - this means you have modified the file. If there's an `A`, that's an added file, and a `D` is a deleted file.
 
 If you select the `README.md` file and click on `Diff`, you will see the changes you have made. Once the file is selected, it is `staged`, ready to be commited to Github.
+
+![Git diff](img/gitdiff.png)
 
 Click on `Commit` and add in your `commit message` - aim to be concise and informative - what did you do? Once you have clicked on `Commit`, you will get a message about what changes you have made.
 
