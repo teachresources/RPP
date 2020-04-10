@@ -8,7 +8,7 @@ permalink: /
 
 # Hero section
 title: R for Plant Physiologists
-description: Add Description.
+description: 
 buttons:
     - content: Syllabus
       url: '/syllabus'
@@ -19,13 +19,13 @@ buttons:
       external_url: false
     - icon: github
       content: GitHub
-      url: 'https://github.com/https://github.com/TeachingResources'
+      url: 'https://github.com/teachresources/RPP'
       external_url: true
 
 # Author box
 author:
     title: Contact
-    title_url: 'team'
+    title_url: '/contact'
     external_url: false
     description: Contact information 
 
