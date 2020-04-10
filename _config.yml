@@ -12,7 +12,7 @@ doks:
             image: assets/img/logos/qosf_colour_logo.svg
         nav:
             - item_name: Home
-              item_url: '/RPP/'
+              item_url: '/'
             - item_name: Schedule
               item_url: 'https://docs.google.com/spreadsheets/d/1YFBP6Qa5S78Xn77GfmOgQg1wjlvgceqPmbOcBMi94T8/edit?usp=sharing'
     footer:
