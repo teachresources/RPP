@@ -63,6 +63,10 @@ Having a GitHub repo makes it easy for you to keep track of collaborative and pe
 
 ![ ](img/GIT1.png)
 
+# What is GitHUb?
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/w3jLJU7DT5E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## What is a repository?
 
 You can think of a repository (_aka_ a repo) as a "master folder", everything associated with a specific project should be kept in a repo for that project. Repos can have folders within them, or just be separate files.
@@ -70,6 +74,8 @@ You can think of a repository (_aka_ a repo) as a "master folder", everything as
 You will have a local copy (on your computer) and an online copy (on GitHub) of all the files in the repository.
 
 ### The workflow
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KjLycV1IWqc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 The GitHub workflow can be summarised by the "commit-pull-push" mantra.
 
@@ -89,7 +95,6 @@ Each file on GitHub has a history, so instead of having many files like `Dissert
 For example, here is the history for a repo with an R script inside it, as viewed on Github. 
 
 ![ ](img/commit.png)
-
 
 # Create your own repository and project folder structure
 
@@ -138,25 +143,29 @@ Go to your lab's main repository, click on `Create new file` and add `project-ru
 
 # Sync and interact with your repository through `RStudio`
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/E2d91v1Twcc?start=175" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 The "commit-pull-push" workflow can be embedded within `RStudio` using "Projects" and enabling version control for them - we will be doing that shortly in the tutorial.
 
 __Log into your Github account and navigate to the repository you created earlier__
 
 Click `Clone or download` and copy the HTTPS link.
 
-<!-- ![Github clone repository screenshot]() -->
+![Github clone repository screenshot](img/download.png) 
 
 Now open RStudio, click `File/ New Project/ Version control/ Git` and paste the HTTPS link from the Github repository into the `Repository URL:` field. Select a folder on your computer - that is where the "local" copy of your repository will be (the online one being on Github).
 
-Once the files have finished copying across (this may take a while depending on the size of the repo you're joining), you will notice that a few things about your RStudio session have changed: there is a `Git` tab in the top right corner of RStudio, and all the files that are in the repo are now on your computer as well.
+![Github clone repository screenshot](img/clone.png) 
 
-<!--![RStudio Git tab screenshot]() -->
+Once the files have finished copying across (this may take a while depending on the size of the repo you're joining), you will notice that a few things about your RStudio session have changed: there is a `Git` tab in the top right corner of RStudio, and all the files that are in the repo are now on your computer as well.
 
 You are now ready to start making changes and documenting them through Github!  __Note that you can't push empty folders.__
 
+![RStudio Git staging area screenshot](img/display.png)
+
 You can open some of the files you made online earlier - for example if you click on your `README.md` file, it will open in `RStudio` and you can make changes. Add some more text just for the sake of exemplifying how version control works. Save the file in the same location (i.e., your repository). 
 
-<!--![RStudio Git staging area screenshot]({{ site.baseurl }}/assets/img/tutorials/git/readme_edit.png) -->
+
 
 If you click on the `Git` tab you will see that now your `README.md` file is listed there. Add a tick next to it. Now it has an `M` - this means you have modified the file. If there's an `A`, that's an added file, and a `D` is a deleted file.
 
