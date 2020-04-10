@@ -38,6 +38,8 @@ If you need any more convincing, why are we using R and not one of the many othe
 - Because R is a programming language rather than a graphical interface, the user can easily save scripts as small text files for use in the future, or share them with collaborators.
 - R has a very active and helpful online community - normally a quick search is all it takes to find that somebody has already solved the problem you're having. You can start with our [page with useful links](https://ourcodingclub.github.io/links.html)!
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/k8NJFLMZiRs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 # Download R and RStudio
 
 As we said before, R itself does not have a graphical interface, but most people interact with R through graphical platforms that provide extra functionality. We will be using a program called __RStudio__ as a graphical front-end to R, so that we can access our scripts and data, find help, and preview plots and outputs all in one place.
