@@ -20,7 +20,7 @@ page_nav:
         url: '/'
     next:
         content: R and RStudio
-        url: '/u2/'
+        url: 'RPP/u2/'
 ---
 
 # Course Introduction 
