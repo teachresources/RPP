@@ -1,7 +1,6 @@
-# qosf.org
+# RPP 2020 
 
-This is a repository hosting the www.qosf.org site, the universal source of
-information about open source software for quantum computing.
+RPP Class 2020 
 
 # Template
 https://github.com/qosf/qosf.org
