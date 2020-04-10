@@ -17,10 +17,10 @@ micro_nav: false
 page_nav:
     prev:
         content: Home
-        url: '/'
+        url: '/RPP'
     next:
         content: R and RStudio
-        url: 'RPP/u2/'
+        url: '/u2/'
 ---
 
 # Course Introduction 
