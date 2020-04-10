@@ -34,37 +34,37 @@ grid_navigation:
     - title: Course Introduction
       excerpt: Section description
       cta: Get started
-      url: './u1'
+      url: '/u1'
     - title: Getting started with R and RStudio 
       excerpt: Section description
       cta: Get started
-      url: './u2'
+      url: '/u2'
     - title: Project Management - Git
       excerpt: Section description
       cta: Get started
-      url: './u3'
+      url: '/u3'
     - title: Explore Data
       excerpt: Section description
       cta: Get started
-      url: './u4'
+      url: '/u4'
     - title: Anova
       excerpt: Section description
       cta: Get started
-      url: './u5'
+      url: '/u5'
     - title: Post Hoc Tests
       excerpt: Section description
       cta: Get started
-      url: './u6'
+      url: '/u6'
     - title: Multivariate Statistical Analysis 
       excerpt: Section description
       cta: Get started
-      url: './u7'
+      url: '/u7'
     - title: Graphics and Visualization
       excerpt: Section description
       cta: Get started
-      url: './u8'
+      url: '/u8'
     - title: Project
       excerpt: Section description
       cta: Get started
-      url: './project'
+      url: '/project'
 ---
