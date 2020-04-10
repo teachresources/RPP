@@ -11,11 +11,11 @@ title: R for Plant Physiologists
 description: 
 buttons:
     - content: Syllabus
-      url: '/syllabus'
+      url: 'evaluation'
       external_url: false
       # icon: home
     - content: Resources
-      url: '/resources'
+      url: 'resources'
       external_url: false
     - icon: github
       content: GitHub

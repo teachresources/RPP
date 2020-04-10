@@ -23,7 +23,7 @@
 			
 				<li><a href="/RPP/">Home</a></li>
 			
-				<li><a href="schedule">Schedule</a></li>
+				<li><a href="https://docs.google.com/spreadsheets/d/1YFBP6Qa5S78Xn77GfmOgQg1wjlvgceqPmbOcBMi94T8/edit?usp=sharing">Schedule</a></li>
 			
 		</ul><!-- /.offcanvas__nav -->
 	</div><!-- /.offcanvas -->
@@ -46,7 +46,7 @@
 							
 								<li><a href="/RPP/">Home</a></li>
 							
-								<li><a href="schedule">Schedule</a></li>
+								<li><a href="https://docs.google.com/spreadsheets/d/1YFBP6Qa5S78Xn77GfmOgQg1wjlvgceqPmbOcBMi94T8/edit?usp=sharing">Schedule</a></li>
 							
 						</ul><!-- /.site-header__nav -->
 						<button class="offcanvas-toggle visible-xs">
@@ -132,6 +132,10 @@
 
 <p><img src="/u3/img/GIT1.png" alt=" " /></p>
 
+<h1 id="what-is-github">What is GitHUb?</h1>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/w3jLJU7DT5E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
 <h2 id="what-is-a-repository">What is a repository?</h2>
 
 <p>You can think of a repository (<em>aka</em> a repo) as a “master folder”, everything associated with a specific project should be kept in a repo for that project. Repos can have folders within them, or just be separate files.</p>
@@ -139,6 +143,8 @@
 <p>You will have a local copy (on your computer) and an online copy (on GitHub) of all the files in the repository.</p>
 
 <h3 id="the-workflow">The workflow</h3>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KjLycV1IWqc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 
 <p>The GitHub workflow can be summarised by the “commit-pull-push” mantra.</p>
 
@@ -217,33 +223,39 @@
 
 <h1 id="sync-and-interact-with-your-repository-through-rstudio">Sync and interact with your repository through <code class="language-plaintext highlighter-rouge">RStudio</code></h1>
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/E2d91v1Twcc?start=175" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
 <p>The “commit-pull-push” workflow can be embedded within <code class="language-plaintext highlighter-rouge">RStudio</code> using “Projects” and enabling version control for them - we will be doing that shortly in the tutorial.</p>
 
 <p><strong>Log into your Github account and navigate to the repository you created earlier</strong></p>
 
 <p>Click <code class="language-plaintext highlighter-rouge">Clone or download</code> and copy the HTTPS link.</p>
 
-<!-- ![Github clone repository screenshot]() -->
+<p><img src="/u3/img/download.png" alt="Github clone repository screenshot" /></p>
 
 <p>Now open RStudio, click <code class="language-plaintext highlighter-rouge">File/ New Project/ Version control/ Git</code> and paste the HTTPS link from the Github repository into the <code class="language-plaintext highlighter-rouge">Repository URL:</code> field. Select a folder on your computer - that is where the “local” copy of your repository will be (the online one being on Github).</p>
 
-<p>Once the files have finished copying across (this may take a while depending on the size of the repo you’re joining), you will notice that a few things about your RStudio session have changed: there is a <code class="language-plaintext highlighter-rouge">Git</code> tab in the top right corner of RStudio, and all the files that are in the repo are now on your computer as well.</p>
+<p><img src="/u3/img/clone.png" alt="Github clone repository screenshot" /></p>
 
-<!--![RStudio Git tab screenshot]() -->
+<p>Once the files have finished copying across (this may take a while depending on the size of the repo you’re joining), you will notice that a few things about your RStudio session have changed: there is a <code class="language-plaintext highlighter-rouge">Git</code> tab in the top right corner of RStudio, and all the files that are in the repo are now on your computer as well.</p>
 
 <p>You are now ready to start making changes and documenting them through Github!  <strong>Note that you can’t push empty folders.</strong></p>
 
+<p><img src="/u3/img/display.png" alt="RStudio Git staging area screenshot" /></p>
+
 <p>You can open some of the files you made online earlier - for example if you click on your <code class="language-plaintext highlighter-rouge">README.md</code> file, it will open in <code class="language-plaintext highlighter-rouge">RStudio</code> and you can make changes. Add some more text just for the sake of exemplifying how version control works. Save the file in the same location (i.e., your repository).</p>
 
-<!--![RStudio Git staging area screenshot](/assets/img/tutorials/git/readme_edit.png) -->
+<p><img src="/u3/img/diff.png" alt="Git check" /></p>
 
 <p>If you click on the <code class="language-plaintext highlighter-rouge">Git</code> tab you will see that now your <code class="language-plaintext highlighter-rouge">README.md</code> file is listed there. Add a tick next to it. Now it has an <code class="language-plaintext highlighter-rouge">M</code> - this means you have modified the file. If there’s an <code class="language-plaintext highlighter-rouge">A</code>, that’s an added file, and a <code class="language-plaintext highlighter-rouge">D</code> is a deleted file.</p>
 
 <p>If you select the <code class="language-plaintext highlighter-rouge">README.md</code> file and click on <code class="language-plaintext highlighter-rouge">Diff</code>, you will see the changes you have made. Once the file is selected, it is <code class="language-plaintext highlighter-rouge">staged</code>, ready to be commited to Github.</p>
 
+<p><img src="/u3/img/gitdiff.png" alt="Git diff" /></p>
+
 <p>Click on <code class="language-plaintext highlighter-rouge">Commit</code> and add in your <code class="language-plaintext highlighter-rouge">commit message</code> - aim to be concise and informative - what did you do? Once you have clicked on <code class="language-plaintext highlighter-rouge">Commit</code>, you will get a message about what changes you have made.</p>
 
-<!--![RStudio Git commit interface screenshot](/assets/img/tutorials/git/commit_window.png) -->
+<p><img src="/u3/img/push.png" alt="" /></p>
 
 <p><strong>If you are making your first ever commit, clicking on <code class="language-plaintext highlighter-rouge">Commit</code> may result in an error message - git will tell you that you need to configure your username and email. This is easily done, and you only need to do it once, afterwards you can commit-pull-push at your convenience!</strong></p>
 
@@ -452,13 +464,13 @@ git config --global user.name "Your GitHub Username"
 						<div class="row">
 							<div class="col-xs-12">
 								
-									<a href="/RPP/u2/" class="page-nav__item page-nav__item--prev">
+									<a href="/u2/" class="page-nav__item page-nav__item--prev">
 										<i class="icon icon--arrow-left"></i>
 										R and RStudio
 									</a><!-- /.page-nav__item -->
 								
 								
-									<a href="/RPP/u4/" class="page-nav__item page-nav__item--next">
+									<a href="/u4/" class="page-nav__item page-nav__item--next">
 										Intro R
 										<i class="icon icon--arrow-right"></i>
 									</a><!-- /.page-nav__item -->
