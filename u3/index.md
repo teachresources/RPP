@@ -175,7 +175,7 @@ If you select the `README.md` file and click on `Diff`, you will see the changes
 
 Click on `Commit` and add in your `commit message` - aim to be concise and informative - what did you do? Once you have clicked on `Commit`, you will get a message about what changes you have made.
 
-<!--![RStudio Git commit interface screenshot]({{ site.baseurl }}/assets/img/tutorials/git/commit_window.png) -->
+![](img/push.png)
 
 __If you are making your first ever commit, clicking on `Commit` may result in an error message - git will tell you that you need to configure your username and email. This is easily done, and you only need to do it once, afterwards you can commit-pull-push at your convenience!__
 
