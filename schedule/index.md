@@ -19,4 +19,4 @@ page_nav:
 
 # Course Schedule 
 
-All the information related to the Course introduction can be found [here](https://docs.google.com/spreadsheets/d/1YFBP6Qa5S78Xn77GfmOgQg1wjlvgceqPmbOcBMi94T8/edit?usp=sharing). 
+All the details related to the Course Schedule and students project can be found [here](https://docs.google.com/spreadsheets/d/1YFBP6Qa5S78Xn77GfmOgQg1wjlvgceqPmbOcBMi94T8/edit?usp=sharing). 
