@@ -16,10 +16,10 @@ micro_nav: false
 page_nav:
     prev:
         content: Course Introduction
-        url: '/u1/'
+        url: '/RPP/u1/'
     next:
         content: Project Management - Git
-        url: '/u3/'
+        url: '/RPP/u3/'
 ---
 
 # What is R?

@@ -16,10 +16,10 @@ micro_nav: false
 page_nav:
     prev:
         content: R and RStudio
-        url: '/u2/'
+        url: '/RPP/u2/'
     next:
         content: Intro R
-        url: '/u4/'
+        url: '/RPP/u4/'
 ---
 
 # GitHub in RPP 
