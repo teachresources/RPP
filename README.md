@@ -2,6 +2,4 @@
 
 RPP Class 2020 
 
-
-# Template
-https://github.com/qosf/qosf.org
+## Original [Template](https://github.com/qosf/qosf.org)
