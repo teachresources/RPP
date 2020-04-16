@@ -1,0 +1,7 @@
+base
+gdata
+googlesheets
+dplyr
+knitr
+rmarkdown
+BiocStyle

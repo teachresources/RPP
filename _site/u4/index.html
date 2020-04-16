@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Intro R</title>
+
+	<meta name="description" content="">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/assets/css/custom_styles.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+
+	</head>
+	<body class="green" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/">Home</a></li>
+			
+				<li><a href="/schedule">Schedule</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+      <!--  <a href="https://github.com/qosf/qosf.org"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
+ -->
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+                            <img src="/assets/img/logos/qosf_colour_logo.svg">
+						</a><!-- /.site-header__logo -->
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/">Home</a></li>
+							
+								<li><a href="/schedule">Schedule</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+            
+            
+            
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Intro R</h1>
+								
+								
+                                <p class="hero-subheader__desc">
+</p>
+								
+                                
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="content">
+							<!-- rmarkdown::render("index.Rmd", md_document()) -->
+
+<h1 id="introduction-to-r">Introduction to R</h1>
+
+<h2 id="rstudio">RStudio</h2>
+
+<p>Some userful shortcuts: <code class="language-plaintext highlighter-rouge">Ctrl+Enter</code> (send code), <code class="language-plaintext highlighter-rouge">Ctrl+Shift+C</code>
+(comment/uncomment), <code class="language-plaintext highlighter-rouge">Ctrl+1/2</code> (switch window focus)</p>
+
+<p>Explore
+<a href="https://rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf">here</a>
+all the RStudio shortcuts</p>
+
+<h2 id="r-package-repositories">R Package Repositories</h2>
+
+<ul>
+  <li>CRAN (&gt;11,000 packages) general data analysis -
+<a href="http://cran.at.r-project.org/">URL</a></li>
+  <li>Bioconductor (&gt;1,800 packages) bioscience data analysis -
+<a href="http://www.bioconductor.org/">URL</a></li>
+  <li>Omegahat (&gt;90 packages) programming interfaces -
+<a href="https://github.com/omegahat?tab=repositories">URL</a></li>
+</ul>
+
+<h2 id="installation-of-r-packages">Installation of R Packages</h2>
+
+<ol>
+  <li>
+    <p>Install R for your operating system from
+<a href="http://cran.at.r-project.org/">CRAN</a>.</p>
+  </li>
+  <li>
+    <p>Install RStudio from <a href="http://www.rstudio.com/ide/download">RStudio</a>.</p>
+  </li>
+  <li>
+    <p>Install CRAN Packages from R console like this:</p>
+  </li>
+</ol>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>install.packages(c("pkg1", "pkg2")) 
+install.packages("pkg.zip", repos=NULL)
+</code></pre></div></div>
+
+<ol>
+  <li>Install Bioconductor packages as follows:</li>
+</ol>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>install.packages("BiocManager") 
+BiocManager::install("systemPipeR")
+</code></pre></div></div>
+
+<h1 id="getting-around">Getting Around</h1>
+
+<h2 id="startup-and-closing-behavior">Startup and Closing Behavior</h2>
+
+<ul>
+  <li>
+    <p><strong>Starting R</strong>: The R GUI versions, including RStudio, under Windows
+and Mac OS X can be opened by double-clicking their icons.
+Alternatively, one can start it by typing <code class="language-plaintext highlighter-rouge">R</code> in a terminal (default
+under Linux).</p>
+  </li>
+  <li>
+    <p><strong>Startup/Closing Behavior</strong>: The R environment is controlled by
+hidden files in the startup directory: <code class="language-plaintext highlighter-rouge">.RData</code>, <code class="language-plaintext highlighter-rouge">.Rhistory</code> and
+<code class="language-plaintext highlighter-rouge">.Rprofile</code> (optional).</p>
+  </li>
+  <li>
+    <p><strong>Closing R</strong>:</p>
+  </li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>q()  
+
+Save workspace image? [y/n/c]: n
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Note</strong>: When responding with <code class="language-plaintext highlighter-rouge">y</code>, then the entire R workspace will
+be written to the <code class="language-plaintext highlighter-rouge">.RData</code> file which can become very large. Often
+it is sufficient to just save an analysis protocol in an R source
+file. This way one can quickly regenerate all data sets and objects.</li>
+</ul>
+
+<h2 id="r-session">R Session</h2>
+
+<p>After R is started, there is a console awaiting for input. At the prompt
+(&gt;), you can enter numbers and perform calculations.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1+4
+</code></pre></div></div>
+
+<p>List objects in current R session</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls()
+</code></pre></div></div>
+
+<p>Collect information about the current R session</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sessionInfo()
+.libPaths()
+</code></pre></div></div>
+
+<h2 id="variable-assignment">Variable Assignment</h2>
+
+<p>We assign values to variables with the assignment operator <code class="language-plaintext highlighter-rouge">&lt;-</code>. Just
+typing the variable by itself at the prompt will print out the value. We
+should note that another form of assignment operator <code class="language-plaintext highlighter-rouge">=</code> is also in use.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x &lt;- 1
+y = 3
+x+y
+</code></pre></div></div>
+
+<h2 id="functions">Functions</h2>
+
+<p>R functions are invoked by its name, then followed by the parenthesis,
+and zero or more arguments. The following apply the function c to
+combine three numeric values into a vector.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sum(x+y)
+log(x+y)
+print(x)
+</code></pre></div></div>
+
+<h2 id="comments">Comments</h2>
+
+<p>All text after the pound sign “#” within the same line is considered a
+comment.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sum(x+y) # This is a comment
+</code></pre></div></div>
+
+<h2 id="getting-help">Getting Help</h2>
+
+<p>R provides extensive documentation. For example, entering <code class="language-plaintext highlighter-rouge">?sum</code> or
+<code class="language-plaintext highlighter-rouge">help(sum)</code> at the prompt gives documentation of the function c in R.
+Please give it a try.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>help(sum)
+?log
+</code></pre></div></div>
+
+<p>HomeWork2: Seeking help</p>
+
+<h2 id="navigating-directories">Navigating directories</h2>
+
+<p>Return content of current working directory</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dir()
+</code></pre></div></div>
+
+<p>Return path of current working directory</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>getwd()
+</code></pre></div></div>
+
+<p>Change current working directory</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>setwd("/home/user")
+</code></pre></div></div>
+
+<p>Removing Objects</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm(y)
+ls()
+rm(list = ls()) # Removes all objects without warning
+</code></pre></div></div>
+
+<h2 id="basic-operators-and-calculations">Basic Operators and Calculations</h2>
+
+<ul>
+  <li>Comparison operators
+    <ul>
+      <li>equal: <code class="language-plaintext highlighter-rouge">==</code></li>
+      <li>not equal: <code class="language-plaintext highlighter-rouge">!=</code></li>
+      <li>greater/less than: <code class="language-plaintext highlighter-rouge">&gt;</code> <code class="language-plaintext highlighter-rouge">&lt;</code></li>
+      <li>greater/less than or equal: <code class="language-plaintext highlighter-rouge">&gt;=</code> <code class="language-plaintext highlighter-rouge">&lt;=</code></li>
+    </ul>
+  </li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1==1
+
+## [1] TRUE
+
+x &lt;- 2
+y &lt;- 3
+x == y
+
+## [1] FALSE
+
+x != y
+
+## [1] TRUE
+</code></pre></div></div>
+
+<ul>
+  <li>Logical operators
+    <ul>
+      <li>AND: <code class="language-plaintext highlighter-rouge">&amp;</code></li>
+    </ul>
+  </li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x &lt;- 1:10
+y &lt;- 10:1 
+x &gt; 5 
+
+##  [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+
+x &gt; y &amp; x &gt; 5 
+
+##  [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+</code></pre></div></div>
+
+<ul>
+  <li>NOT: <code class="language-plaintext highlighter-rouge">!</code></li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!x &gt; y
+
+##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+</code></pre></div></div>
+
+<h2 id="load-a-librarypackage">Load a library/package</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>library("my_library") 
+</code></pre></div></div>
+
+<p>List functions defined by a library</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>library(help="my_library")
+</code></pre></div></div>
+
+<p>Load library manual (PDF or HTML file)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vignette("my_library") 
+</code></pre></div></div>
+
+<p>Execute an R script from within R</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source("my_script.R")
+</code></pre></div></div>
+
+<!-- Note: Vignette X Manual  -->
+<p>Data Types
+==========</p>
+
+<p><em>What are Data types in R?</em></p>
+
+<p>For correct processing, a programming language must know what can and
+cannot be done to a particular value. For example, addition cannot be
+performed on the words <em>hello</em> and <em>world</em>.</p>
+
+<p>Similarly, you cannot change the numbers <code class="language-plaintext highlighter-rouge">1</code> and <code class="language-plaintext highlighter-rouge">-34.5</code> from lower to
+uppercase. Due to this, R has a feature called the data types. Different
+kinds of values are assigned different data types that help
+differentiate them. These types have certain characteristics and rules
+associated with them that define their properties.</p>
+
+<p>R provides the <code class="language-plaintext highlighter-rouge">class()</code> and <code class="language-plaintext highlighter-rouge">typeof()</code> functions to find out what is
+the class and type of any variable. R has five data types which are:</p>
+
+<ul>
+  <li>Numeric</li>
+  <li>Characters</li>
+  <li>Integers</li>
+  <li>Complex</li>
+  <li>Logical</li>
+</ul>
+
+<p>Let’s go through these data types one-by-one.</p>
+
+<h2 id="numeric-data">Numeric data</h2>
+
+<p>The numeric data type is for numeric values. It is the default data type
+for numbers in R. Example: <code class="language-plaintext highlighter-rouge">1, 2, 3, ...</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x &lt;- c(1, 2, 3)
+x
+
+is.numeric(x)
+as.character(x)
+class(x) # Prints the object type.
+</code></pre></div></div>
+
+<h2 id="character-data">Character data</h2>
+
+<p>The character data type stores character values or strings. Strings in R
+can contain the alphabet, numbers, and symbols. The easiest way to
+denote that a value is of character type in R is to wrap the value
+inside single or double inverted commas. Example: <code class="language-plaintext highlighter-rouge">"a", "b", "c", ...</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x &lt;- c("1", "2", "3")
+x
+is.character(x)
+as.numeric(x)
+</code></pre></div></div>
+
+<h2 id="integers-data">Integers data</h2>
+
+<p>The Integer data type is used for integer values. To store a value as an
+integer, we need to specify it as such. The integer data type is
+commonly used for discrete only values like unique ids. We can store as
+well as convert a value into an integer type using the as.integer()
+function.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int &lt;- as.integer(16)
+class(int)
+int2 &lt;- as.integer(x)
+int2
+class(int2)
+</code></pre></div></div>
+
+<h2 id="complex-data">Complex data</h2>
+
+<p>The complex data type is to store numbers with an imaginary component.
+Examples of complex values would be <em>1+2i</em>, <em>3i</em>, <em>4-5i</em>, <em>-12+6i</em>, etc.
+Example: mix of both</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>y &lt;- c(1, "b", 3)
+</code></pre></div></div>
+
+<h2 id="logical-data">Logical data</h2>
+
+<p>Example: <code class="language-plaintext highlighter-rouge">TRUE</code> of <code class="language-plaintext highlighter-rouge">FALSE</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x &lt;- 1:10 &lt; 5
+x  
+!x
+which(x) # Returns index for the 'TRUE' values in logical vector
+y &lt;- TRUE
+class(y)
+</code></pre></div></div>
+
+<h1 id="data-objects-structures">Data Objects (Structures)</h1>
+
+<p>In any programming language, if you are doing programming, you need to
+use different variables to store different data. Moreover, variables are
+reserved in a memory location to store values. Also, this implies that,
+once you create a variable you reserve some area in memory. Further,
+data structures are the only way of arranging data so it can be used
+efficiently on a computer.</p>
+
+<p>If we see in contrast to different programming languages like C and
+Java, R doesn’t have variables declared as some data type. Further, the
+variables are appointed with R-objects and the knowledge form of the
+R-object becomes the datatype of the variable. There are many types of
+R-objects. The popularly used ones are:</p>
+
+<ul>
+  <li>Vector</li>
+  <li>Factor</li>
+  <li>Matrix</li>
+  <li>Lists</li>
+  <li>Data Frames</li>
+</ul>
+
+<p>Now, we will discuss each of these R-objects in brief.</p>
+
+<h2 id="vectors-1d">Vectors (1D)</h2>
+
+<p>A vector is a sequence of elements that share the same data type. These
+elements are known as components of a vector.</p>
+
+<p>Definition: <code class="language-plaintext highlighter-rouge">numeric</code> or <code class="language-plaintext highlighter-rouge">character</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myVec &lt;- 1:10; names(myVec) &lt;- letters[1:10]  
+myVec[1:5]
+myVec[c(2,4,6,8)]
+myVec[c("b", "d", "f")]
+
+c(TRUE, FALSE, TRUE, FALSE, FALSE) # here is a vector of logical values
+length(c("aa", "bb", "cc", "dd", "ee")) # number of elements in a vector is given by the length function
+</code></pre></div></div>
+
+<h2 id="factors-1d">Factors (1D)</h2>
+
+<p>R factors are variables. It takes a limited number of different values.
+Hence, those variables are often known as categorical variables. In
+order to categorise the data and store it on multiple levels, we use the
+data object called R factor. They can store both strings and integers.
+They are also useful in the columns which have a limited number of
+unique values.</p>
+
+<p>The factor is stored as integers. They have labels associated with these
+unique integers. We need to be careful while treating factors like
+strings. Factor contains a predefined set value called levels. By
+default, R always sorts levels in alphabetical order.</p>
+
+<p>Definition: vectors with grouping information</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>factor(c("dog", "cat", "mouse", "dog", "dog", "cat"))
+</code></pre></div></div>
+
+<h2 id="matrices-2d">Matrices (2D)</h2>
+
+<p>A matrix in R is a two-dimensional rectangular data set and thus it can
+be created using vector input to the matrix function. R is a tool for
+expressing statistical and mathematical operations from which beginners
+will learn how to create and access the R matrix. And, by the end of
+this article, you will be able to perform addition, subtraction,
+multiplication, and division operations on R matrices.</p>
+
+<p>Definition: two dimensional structures with data of same type</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myMA &lt;- matrix(1:30, 3, 10, byrow = TRUE) 
+class(myMA)
+myMA[1:2,]
+myMA[1, , drop=FALSE]
+
+mat &lt;- matrix (
+c(2 , 4, 3, 1, 5, 7),       # the data elements
+nrow =2,                   # no. of rows
+ncol =3,                   # no. of columns
+byrow = TRUE)
+mat
+</code></pre></div></div>
+
+<h2 id="data-frames-2d">Data Frames (2D)</h2>
+
+<p>Definition: two dimensional objects with data of variable types</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myDF &lt;- data.frame(Col1=1:10, Col2=10:1) 
+myDF[1:2, ]
+cbind(myDF, Col3=LETTERS[1:10])
+</code></pre></div></div>
+
+<h2 id="lists">Lists</h2>
+
+<p>R list is the object which contains elements of different types – like
+strings, numbers, vectors and another list inside it. R list can also
+contain a matrix or a function as its elements. The list is created
+using the <code class="language-plaintext highlighter-rouge">list()</code> function in R. In other words, a list is a generic
+vector containing other objects.</p>
+
+<p>Definition: containers for any object type</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myL &lt;- list(name="Fred", wife="Mary", no.children=3, child.ages=c(4,7,9)) 
+myL
+myL[[4]][1:2] 
+</code></pre></div></div>
+
+<h2 id="functions-1">Functions</h2>
+
+<p>Definition: piece of code</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myfct &lt;- function(arg1, arg2, ...) { 
+    function_body 
+}
+</code></pre></div></div>
+
+<h1 id="subsetting-of-data-objects">Subsetting of data objects</h1>
+
+<p><strong>(1.) Subsetting by positive or negative index/position numbers</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myVec &lt;- 1:26; names(myVec) &lt;- LETTERS 
+myVec[1:4]
+names(myVec)
+</code></pre></div></div>
+
+<p><strong>(2.) Subsetting by same length logical vectors</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myLog &lt;- myVec &gt; 10
+myVec[myLog] 
+</code></pre></div></div>
+
+<p><strong>(3.) Subsetting by field names</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myVec[c("B", "K", "M")]
+</code></pre></div></div>
+
+<p><strong>(4.) Subset with <code class="language-plaintext highlighter-rouge">$</code> sign</strong>: references a single column or list
+component by its name</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iris$Species[1:8]
+</code></pre></div></div>
+
+<h1 id="important-utilities">Important Utilities</h1>
+
+<h2 id="combining-objects">Combining Objects</h2>
+
+<p>Vectors can be combined via the function c. For examples, the following
+two vectors n and s are combined into a new vector containing elements
+from both vectors.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">c</code> function combines vectors and lists</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c(1, 2, 3)
+x &lt;- 1:3; y &lt;- 101:103
+c(x, y)
+iris$Species[1:8]
+w &lt;- c("a", "b")
+c(x, w)
+</code></pre></div></div>
+
+<p>*Value Coercion: *</p>
+
+<p>In the code snippet above, notice how the numeric values are being
+coerced into character strings when the two vectors are combined. This
+is necessary so as to maintain the same primitive data type for members
+in the same vector.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">cbind</code> and <code class="language-plaintext highlighter-rouge">rbind</code> functions can be used to append columns and
+rows, respecively.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ma &lt;- cbind(x, y)
+ma
+rbind(ma, ma)
+</code></pre></div></div>
+
+<h2 id="accessing-dimensions-of-objects">Accessing Dimensions of Objects</h2>
+
+<p>Length and dimension information of objects</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>length(iris$Species)
+dim(iris)
+</code></pre></div></div>
+
+<h2 id="accessing-name-slots-of-objects">Accessing Name Slots of Objects</h2>
+
+<p>Accessing row and column names of 2D objects</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rownames(iris)[1:8]
+colnames(iris)
+</code></pre></div></div>
+
+<p>Return name field of vectors and lists</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>names(myVec)
+names(myL)
+</code></pre></div></div>
+
+<h2 id="sorting-objects">Sorting Objects</h2>
+
+<p>The function <code class="language-plaintext highlighter-rouge">sort</code> returns a vector in ascending or descending order</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sort(10:1)
+</code></pre></div></div>
+
+<p>The function <code class="language-plaintext highlighter-rouge">order</code> returns a sorting index for sorting an object</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sortindex &lt;- order(iris[,1], decreasing = FALSE)
+sortindex[1:12]
+iris[sortindex,][1:2,]
+sortindex &lt;- order(-iris[,1]) # Same as decreasing=TRUE
+</code></pre></div></div>
+
+<p>Sorting multiple columns</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iris[order(iris$Sepal.Length, iris$Sepal.Width),][1:2,]
+</code></pre></div></div>
+
+<h1 id="operators-and-calculations">Operators and Calculations</h1>
+
+<h2 id="comparison-operators">Comparison Operators</h2>
+
+<p>Comparison operators: <code class="language-plaintext highlighter-rouge">==</code>, <code class="language-plaintext highlighter-rouge">!=</code>, <code class="language-plaintext highlighter-rouge">&lt;</code>, <code class="language-plaintext highlighter-rouge">&gt;</code>, <code class="language-plaintext highlighter-rouge">&lt;=</code>, <code class="language-plaintext highlighter-rouge">&gt;=</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1==1
+</code></pre></div></div>
+
+<p>Logical operators: AND: <code class="language-plaintext highlighter-rouge">&amp;</code>, OR: <code class="language-plaintext highlighter-rouge">|</code>, NOT: <code class="language-plaintext highlighter-rouge">!</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x &lt;- 1:10; y &lt;- 10:1
+x &gt; y &amp; x &gt; 5
+</code></pre></div></div>
+
+<h2 id="basic-calculations">Basic Calculations</h2>
+
+<p>Arithmetic operations of vectors are performed element-by-element.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x + y
+sum(x)
+mean(x)
+apply(iris[1:6,1:3], 1, mean) 
+x
+2*x
+</code></pre></div></div>
+
+<p>To look up math functions, see Function Index
+<a href="http://cran.at.r-project.org/doc/manuals/R-intro.html#Function-and-variable-index">here</a></p>
+
+<h1 id="reading-and-writing-external-data">Reading and Writing External Data</h1>
+
+<h2 id="import-of-tabular-data">Import of tabular data</h2>
+
+<p>Import of a tab-delimited tabular file</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myDF &lt;- read.delim("data/example.csv", sep="\t")
+myDF &lt;- read.delim("data/example.csv", sep=",")
+</code></pre></div></div>
+
+<p>Import of Excel file. Note: working with tab- or comma-delimited files
+is more flexible and preferred.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>library(gdata)
+myDF &lt;- read.xls("data/example.xls")
+</code></pre></div></div>
+
+<p>Import of Google Sheets. The following example imports a sample Google
+Sheet from
+<a href="https://docs.google.com/spreadsheets/d/1U-32UcwZP1k3saKeaH1mbvEAOfZRdNHNkWK2GI1rpPM/edit#gid=472150521">here</a>.
+Detailed instructions for interacting from R with Google Sheets with the
+required <code class="language-plaintext highlighter-rouge">googlesheets</code> package are
+<a href="https://github.com/jennybc/googlesheets">here</a>.</p>
+
+<h2 id="export-of-tabular-data">Export of tabular data</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>write.table(myDF, file="results/myfile.xls", sep="\t", quote=FALSE, col.names=NA)
+</code></pre></div></div>
+
+<h2 id="line-wise-export">Line-wise export</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>writeLines(month.name, "results/myData.txt")
+</code></pre></div></div>
+
+<h2 id="line-wise-import">Line-wise import</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myDF &lt;- readLines("results/myData.txt")
+</code></pre></div></div>
+
+<h2 id="export-r-object">Export R object</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mylist &lt;- list(C1=iris[,1], C2=iris[,2]) # Example to export
+saveRDS(mylist, "results/mylist.rds")
+</code></pre></div></div>
+
+<h2 id="import-r-object">Import R object</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mylist &lt;- readRDS("results/mylist.rds")
+</code></pre></div></div>
+
+						</div><!-- /.content -->
+					</div><!-- /.col -->
+					<div class="col-md-4 col-md-offset-1">
+						<div class="sections-list-wrapper">
+							<div class="sections-list js-sections js-affix js-scrollspy hidden-xs hidden-sm"></div><!-- /.sections-list -->
+						</div>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+				<nav class="page-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								
+									<a href="/u3/" class="page-nav__item page-nav__item--prev">
+										<i class="icon icon--arrow-left"></i>
+										Project Management - Git
+									</a><!-- /.page-nav__item -->
+								
+								
+									<a href="/u4/help/" class="page-nav__item page-nav__item--next">
+										Homework 2.1 - Help
+										<i class="icon icon--arrow-right"></i>
+									</a><!-- /.page-nav__item -->
+								
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</nav><!-- /.page-nav -->
+			
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+						<a href="/" class="site-footer__logo">R for Plant Physiologists</a>
+					
+					
+						<hr>
+						<p class="site-footer__copyright">Contact: <a href="mailto:danicassol@gmail.com">danicassol@gmail.com</a> </br> ©2020 Daniela Cassol. All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+					<div class="col-sm-6 align-right">
+						<ul class="social-list">
+							
+								<li>
+									<a href="https://www.github.com/dcassol" target="_blank" class="social-list__item social-list__item--github">
+										<i class="icon icon--github"></i>
+									</a>
+								</li>
+							
+						</ul><!-- /.social-list -->
+					</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+
+
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>
