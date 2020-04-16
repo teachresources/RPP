@@ -26,6 +26,12 @@ page_nav:
 
 # Introduction to R
 
+Download the `*.Rmd` [here](https://github.com/teachresources/RPP/blob/gh-pages/u4/index.Rmd) or from R
+
+<!-- -->
+
+    download.file(url = "https://raw.githubusercontent.com/teachresources/RPP/gh-pages/u4/index.Rmd", destfile = "introR.Rmd")
+
 RStudio
 -------
 
