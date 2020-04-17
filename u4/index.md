@@ -585,8 +585,9 @@ Import of tabular data
 
 Import of a tab-delimited tabular file
 
-    myDF <- read.delim("data/example.csv", sep="\t")
-    myDF <- read.delim("data/example.csv", sep=",")
+    myDF <- read.delim("data/example.csv", sep="\t") ## replace "example.csv" for you dataset
+    myDF <- read.delim("data/example.csv", sep=",") 
+    ## Choose the right separator character "sep" for your data
 
 Import of Excel file. Note: working with tab- or comma-delimited files
 is more flexible and preferred.
@@ -604,7 +605,9 @@ required `googlesheets` package are
 Export of tabular data
 ----------------------
 
-    write.table(myDF, file="results/myfile.xls", sep="\t", quote=FALSE, col.names=NA)
+    myDF <- iris[,1:4]
+    write.table(myDF, file="results/myfile.xls", sep="\t", quote=FALSE, col.names=NA) 
+    ## replace "results/myfile.xls" for "results/myfile_YOURNAME.xls"
 
 Line-wise export
 ----------------

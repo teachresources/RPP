@@ -530,8 +530,9 @@ To look up math functions, see Function Index [here](http://cran.at.r-project.or
 
 Import of a tab-delimited tabular file
 ```{r, eval=FALSE}
-myDF <- read.delim("data/example.csv", sep="\t")
-myDF <- read.delim("data/example.csv", sep=",")
+myDF <- read.delim("data/example.csv", sep="\t") ## replace "example.csv" for you dataset
+myDF <- read.delim("data/example.csv", sep=",") 
+## Choose the right separator character "sep" for your data
 ```
 
 Import of Excel file. Note: working with tab- or comma-delimited files is more flexible and preferred.
@@ -545,7 +546,9 @@ Detailed instructions for interacting from R with Google Sheets with the require
 
 ## Export of tabular data
 ```{r, eval=FALSE}
-write.table(myDF, file="results/myfile.xls", sep="\t", quote=FALSE, col.names=NA)
+myDF <- iris[,1:4]
+write.table(myDF, file="results/myfile.xls", sep="\t", quote=FALSE, col.names=NA) 
+## replace "results/myfile.xls" for "results/myfile_YOURNAME.xls"
 ```
 
 ## Line-wise export
