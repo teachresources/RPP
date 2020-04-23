@@ -24,13 +24,9 @@ page_nav:
 
 <!-- rmarkdown::render("index.Rmd", md_document()) -->
 
-# Introduction to R
 
-Download the `*.Rmd` [here](https://github.com/teachresources/RPP/blob/gh-pages/u4/index.Rmd) or from R
-
-<!-- -->
-
-    download.file(url = "https://raw.githubusercontent.com/teachresources/RPP/gh-pages/u4/index.Rmd", destfile = "introR.Rmd")
+Introduction to R
+=================
 
 RStudio
 -------
@@ -427,6 +423,9 @@ Definition: two dimensional objects with data of variable types
     myDF <- data.frame(Col1=1:10, Col2=10:1) 
     myDF[1:2, ]
     cbind(myDF, Col3=LETTERS[1:10])
+    str(iris)
+    View(iris)
+    summary(iris)
 
 Lists
 -----
@@ -454,6 +453,40 @@ Definition: piece of code
 
 Subsetting of data objects
 ==========================
+
+Creating Subsets of Data in R
+-----------------------------
+
+As we know, data size is increasing exponentially and doing an analysis
+of complete data is very time-consuming. So, the data is divided into
+small-sized samples and analysis of samples is done. The process of
+creating samples is called subsetting.
+
+Different methods of subsetting in R are:
+
+### `$`
+
+The dollar sign operator selects a single element of data. The result of
+this operator is always a vector when we use it with a data-frame.
+
+### `[[`
+
+Similar to $ in R, the double square brackets operator in R also returns
+a single element, but it offers the flexibility of referring to the
+elements by position rather than by name. It can be used for data frames
+and lists.
+
+### `[`
+
+The single square bracket operator in R returns multiple elements of
+data. The index within the square brackets can be a numeric vector, a
+logical vector, or a character vector.
+
+For example: To retrieve 5 rows and all columns of already built-in
+dataset iris, the below command, is used:
+
+    data(iris)
+    iris[1:5, ]
 
 **(1.) Subsetting by positive or negative index/position numbers**
 
@@ -515,6 +548,8 @@ Length and dimension information of objects
 
     length(iris$Species)
     dim(iris)
+    nrow(iris)
+    ncol(iris)
 
 Accessing Name Slots of Objects
 -------------------------------
@@ -523,6 +558,7 @@ Accessing row and column names of 2D objects
 
     rownames(iris)[1:8]
     colnames(iris)
+    nrow(iris)
 
 Return name field of vectors and lists
 
@@ -546,6 +582,32 @@ The function `order` returns a sorting index for sorting an object
 Sorting multiple columns
 
     iris[order(iris$Sepal.Length, iris$Sepal.Width),][1:2,]
+
+Duplicate data can be removed during analysis using `duplicated()` function
+---------------------------------------------------------------------------
+
+Below command shows how to find duplicate data in subsets: duplicated()
+function finds duplicate values and returns a logical vector that tells
+you whether the specified value is a duplicate of a previous value.
+
+    x <- c(1,2,1,3,1,4, NA)
+    is.na(x)
+    duplicated(x)
+    x[!duplicated(x)]
+    x[!is.na(x)]
+
+Converting between vector types
+-------------------------------
+
+    x <- c(1,2,1,3,1,4, NA)
+    class(x)
+    is.numeric(x)
+    as.numeric(x)
+    c <- as.character(x)
+    f <- factor(x)
+
+You want to convert between numeric vectors, character vectors, and
+factors.
 
 Operators and Calculations
 ==========================
@@ -629,3 +691,41 @@ Import R object
 ---------------
 
     mylist <- readRDS("results/mylist.rds")
+
+Operations with Data Frame
+==========================
+
+Removing rows
+-------------
+
+    irisNew <- iris
+    irisNew[-4,]
+    irisNew[c(-4,-5), ]
+    x <- c(10,20, NA)
+    irisNew <- cbind(irisNew, addCol=x)
+    is.na(irisNew)[1:4,]
+    na.omit(irisNew)
+
+Removing columns
+----------------
+
+    irisNew[, -5]
+
+Key Points
+----------
+
+-   Use cbind() to add a new column to a data frame.
+-   Use rbind() to add a new row to a data frame.
+-   Use na.omit() to remove rows from a data frame with NA values.
+-   Use levels() and as.character() to explore and manipulate factors.
+-   se str(), summary(), nrow(), ncol(), dim(), colnames(), rownames(),
+    head(), and class() to understand the structure of a data frame.
+-   Read in a csv file using read.csv().
+-   Understand what length() of a data frame represents.
+
+<!-- Extra -->
+<!-- d <- irisNew$addCol[!is.na(irisNew$addCol)] -->
+<!-- max(irisNew$addCol) -->
+<!-- max(irisNew$addCol, na.rm=TRUE) -->
+<!-- ?merge -->
+<!-- merge(iris, irisNew)[1:4,] -->

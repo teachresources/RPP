@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>RMarkdown</title>
+
+	<meta name="description" content="">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/assets/css/custom_styles.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+
+	</head>
+	<body class="green" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/">Home</a></li>
+			
+				<li><a href="/schedule">Schedule</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+      <!--  <a href="https://github.com/qosf/qosf.org"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
+ -->
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+                            <img src="/assets/img/logos/qosf_colour_logo.svg">
+						</a><!-- /.site-header__logo -->
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/">Home</a></li>
+							
+								<li><a href="/schedule">Schedule</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+            
+            
+            
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">RMarkdown</h1>
+								
+								
+                                <p class="hero-subheader__desc">
+</p>
+								
+                                
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="content">
+							<h1 id="introduction-to-r-markdown">Introduction to R Markdown</h1>
+
+<iframe width="800" height="450" src="https://www.youtube.com/embed/DNS7i2m4sB0" frameborder="0" allowfullscreen="">
+</iframe>
+
+<p>Interactive documents are a new way to build Shiny apps. An interactive
+document is an <a href="http://rmarkdown.rstudio.com">R Markdown</a> file that
+contains Shiny widgets and outputs. You write the report in
+<a href="http://daringfireball.net/projects/markdown/basics">markdown</a>, and then
+launch it as an app with the click of a button.</p>
+
+<p>This article will show you how to write an R Markdown report.</p>
+
+<p>The companion article, <a href="http://shiny.rstudio.com/articles/interactive-docs.html">Introduction to interactive
+documents</a>,
+will show you how to turn an R Markdown report into an interactive
+document with Shiny components.</p>
+
+<h3 id="r-markdown">R Markdown</h3>
+
+<p>R Markdown is a file format for making dynamic documents with R. An R
+Markdown document is written in markdown (an easy-to-write plain text
+format) and contains chunks of embedded R code, like the document below.</p>
+
+<pre><code>---
+output: html_document
+---
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see &lt;http://rmarkdown.rstudio.com&gt;.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+&amp;#96``{r}
+summary(cars)
+&amp;#96``
+
+You can also embed plots, for example:
+
+&amp;#96``{r, echo=FALSE}
+plot(cars)
+&amp;#96``
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.</code></pre>
+<p>R Markdown files are designed to be used with the <code class="language-plaintext highlighter-rouge">rmarkdown</code> package.
+<code class="language-plaintext highlighter-rouge">rmarkdown</code> comes installed with the RStudio IDE, but you can acquire
+your own copy of <code class="language-plaintext highlighter-rouge">rmarkdown</code> from CRAN with the command</p>
+
+<pre class="r"><code>install.packages("rmarkdown")</code></pre>
+<p>R Markdown files are the source code for rich, reproducible documents.
+You can transform an R Markdown file in two ways.</p>
+
+<ol>
+  <li>
+    <p><strong>knit</strong> - You can <em>knit</em> the file. The <code class="language-plaintext highlighter-rouge">rmarkdown</code> package will
+call the <code class="language-plaintext highlighter-rouge">knitr</code> package. <code class="language-plaintext highlighter-rouge">knitr</code> will run each chunk of R code in
+the document and append the results of the code to the document next
+to the code chunk. This workflow saves time and facilitates
+reproducible reports.</p>
+
+    <p>Consider how authors typically include graphs (or tables, or
+numbers) in a report. The author makes the graph, saves it as a
+file, and then copy and pastes it into the final report. This
+process relies on manual labor. If the data changes, the author must
+repeat the entire process to update the graph.</p>
+
+    <p>In the R Markdown paradigm, each report contains the code it needs
+to make its own graphs, tables, numbers, etc. The author can
+automatically update the report by re-knitting.</p>
+  </li>
+  <li>
+    <p><strong>convert</strong> - You can <em>convert</em> the file. The <code class="language-plaintext highlighter-rouge">rmarkdown</code> package
+will use the <code class="language-plaintext highlighter-rouge">pandoc</code> program to transform the file into a new
+format. For example, you can convert your .Rmd file into an HTML,
+PDF, or Microsoft Word file. You can even turn the file into an
+HTML5 or PDF slideshow. <code class="language-plaintext highlighter-rouge">rmarkdown</code> will preserve the text, code
+results, and formatting contained in your original .Rmd file.</p>
+
+    <p>Conversion lets you do your original work in markdown, which is very
+easy to use. You can include R code to knit, and you can share your
+document in a variety of formats.</p>
+  </li>
+</ol>
+
+<p>In practice, authors almost always knit and convert their documents at
+the same time. In this article, I will use the term <em>render</em> to refer to
+the two step process of knitting and converting an R Markdown file.</p>
+
+<p>You can manually render an R Markdown file with <code class="language-plaintext highlighter-rouge">rmarkdown::render()</code>.
+This is what the above document looks like when rendered as a HTML file.</p>
+
+<p><img src="/u5/images/rmd-temp.png" alt="" /></p>
+
+<p>In practice, you do not need to call <code class="language-plaintext highlighter-rouge">rmarkdown::render()</code>. You can use
+a button in the RStudio IDE to render your reprt. R Markdown is heavily
+<a href="http://shiny.rstudio.com/articles/rmd-integration.html">integrated into the RStudio
+IDE</a>.</p>
+
+<h3 id="getting-started">Getting started</h3>
+
+<p>To create an R Markdown report, open a plain text file and save it with
+the extension <em>.Rmd</em>. You can open a plain text file in your scripts
+editor by clicking File &gt; New File &gt; Text File in the RStudio
+toolbar.</p>
+
+<p><img src="/u5/images/rmd-file.png" alt="" /></p>
+
+<p>Be sure to save the file with the extension <em>.Rmd</em>. The RStudio IDE
+enables several helpful buttons when you save the file with the .Rmd
+extension. You can save your file by clicking File &gt; Save in the
+RStudio toolbar.</p>
+
+<p><img src="/u5/images/rmd-save.png" alt="" /></p>
+
+<p>R Markdown reports rely on three frameworks</p>
+
+<ol>
+  <li>markdown for formatted text</li>
+  <li><code class="language-plaintext highlighter-rouge">knitr</code> for embedded R code</li>
+  <li>YAML for render parameters</li>
+</ol>
+
+<p>The sections below describe each framework.</p>
+
+<h3 id="markdown-for-formatted-text">Markdown for formatted text</h3>
+
+<p>.Rmd files are meant to contain text written in
+<a href="http://daringfireball.net/projects/markdown/basics">markdown</a>. Markdown
+is a set of conventions for formatting plain text. You can use markdown
+to indicate</p>
+
+<ul>
+  <li>bold and italic text</li>
+  <li>lists</li>
+  <li>headers (e.g., section titles)</li>
+  <li>hyperlinks</li>
+  <li>and much more</li>
+</ul>
+
+<p>The conventions of markdown are very unobtrusive, which make Markdown
+files easy to read. The file below uses several of the most useful
+markdown conventions.</p>
+
+<pre class="r"><code>
+
+## Say Hello to markdown
+
+Markdown is an **easy to use** format for writing reports. It resembles what you naturally write every time you compose an email. In fact, you may have already used markdown *without realizing it*. These websites all rely on markdown formatting
+
+* [Github](www.github.com)
+* [StackOverflow](www.stackoverflow.com)
+* [Reddit](www.reddit.com)
+
+</code></pre>
+<p>The file demonstrates how to use markdown to indicate:</p>
+
+<ol>
+  <li><strong>headers</strong> - Place one or more hashtags at the start of a line that
+will be a header (or sub-header). For example,
+<code class="language-plaintext highlighter-rouge"># Say Hello to markdown</code>. A single hashtag creates a first level
+header. Two hashtags, <code class="language-plaintext highlighter-rouge">##</code>, creates a second level header, and so
+on.</li>
+  <li><strong>italicized and bold text</strong> - Surround italicized text with
+asterisks, like this <code class="language-plaintext highlighter-rouge">*without realizing it*</code>. Surround bold text
+with two asterisks, like this <code class="language-plaintext highlighter-rouge">**easy to use**</code>.</li>
+  <li>
+    <p><strong>lists</strong> - Group lines into bullet points that begin with
+asterisks. Leave a blank line before the first bullet, like this</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> This is a list
+
+ * item 1
+ * item 2
+ * item 3
+</code></pre></div>    </div>
+  </li>
+  <li><strong>hyperlinks</strong> - Surround links with brackets, and then provide the
+link target in parentheses, like this <code class="language-plaintext highlighter-rouge">[Github](www.github.com)</code>.</li>
+</ol>
+
+<p>You can learn about more of markdown’s conventions in the <em>Markdown
+Quick Reference</em> guide, which comes with the RStudio IDE.</p>
+
+<p>To access the guide, open a <em>.md</em> or <em>.Rmd</em> file in RStudio. Then click
+the question mark that appears at the top of the scripts pane. Next,
+select “Markdown Quick Reference”. RStudio will open the <em>Markdown Quick
+Reference</em> guide in the Help pane.</p>
+
+<p><img src="/u5/images/rmd-ref.png" alt="" /></p>
+
+<h4 id="rendering">Rendering</h4>
+
+<p>To transform your markdown file into an HTML, PDF, or Word document,
+click the “Knit” icon that appears above your file in the scripts
+editor. A drop down menu will let you select the type of output that you
+want.</p>
+
+<p><img src="/u5/images/rmd-dropdown.png" alt="" /></p>
+
+<p>When you click the button, <code class="language-plaintext highlighter-rouge">rmarkdown</code> will duplicate your text in the
+new file format. <code class="language-plaintext highlighter-rouge">rmarkdown</code> will use the formatting instructions that
+you provided with markdown syntax.</p>
+
+<p>Once the file is rendered, RStudio will show you a preview of the new
+output and save the output file in your working directory.</p>
+
+<p>Here is how the markdown script above would look in each output format.</p>
+
+<p><img src="/u5/images/rmd-types.png" alt="" /></p>
+
+<p><em>Note: RStudio does not build PDF and Word documents from scratch. You
+will need to have a distribution of Latex installed on your computer to
+make PDFs and Microsoft Word (or a similar program) installed to make
+Word files.</em></p>
+
+<h3 id="knitr-for-embedded-r-code">knitr for embedded R code</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">knitr</code> package extends the basic markdown syntax to include chunks
+of executable R code.</p>
+
+<p>When you render the report, <code class="language-plaintext highlighter-rouge">knitr</code> will run the code and add the
+results to the output file. You can have the output display just the
+code, just the results, or both.</p>
+
+<p>To embed a chunk of R code into your report, surround the code with two
+lines that each contain three backticks. After the first set of
+backticks, include <code class="language-plaintext highlighter-rouge">{r}</code>, which alerts <code class="language-plaintext highlighter-rouge">knitr</code> that you have included a
+chunk of R code. The result will look like this</p>
+
+<pre class="r"><code>
+Here’s some code
+
+```r
+dim(iris)
+```
+
+```
+
+### [1] 150   5
+```
+</code></pre>
+<p>When you render your document, <code class="language-plaintext highlighter-rouge">knitr</code> will run the code and append the
+results to the code chunk. <code class="language-plaintext highlighter-rouge">knitr</code> will provide formatting and syntax
+highlighting to both the code and its results (where appropriate).</p>
+
+<p>As a result, the markdown snippet above will look like this when
+rendered (to HTML).</p>
+
+<p><img src="/u5/images/rmd-code.png" alt="" /></p>
+
+<p>To omit the <em>results</em> from your final report (and not run the code) add
+the argument <code class="language-plaintext highlighter-rouge">eval = FALSE</code> inside the brackets and after <code class="language-plaintext highlighter-rouge">r</code>. This will
+place a copy of your code into the report.</p>
+
+<p><img src="/u5/images/rmd-eval.png" alt="" /></p>
+
+<p>To omit the <em>code</em> from the final report (while including the results)
+add the argument <code class="language-plaintext highlighter-rouge">echo = FALSE</code>. This will place a copy of the results
+into your report.</p>
+
+<p><img src="/u5/images/rmd-echo.png" alt="" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">echo = FALSE</code> is very handy for adding plots to a report, since you
+usually do not want to see the code that generates the plot.</p>
+
+<p><img src="/u5/images/rmd-echo2.png" alt="" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">echo</code> and <code class="language-plaintext highlighter-rouge">eval</code> are not the only arguments that you can use to
+customize code chunks. You can learn more about formatting the output of
+code chunks at the
+<a href="https://bookdown.org/yihui/rmarkdown/r-code.html">rmarkdown</a> and
+<a href="http://yihui.name/knitr/options">knitr</a> websites.</p>
+
+<h4 id="inline-code">Inline code</h4>
+
+<p>To embed R code in a line of text, surround the code with a pair of
+backticks and the letter <code class="language-plaintext highlighter-rouge">r</code>, like this.</p>
+
+<pre class="r"><code>
+Two plus two equals 4.
+</code></pre>
+<p><code class="language-plaintext highlighter-rouge">knitr</code> will replace the inline code with its result in your final
+document (inline code is <em>always</em> replaced by its result). The result
+will appear as if it were part of the original text. For example, the
+snippet above will appear like this:</p>
+
+<p><img src="/u5/images/rmd-inline.png" alt="" /></p>
+
+<h3 id="yaml-for-render-parameters">YAML for render parameters</h3>
+
+<p>You can use a YAML header to control how <code class="language-plaintext highlighter-rouge">rmarkdown</code> renders your .Rmd
+file. A YAML header is a section of <code class="language-plaintext highlighter-rouge">key: value</code> pairs surrounded by
+<code class="language-plaintext highlighter-rouge">---</code> marks, like below</p>
+
+<h3 id="pre-classr">&lt;pre class="r"&gt;<code></code></h3>
+
+<p>title: “Untitled” author: “Garrett” date: “July 10, 2014” output:
+html_document —</p>
+
+<p>Some inline R code, 4. &lt;/code&gt;&lt;/pre&gt;</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">output:</code> value determines what type of output to convert the file
+into when you call <code class="language-plaintext highlighter-rouge">rmarkdown::render()</code>. <em>Note: you do not need to
+specify <code class="language-plaintext highlighter-rouge">output:</code> if you render your file with the RStudio IDE knit
+button.</em></p>
+
+<p><code class="language-plaintext highlighter-rouge">output:</code> recognizes the following values:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">html_document</code>, which will create HTML output (default)</li>
+  <li><code class="language-plaintext highlighter-rouge">pdf_document</code>, which will create PDF output</li>
+  <li><code class="language-plaintext highlighter-rouge">word_document</code>, which will create Word output</li>
+</ul>
+
+<p>If you use the RStudio IDE knit button to render your file, the
+selection you make in the gui will override the <code class="language-plaintext highlighter-rouge">output:</code> setting.</p>
+
+<h4 id="slideshows">Slideshows</h4>
+
+<p>You can also use the <code class="language-plaintext highlighter-rouge">output:</code> value to render your document as a
+slideshow.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">output: ioslides_presentation</code> will create an ioslides (HTML5)
+slideshow</li>
+  <li><code class="language-plaintext highlighter-rouge">output: beamer_presentation</code> will create a beamer (PDF) slideshow</li>
+</ul>
+
+<p><em>Note: The knit button in the RStudio IDE will update to show slideshow
+options when you include one of the above output values and save your
+.Rmd file.</em></p>
+
+<p><code class="language-plaintext highlighter-rouge">rmarkdown</code> will convert your document into a slideshow by starting a
+new slide at each header or horizontal rule (e.g., <code class="language-plaintext highlighter-rouge">***</code>).</p>
+
+<p>Visit
+<a href="https://bookdown.org/yihui/rmarkdown/html-document.html">rmakdown.rstudio.com</a>
+to learn about more YAML options that control the render process.</p>
+
+<h3 id="recap">Recap</h3>
+
+<p>R Markdown documents provide quick, reproducible reporting from R. You
+write your document in markdown and embed executable R code chunks with
+the <code class="language-plaintext highlighter-rouge">knitr</code> syntax.</p>
+
+<p>You can update your document at any time by re-knitting the code chunks.</p>
+
+<p>You can then convert your document into several common formats.</p>
+
+<p>R Markdown documents implement Donald’s Knuth’s idea of literate
+programming and take the manual labor out of writing and maintaining
+reports. Moreover, they are quick to learn. You already know ecnough
+about markdown, knitr, and YAML to begin writing your own R Markdown
+reports.</p>
+
+<p>In the next article, <a href="http://shiny.rstudio.com/interactive-docs.html">Introduction to interactive
+documents</a>, you will
+learn how to add interactive Shiny components to an R Markdown report.
+This creates a quick workflow for writing light-weight Shiny apps.</p>
+
+<p>To learn more about R Markdown and interactive documents, please visit
+<a href="http://rmarkdown.rstudio.com">rmarkdown.rstudio.com</a>.</p>
+
+<h2 id="reference">Reference:</h2>
+
+<ol>
+  <li><a href="https://r4ds.had.co.nz/">R for Data Science</a></li>
+  <li><a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive
+Guide</a>
+<a href="https://ourcodingclub.github.io/tutorials/rmarkdown/" class="uri">https://ourcodingclub.github.io/tutorials/rmarkdown/</a>
+<a href="http://www.jacolienvanrij.com/Tutorials/tutorialMarkdown.html" class="uri">http://www.jacolienvanrij.com/Tutorials/tutorialMarkdown.html</a></li>
+</ol>
+
+						</div><!-- /.content -->
+					</div><!-- /.col -->
+					<div class="col-md-4 col-md-offset-1">
+						<div class="sections-list-wrapper">
+							<div class="sections-list js-sections js-affix js-scrollspy hidden-xs hidden-sm"></div><!-- /.sections-list -->
+						</div>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+				<nav class="page-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								
+									<a href="/u4/" class="page-nav__item page-nav__item--prev">
+										<i class="icon icon--arrow-left"></i>
+										Intro R
+									</a><!-- /.page-nav__item -->
+								
+								
+									<a href="/u6/" class="page-nav__item page-nav__item--next">
+										Explore Data
+										<i class="icon icon--arrow-right"></i>
+									</a><!-- /.page-nav__item -->
+								
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</nav><!-- /.page-nav -->
+			
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+						<a href="/" class="site-footer__logo">R for Plant Physiologists</a>
+					
+					
+						<hr>
+						<p class="site-footer__copyright">Contact: <a href="mailto:danicassol@gmail.com">danicassol@gmail.com</a> </br> ©2020 Daniela Cassol. All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+					<div class="col-sm-6 align-right">
+						<ul class="social-list">
+							
+								<li>
+									<a href="https://www.github.com/dcassol" target="_blank" class="social-list__item social-list__item--github">
+										<i class="icon icon--github"></i>
+									</a>
+								</li>
+							
+						</ul><!-- /.social-list -->
+					</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+
+
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

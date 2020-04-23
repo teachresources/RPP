@@ -47,14 +47,18 @@ grid_navigation:
       excerpt: Section description
       cta: Get started
       url: '/u4'
+    - title: RMarkdown
+      excerpt: Section description
+      cta: Get started
+      url: '/u5'
     - title: Explore Data
       excerpt: Section description
       cta: Get started
-      url: '/u5'
+      url: '/u6'
     - title: Anova
       excerpt: Section description
       cta: Get started
-      url: '/u5'
+      url: '/u6'
     - title: Post Hoc Tests
       excerpt: Section description
       cta: Get started

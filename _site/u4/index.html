@@ -529,6 +529,9 @@ mat
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myDF &lt;- data.frame(Col1=1:10, Col2=10:1) 
 myDF[1:2, ]
 cbind(myDF, Col3=LETTERS[1:10])
+str(iris)
+View(iris)
+summary(iris)
 </code></pre></div></div>
 
 <h2 id="lists">Lists</h2>
@@ -556,6 +559,40 @@ myL[[4]][1:2]
 </code></pre></div></div>
 
 <h1 id="subsetting-of-data-objects">Subsetting of data objects</h1>
+
+<h2 id="creating-subsets-of-data-in-r">Creating Subsets of Data in R</h2>
+
+<p>As we know, data size is increasing exponentially and doing an analysis
+of complete data is very time-consuming. So, the data is divided into
+small-sized samples and analysis of samples is done. The process of
+creating samples is called subsetting.</p>
+
+<p>Different methods of subsetting in R are:</p>
+
+<h3><code class="language-plaintext highlighter-rouge">$</code></h3>
+
+<p>The dollar sign operator selects a single element of data. The result of
+this operator is always a vector when we use it with a data-frame.</p>
+
+<h3 id="-1"><code class="language-plaintext highlighter-rouge">[[</code></h3>
+
+<p>Similar to $ in R, the double square brackets operator in R also returns
+a single element, but it offers the flexibility of referring to the
+elements by position rather than by name. It can be used for data frames
+and lists.</p>
+
+<h3 id="-2"><code class="language-plaintext highlighter-rouge">[</code></h3>
+
+<p>The single square bracket operator in R returns multiple elements of
+data. The index within the square brackets can be a numeric vector, a
+logical vector, or a character vector.</p>
+
+<p>For example: To retrieve 5 rows and all columns of already built-in
+dataset iris, the below command, is used:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data(iris)
+iris[1:5, ]
+</code></pre></div></div>
 
 <p><strong>(1.) Subsetting by positive or negative index/position numbers</strong></p>
 
@@ -620,6 +657,8 @@ rbind(ma, ma)
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>length(iris$Species)
 dim(iris)
+nrow(iris)
+ncol(iris)
 </code></pre></div></div>
 
 <h2 id="accessing-name-slots-of-objects">Accessing Name Slots of Objects</h2>
@@ -628,6 +667,7 @@ dim(iris)
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rownames(iris)[1:8]
 colnames(iris)
+nrow(iris)
 </code></pre></div></div>
 
 <p>Return name field of vectors and lists</p>
@@ -655,6 +695,32 @@ sortindex &lt;- order(-iris[,1]) # Same as decreasing=TRUE
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iris[order(iris$Sepal.Length, iris$Sepal.Width),][1:2,]
 </code></pre></div></div>
+
+<h2 id="duplicate-data-can-be-removed-during-analysis-using-duplicated-function">Duplicate data can be removed during analysis using <code class="language-plaintext highlighter-rouge">duplicated()</code> function</h2>
+
+<p>Below command shows how to find duplicate data in subsets: duplicated()
+function finds duplicate values and returns a logical vector that tells
+you whether the specified value is a duplicate of a previous value.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x &lt;- c(1,2,1,3,1,4, NA)
+is.na(x)
+duplicated(x)
+x[!duplicated(x)]
+x[!is.na(x)]
+</code></pre></div></div>
+
+<h2 id="converting-between-vector-types">Converting between vector types</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x &lt;- c(1,2,1,3,1,4, NA)
+class(x)
+is.numeric(x)
+as.numeric(x)
+c &lt;- as.character(x)
+f &lt;- factor(x)
+</code></pre></div></div>
+
+<p>You want to convert between numeric vectors, character vectors, and
+factors.</p>
 
 <h1 id="operators-and-calculations">Operators and Calculations</h1>
 
@@ -692,8 +758,9 @@ x
 
 <p>Import of a tab-delimited tabular file</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myDF &lt;- read.delim("data/example.csv", sep="\t")
-myDF &lt;- read.delim("data/example.csv", sep=",")
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myDF &lt;- read.delim("data/example.csv", sep="\t") ## replace "example.csv" for you dataset
+myDF &lt;- read.delim("data/example.csv", sep=",") 
+## Choose the right separator character "sep" for your data
 </code></pre></div></div>
 
 <p>Import of Excel file. Note: working with tab- or comma-delimited files
@@ -712,7 +779,9 @@ required <code class="language-plaintext highlighter-rouge">googlesheets</code> 
 
 <h2 id="export-of-tabular-data">Export of tabular data</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>write.table(myDF, file="results/myfile.xls", sep="\t", quote=FALSE, col.names=NA)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myDF &lt;- iris[,1:4]
+write.table(myDF, file="results/myfile.xls", sep="\t", quote=FALSE, col.names=NA) 
+## replace "results/myfile.xls" for "results/myfile_YOURNAME.xls"
 </code></pre></div></div>
 
 <h2 id="line-wise-export">Line-wise export</h2>
@@ -735,6 +804,44 @@ saveRDS(mylist, "results/mylist.rds")
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mylist &lt;- readRDS("results/mylist.rds")
 </code></pre></div></div>
+
+<h1 id="operations-with-data-frame">Operations with Data Frame</h1>
+
+<h2 id="removing-rows">Removing rows</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>irisNew &lt;- iris
+irisNew[-4,]
+irisNew[c(-4,-5), ]
+x &lt;- c(10,20, NA)
+irisNew &lt;- cbind(irisNew, addCol=x)
+is.na(irisNew)[1:4,]
+na.omit(irisNew)
+</code></pre></div></div>
+
+<h2 id="removing-columns">Removing columns</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>irisNew[, -5]
+</code></pre></div></div>
+
+<h2 id="key-points">Key Points</h2>
+
+<ul>
+  <li>Use cbind() to add a new column to a data frame.</li>
+  <li>Use rbind() to add a new row to a data frame.</li>
+  <li>Use na.omit() to remove rows from a data frame with NA values.</li>
+  <li>Use levels() and as.character() to explore and manipulate factors.</li>
+  <li>se str(), summary(), nrow(), ncol(), dim(), colnames(), rownames(),
+head(), and class() to understand the structure of a data frame.</li>
+  <li>Read in a csv file using read.csv().</li>
+  <li>Understand what length() of a data frame represents.</li>
+</ul>
+
+<!-- Extra -->
+<!-- d <- irisNew$addCol[!is.na(irisNew$addCol)] -->
+<!-- max(irisNew$addCol) -->
+<!-- max(irisNew$addCol, na.rm=TRUE) -->
+<!-- ?merge -->
+<!-- merge(iris, irisNew)[1:4,] -->
 
 						</div><!-- /.content -->
 					</div><!-- /.col -->
