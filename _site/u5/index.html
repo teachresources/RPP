@@ -92,365 +92,500 @@
 						<div class="content">
 							<h1 id="introduction-to-r-markdown">Introduction to R Markdown</h1>
 
-<iframe width="800" height="450" src="https://www.youtube.com/embed/DNS7i2m4sB0" frameborder="0" allowfullscreen="">
-</iframe>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/DNS7i2m4sB0" frameborder="0" allowfullscreen=""></iframe>
 
-<p>Interactive documents are a new way to build Shiny apps. An interactive
-document is an <a href="http://rmarkdown.rstudio.com">R Markdown</a> file that
-contains Shiny widgets and outputs. You write the report in
-<a href="http://daringfireball.net/projects/markdown/basics">markdown</a>, and then
-launch it as an app with the click of a button.</p>
+<p>R Markdown allows you to create documents that serve as a neat record of your analysis. In the world of reproducible research, we want other researchers to easily understand what we did in our analysis, otherwise nobody can be certain that you analysed your data properly. You might choose to create an RMarkdown document as an appendix to a paper or project assignment that you are doing, upload it to an online repository such as Github, or simply to keep as a personal record so you can quickly look back at your code and see what you did. RMarkdown presents your code alongside its output (graphs, tables, etc.) with conventional text to explain it, a bit like a notebook.</p>
 
-<p>This article will show you how to write an R Markdown report.</p>
+<p>RMarkdown uses <a href="https://daringfireball.net/projects/markdown/">Markdown syntax</a>. Markdown is a very simple ‘markup’ language which provides methods for creating documents with headers, images, links etc. from plain text files, while keeping the original plain text file easy to read. You can convert Markdown documents to many other file types like <code class="language-plaintext highlighter-rouge">.html</code> or <code class="language-plaintext highlighter-rouge">.pdf</code> to display the headers, images etc..</p>
 
-<p>The companion article, <a href="http://shiny.rstudio.com/articles/interactive-docs.html">Introduction to interactive
-documents</a>,
-will show you how to turn an R Markdown report into an interactive
-document with Shiny components.</p>
+<h2 id="download-r-markdown">Download R Markdown</h2>
 
-<h3 id="r-markdown">R Markdown</h3>
+<p>To get RMarkdown working in RStudio, the first thing you need is the <code class="language-plaintext highlighter-rouge">rmarkdown</code> package, which you can get from <a href="https://cran.r-project.org/web/packages/rmarkdown/index.html">CRAN</a> by running the following commands in R or RStudio:</p>
 
-<p>R Markdown is a file format for making dynamic documents with R. An R
-Markdown document is written in markdown (an easy-to-write plain text
-format) and contains chunks of embedded R code, like the document below.</p>
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"rmarkdown"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">rmarkdown</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
 
-<pre><code>---
+<h1 id="create-an-rmarkdown-file">Create an RMarkdown file</h1>
+
+<p>To create a new RMarkdown file (<code class="language-plaintext highlighter-rouge">.Rmd</code>), select <code class="language-plaintext highlighter-rouge">File -&gt; New File -&gt; R Markdown...</code>_ in <code class="language-plaintext highlighter-rouge">RStudio</code>, then choose the file type you want to create. For now we will focus on a <code class="language-plaintext highlighter-rouge">.html</code> <code class="language-plaintext highlighter-rouge">Document</code>, which can be easily converted to other file types later.</p>
+
+<p>The newly created <code class="language-plaintext highlighter-rouge">.Rmd</code> file comes with basic instructions, but we want to create our own RMarkdown script, so go ahead and delete everything in the example file.</p>
+
+<p>Now save the <code class="language-plaintext highlighter-rouge">.Rmd</code> file to the repository you downloaded earlier <a href="https://github.com/ourcodingclub/CC-2-RMarkdown">from Github</a>.</p>
+
+<p>Now open the <code class="language-plaintext highlighter-rouge">RMarkdown_Tutorial.R</code> practice script from the repository you downloaded earlier in another tab in <code class="language-plaintext highlighter-rouge">RStudio</code> and use the instructions below to help you convert this script into a coherent RMarkdown document, bit by bit.</p>
+
+<p>If you have any of your own <code class="language-plaintext highlighter-rouge">R</code> scripts that you would like to make into an R Markdown document, you can also use those!</p>
+
+<h1 id="the-yaml-header">The YAML Header</h1>
+
+<p>At the top of any RMarkdown script is a <code class="language-plaintext highlighter-rouge">YAML</code> header section enclosed by <code class="language-plaintext highlighter-rouge">---</code>. By default this includes a title, author, date and the file type you want to output to. Many other options are available for different functions and formatting, see <a href="http://rmarkdown.rstudio.com/html_document_format.html">here for <code class="language-plaintext highlighter-rouge">.html</code> options</a> and <a href="http://rmarkdown.rstudio.com/pdf_document_format.html">here for <code class="language-plaintext highlighter-rouge">.pdf</code> options</a>. Rules in the header section will alter the whole document. Have a flick through quickly to familiarise yourself with the sorts of things you can alter by adding an option to the <code class="language-plaintext highlighter-rouge">YAML</code> header.</p>
+
+<p>Insert something like this at the top of your new <code class="language-plaintext highlighter-rouge">.Rmd</code> script:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+title: "Edinburgh Biodiversity"
+author: John Doe
+date: 22/Oct/2016
 output: html_document
 ---
+</code></pre></div></div>
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see &lt;http://rmarkdown.rstudio.com&gt;.
+<p>By default, the <code class="language-plaintext highlighter-rouge">title</code>, <code class="language-plaintext highlighter-rouge">author</code>, <code class="language-plaintext highlighter-rouge">date</code> and <code class="language-plaintext highlighter-rouge">output</code> format are printed at the top of your <code class="language-plaintext highlighter-rouge">.html</code> document. This is the minimum you should put in your header section.</p>
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+<p>Now that we have our first piece of content, we can test the <code class="language-plaintext highlighter-rouge">.Rmd</code> file by compiling it to <code class="language-plaintext highlighter-rouge">.html</code>. To compile your <code class="language-plaintext highlighter-rouge">.Rmd</code> file into a <code class="language-plaintext highlighter-rouge">.html</code> document, you should press the <code class="language-plaintext highlighter-rouge">Knit</code> button in the taskbar:</p>
 
-&amp;#96``{r}
-summary(cars)
-&amp;#96``
+<p><img src="/u5/images/Knit_HTML_Screenshot.jpg" alt="RStudio Knit HTML screenshot" /></p>
 
-You can also embed plots, for example:
+<p>By default, RStudio opens a separate preview window to display the output of your .Rmd file. If you want the output to be displayed in the <code class="language-plaintext highlighter-rouge">Viewer</code> window in <code class="language-plaintext highlighter-rouge">RStudio</code> (the same window where you would see plotted figures / packages / file paths), select “View in Pane” from the drop down menu that appears when you click on the <code class="language-plaintext highlighter-rouge">Knit</code> button in the taskbar, or in the <code class="language-plaintext highlighter-rouge">Settings gear icon</code> drop down menu next to the <code class="language-plaintext highlighter-rouge">Knit</code> button.</p>
 
-&amp;#96``{r, echo=FALSE}
-plot(cars)
-&amp;#96``
+<p>A preview appears, and a <code class="language-plaintext highlighter-rouge">.html</code> file is also saved to the same folder where you saved your <code class="language-plaintext highlighter-rouge">.Rmd</code> file.</p>
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.</code></pre>
-<p>R Markdown files are designed to be used with the <code class="language-plaintext highlighter-rouge">rmarkdown</code> package.
-<code class="language-plaintext highlighter-rouge">rmarkdown</code> comes installed with the RStudio IDE, but you can acquire
-your own copy of <code class="language-plaintext highlighter-rouge">rmarkdown</code> from CRAN with the command</p>
+<h1 id="code-chunks">Code Chunks</h1>
 
-<pre class="r"><code>install.packages("rmarkdown")</code></pre>
-<p>R Markdown files are the source code for rich, reproducible documents.
-You can transform an R Markdown file in two ways.</p>
+<p>Below the <code class="language-plaintext highlighter-rouge">YAML</code> header is the space where you will write your code, accompanying explanation and any outputs. Code that is included in your <code class="language-plaintext highlighter-rouge">.Rmd</code> document should be enclosed by three backwards apostrophes <code class="language-plaintext highlighter-rouge">```</code> (grave accents!). These are known as code chunks and look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```{r}
+norm &lt;- rnorm(100, mean = 0, sd = 1)
+```
+</code></pre></div></div>
+
+<p>Inside the curly brackets is a space where you can assign rules for that code chunk. The code chunk above says that the code is R code. We’ll get onto some other curly brace rules later.</p>
+
+<p><strong>Have a go at grabbing some code from the example R script and inserting it into a code chunk in your <code class="language-plaintext highlighter-rouge">.Rmd</code> document.</strong></p>
+
+<p>You can run an individual chunk of code at any time by placing your cursor inside the code chunk and selecting <code class="language-plaintext highlighter-rouge">Run -&gt; Run Current Chunk</code>:</p>
+
+<p><img src="images/run_sel.png" alt="RStudio run current chunk screenshot" /></p>
+
+<h2 id="more-on-code-chunks">More on Code Chunks</h2>
+
+<p>It’s important to remember when you are creating an RMarkdown file that if you want to run code that refers to an object, for example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```{r}
+plot(dataframe)
+```
+</code></pre></div></div>
+
+<p>you must include instructions showing what <code class="language-plaintext highlighter-rouge">dataframe</code> is, just like in a normal R script. For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```{r}
+A &lt;- c("a", "a", "b", "b")
+B &lt;- c(5, 10, 15, 20)
+dataframe &lt;- data.frame(A, B)
+plot(dataframe)
+```
+</code></pre></div></div>
+
+<p>Or if you are loading a dataframe from a <code class="language-plaintext highlighter-rouge">.csv</code> file, you must include the code in the <code class="language-plaintext highlighter-rouge">.Rmd</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```{r}
+dataframe &lt;- read.csv("~/project/data/dataframe.csv")
+```
+</code></pre></div></div>
+
+<p>Similarly, if you are using any packages in your analysis, you will have to load them in the <code class="language-plaintext highlighter-rouge">.Rmd</code> file using <code class="language-plaintext highlighter-rouge">library()</code> as in a normal <code class="language-plaintext highlighter-rouge">R</code> script.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```{r}
+library(dplyr)
+```
+</code></pre></div></div>
+
+<h2 id="hiding-code-chunks">Hiding code chunks</h2>
+
+<p>If you don’t want the code of a particular code chunk to appear in the final document, but still want to show the output (e.g. a plot), then you can include <code class="language-plaintext highlighter-rouge">echo = FALSE</code> in the code chunk instructions.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```{r, echo = FALSE}
+A &lt;- c("a", "a", "b", "b")
+B &lt;- c(5, 10, 15, 20)
+dataframe &lt;- data.frame(A, B)
+plot(dataframe)
+```
+</code></pre></div></div>
+
+<p>Similarly, you might want to create an object, but not include both the code and the output in the final <code class="language-plaintext highlighter-rouge">.html</code> file. To do this you can use, <code class="language-plaintext highlighter-rouge">include = FALSE</code>. Be aware though, when making reproducible research it’s often not a good idea to completely hide some part of your analysis:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```{r, include = FALSE}
+richness &lt;- 
+  edidiv %&gt;%
+    group_by(taxonGroup) %&gt;%
+    summarise(Species_richness = n_distinct(taxonName))
+```
+</code></pre></div></div>
+
+<p>In some cases, when you load packages into RStudio, various warning messages such as “Warning: package ‘dplyr’ was built under R version 3.4.4” might appear. If you do not want these warning messages to appear, you can use <code class="language-plaintext highlighter-rouge">warning = FALSE</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```{r, warning = FALSE}
+library(dplyr)
+```
+</code></pre></div></div>
+
+<h2 id="more-code-chunk-instructions">More Code Chunk Instructions</h2>
+
+<table>
+  <tr>
+    <th>Rule</th>
+    <th>Example<br />(default)</th>
+    <th>Function</th>
+  </tr>
+  <tr>
+    <td>eval</td>
+    <td>eval=TRUE</td>
+    <td>Is the code run and the results included in the output?</td>
+  </tr>
+  <tr>
+    <td>include</td>
+    <td>include=TRUE</td>
+    <td>Are the code and the results included in the output?</td>
+  </tr>
+  <tr>
+    <td>echo</td>
+    <td>echo=TRUE</td>
+    <td>Is the code displayed alongside the results?</td>
+  </tr>
+  <tr>
+    <td>warning</td>
+    <td>warning=TRUE</td>
+    <td>Are warning messages displayed?</td>
+  </tr>
+  <tr>
+    <td>error</td>
+    <td>error=FALSE</td>
+    <td>Are error messages displayed?</td>
+  </tr>
+  <tr>
+    <td>message</td>
+    <td>message=TRUE</td>
+    <td>Are messages displayed?</td>
+  </tr>
+  <tr>
+    <td>tidy</td>
+    <td>tidy=FALSE</td>
+    <td>Is the code reformatted to make it look “tidy”?</td>
+  </tr>
+  <tr>
+    <td>results</td>
+    <td>results="markup"</td>
+    <td><b> How are results treated? </b> <br /> "hide" = no results <br />"asis" = results without formatting <br />"hold" = results only compiled at end of chunk (use if many commands act on one object)</td>
+  </tr>
+  <tr>
+    <td>cache</td>
+    <td>cache=FALSE</td>
+    <td>Are the results cached for future renders?</td>
+  </tr>
+  <tr>
+    <td>comment</td>
+    <td>comment="##"</td>
+    <td>What character are comments prefaced with?</td>
+  </tr>
+  <tr>
+    <td>fig.width, fig.height</td>
+    <td>fig.width=7</td>
+    <td>What width/height (in inches) are the plots?</td>
+  </tr>
+  <tr>
+    <td>fig.align</td>
+    <td>fig.align="left"</td>
+    <td>"left" "right" "center"</td>
+  </tr>
+</table>
+
+<h2 id="inserting-figures">Inserting Figures</h2>
+<p>Inserting a graph into RMarkdown is easy, the more energy-demanding aspect might be adjusting the formatting.</p>
+
+<p>By default, RMarkdown will place graphs by maximising their height, while keeping them within the margins of the page and maintaining aspect ratio. If you have a particularly tall figure, this can mean a really huge graph. In the following example we modify the dimensions of the figure we created above. To manually set the figure dimensions, you can insert an instruction into the curly braces:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```{r, fig.width = 4, fig.height = 3}
+A &lt;- c("a", "a", "b", "b")
+B &lt;- c(5, 10, 15, 20)
+dataframe &lt;- data.frame(A, B)
+plot(dataframe)
+```
+</code></pre></div></div>
+
+<h1 id="inserting-tables">Inserting Tables</h1>
+
+<h3 id="standard-r-markdown">Standard R Markdown</h3>
+
+<p>While R Markdown can print the contents of a data frame easily by enclosing the name of the data frame in a code chunk:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```{r}
+dataframe
+```
+</code></pre></div></div>
+
+<p>this can look a bit messy, especially with data frames with a lot of columns. Including a formal table requires more effort.</p>
+
+<h3 id="kable-function-from-knitr-package">kable() function from knitr package</h3>
+
+<p>The most aesthetically pleasing and simple table formatting function I have found is <code class="language-plaintext highlighter-rouge">kable()</code> in the <code class="language-plaintext highlighter-rouge">knitr</code> package. The first argument tells kable to make a table out of the object <code class="language-plaintext highlighter-rouge">dataframe</code> and that numbers should have two significant figures. Remember to load the <code class="language-plaintext highlighter-rouge">knitr</code> package in your <code class="language-plaintext highlighter-rouge">.Rmd</code> file as well.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```{r}
+library(knitr)
+kable(dataframe, digits = 2)
+```
+</code></pre></div></div>
+
+<h3 id="pander-function-from-pander-package">pander function from pander package</h3>
+
+<p>If you want a bit more control over the content of your table you can use <code class="language-plaintext highlighter-rouge">pander()</code> in the <code class="language-plaintext highlighter-rouge">pander</code> package. Imagine I want the 3rd column to appear in italics:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```{r}
+library(pander)
+plant &lt;- c("a", "b", "c")
+temperature &lt;- c(20, 20, 20)
+growth &lt;- c(0.65, 0.95, 0.15)
+dataframe &lt;- data.frame(plant, temperature, growth)
+emphasize.italics.cols(3)   # Make the 3rd column italics
+pander(dataframe)           # Create the table
+```
+</code></pre></div></div>
+
+<p>Find more info on pander <a href="https://cran.r-project.org/web/packages/pander/pander.pdf">here</a>.</p>
+
+<h3 id="manually-creating-tables-using-markdown-syntax">Manually creating tables using markdown syntax</h3>
+
+<p>You can also manually create small tables using markdown syntax.</p>
+
+<p>For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| Plant | Temp. | Growth |
+|:------|:-----:|-------:|
+| A     | 20    | 0.65   |
+| B     | 20    | 0.95   |
+| C     | 20    | 0.15   |
+</code></pre></div></div>
+
+<p>will create something that looks like this:</p>
+
+<table>
+  <tr>
+    <th>Plant</th>
+    <th>Temp.</th>
+    <th>Growth</th>
+  </tr>
+  <tr>
+    <td>A</td>
+    <td>20</td>
+    <td>0.65</td>
+  </tr>
+  <tr>
+    <td>B</td>
+    <td>20</td>
+    <td>0.95</td>
+  </tr>
+  <tr>
+    <td>C</td>
+    <td>20</td>
+    <td>0.15</td>
+  </tr>
+</table>
+
+<p>The <code class="language-plaintext highlighter-rouge">:-----:</code> tells markdown that the line above should be treated as a header and the lines below should be treated as the body of the table. Text alignment of the columns is set by the position of <code class="language-plaintext highlighter-rouge">:</code>:</p>
+
+<table>
+  <tr>
+  <th>Syntax</th>
+  <th>Alignment</th>
+  </tr>
+  <tr>
+    <td>`:----:`</td>
+    <td>Centre</td>
+  </tr>
+  <tr>
+    <td>`:-----`</td>
+    <td>Left</td>
+  </tr>
+  <tr>
+    <td>`-----:`</td>
+    <td>Right</td>
+  </tr>
+  <tr>
+    <td>`------`</td>
+    <td>Auto</td>
+  </tr>
+</table>
+
+<h3 id="creating-tables-from-model-outputs">Creating tables from model outputs</h3>
+
+<p>Using <code class="language-plaintext highlighter-rouge">tidy()</code> from the package <code class="language-plaintext highlighter-rouge">broom</code>, we are able to create tables of our model outputs, and insert these tables into our  markdown file. The example below shows a simple example linear model, where the summary output table can be saved as a new R object and then added into the markdown file.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```{r}
+library(broom)
+A &lt;- c(20, 15, 10)
+B &lt;- c(1, 2, 3)
+
+lm_test &lt;- lm(A ~ B)            # Creating linear model 
+summary(lm_test)                # Obtaining linear model summary statistics
+
+table_obj &lt;- tidy(lm_test)      # Using tidy() to create a new R object called table 
+pander(table_obj, digits = 3)   # Using pander() to view the created table, with 3 sig figs  
+```
+</code></pre></div></div>
+
+<h2 id="formatting-text">Formatting Text</h2>
+
+<p>Markdown syntax can be used to change how text appears in your output file. Here are a few common formatting commands:</p>
+
+<p><code class="language-plaintext highlighter-rouge">*Italic*</code></p>
+
+<p><em>Italic</em></p>
+
+<hr />
+
+<p><code class="language-plaintext highlighter-rouge">**Bold**</code></p>
+
+<p><strong>Bold</strong></p>
+
+<hr />
+
+<p>This is  `code` in text</p>
+
+<p>This is <code class="language-plaintext highlighter-rouge">code</code> in text</p>
+
+<hr />
+
+<p><code class="language-plaintext highlighter-rouge"># Header 1</code></p>
+
+<h1 id="header-1">Header 1</h1>
+
+<hr />
+
+<p><code class="language-plaintext highlighter-rouge">## Header 2</code></p>
+
+<h2 id="header-2">Header 2</h2>
+
+<p>Note that when a <code class="language-plaintext highlighter-rouge">#</code> symbol is placed inside a code chunk it acts as a normal R comment, but when placed in text it controls the header size.</p>
+
+<hr />
+
+<p><code class="language-plaintext highlighter-rouge">* Unordered list item</code></p>
+
+<li> Unordered list item </li>
+
+<hr />
+
+<p><code class="language-plaintext highlighter-rouge">1. Ordered list item</code></p>
 
 <ol>
-  <li>
-    <p><strong>knit</strong> - You can <em>knit</em> the file. The <code class="language-plaintext highlighter-rouge">rmarkdown</code> package will
-call the <code class="language-plaintext highlighter-rouge">knitr</code> package. <code class="language-plaintext highlighter-rouge">knitr</code> will run each chunk of R code in
-the document and append the results of the code to the document next
-to the code chunk. This workflow saves time and facilitates
-reproducible reports.</p>
-
-    <p>Consider how authors typically include graphs (or tables, or
-numbers) in a report. The author makes the graph, saves it as a
-file, and then copy and pastes it into the final report. This
-process relies on manual labor. If the data changes, the author must
-repeat the entire process to update the graph.</p>
-
-    <p>In the R Markdown paradigm, each report contains the code it needs
-to make its own graphs, tables, numbers, etc. The author can
-automatically update the report by re-knitting.</p>
-  </li>
-  <li>
-    <p><strong>convert</strong> - You can <em>convert</em> the file. The <code class="language-plaintext highlighter-rouge">rmarkdown</code> package
-will use the <code class="language-plaintext highlighter-rouge">pandoc</code> program to transform the file into a new
-format. For example, you can convert your .Rmd file into an HTML,
-PDF, or Microsoft Word file. You can even turn the file into an
-HTML5 or PDF slideshow. <code class="language-plaintext highlighter-rouge">rmarkdown</code> will preserve the text, code
-results, and formatting contained in your original .Rmd file.</p>
-
-    <p>Conversion lets you do your original work in markdown, which is very
-easy to use. You can include R code to knit, and you can share your
-document in a variety of formats.</p>
-  </li>
+  <li>Ordered list item</li>
 </ol>
 
-<p>In practice, authors almost always knit and convert their documents at
-the same time. In this article, I will use the term <em>render</em> to refer to
-the two step process of knitting and converting an R Markdown file.</p>
+<hr />
 
-<p>You can manually render an R Markdown file with <code class="language-plaintext highlighter-rouge">rmarkdown::render()</code>.
-This is what the above document looks like when rendered as a HTML file.</p>
+<p><code class="language-plaintext highlighter-rouge">[Link](https://www.google.com)</code></p>
 
-<p><img src="/u5/images/rmd-temp.png" alt="" /></p>
+<p><a href="https://www.google.com">Link</a></p>
 
-<p>In practice, you do not need to call <code class="language-plaintext highlighter-rouge">rmarkdown::render()</code>. You can use
-a button in the RStudio IDE to render your reprt. R Markdown is heavily
-<a href="http://shiny.rstudio.com/articles/rmd-integration.html">integrated into the RStudio
-IDE</a>.</p>
+<hr />
 
-<h3 id="getting-started">Getting started</h3>
+<p><code class="language-plaintext highlighter-rouge">$A = \pi \times r^{2}$</code></p>
 
-<p>To create an R Markdown report, open a plain text file and save it with
-the extension <em>.Rmd</em>. You can open a plain text file in your scripts
-editor by clicking File &gt; New File &gt; Text File in the RStudio
-toolbar.</p>
+<p>The <code class="language-plaintext highlighter-rouge">$</code> symbols tells R markdown to use <a href="http://reu.dimacs.rutgers.edu/Symbols.pdf">LaTeX equation syntax</a>.</p>
 
-<p><img src="/u5/images/rmd-file.png" alt="" /></p>
+<h1 id="creating-pdf-files-in-rmarkdown">Creating <code class="language-plaintext highlighter-rouge">.pdf</code> files in Rmarkdown</h1>
 
-<p>Be sure to save the file with the extension <em>.Rmd</em>. The RStudio IDE
-enables several helpful buttons when you save the file with the .Rmd
-extension. You can save your file by clicking File &gt; Save in the
-RStudio toolbar.</p>
+<p>Creating <code class="language-plaintext highlighter-rouge">.pdf</code> documents for printing in A4 requires a bit more fiddling around. RStudio uses another document compiling system called <a href="https://www.latex-project.org/">LaTeX</a> to make <code class="language-plaintext highlighter-rouge">.pdf</code> documents.</p>
 
-<p><img src="/u5/images/rmd-save.png" alt="" /></p>
+<p>If you are using Windows, go to the <a href="https://miktex.org/download">MikTeX website</a> and download the appropriate “Complete MikTeX Installer” for your system, either 32-bit or 64-bit.</p>
 
-<p>R Markdown reports rely on three frameworks</p>
+<p>If you are using a Mac, go to the <a href="https://tug.org/mactex/mactex-download.html">MacTeX website</a> and download the “MacTeX.pkg”.</p>
 
-<ol>
-  <li>markdown for formatted text</li>
-  <li><code class="language-plaintext highlighter-rouge">knitr</code> for embedded R code</li>
-  <li>YAML for render parameters</li>
-</ol>
+<p>Running these installers will install a version of LaTeX onto your system, which R will then be able to call on to compile the <code class="language-plaintext highlighter-rouge">.pdf</code>.</p>
 
-<p>The sections below describe each framework.</p>
+<p>Becoming familiar with <a href="https://tobi.oetiker.ch/lshort/lshort.pdf">LaTeX</a> will give you a lot more options to make your R Markdown <code class="language-plaintext highlighter-rouge">.pdf</code> look pretty, as LaTeX commands are mostly compatible with R Markdown, though some googling is often required.</p>
 
-<h3 id="markdown-for-formatted-text">Markdown for formatted text</h3>
+<p>To compile a <code class="language-plaintext highlighter-rouge">.pdf</code> instead of a <code class="language-plaintext highlighter-rouge">.html</code> document, change <code class="language-plaintext highlighter-rouge">output:</code> from <code class="language-plaintext highlighter-rouge">html_document</code> to <code class="language-plaintext highlighter-rouge">pdf_document</code>.</p>
 
-<p>.Rmd files are meant to contain text written in
-<a href="http://daringfireball.net/projects/markdown/basics">markdown</a>. Markdown
-is a set of conventions for formatting plain text. You can use markdown
-to indicate</p>
+<h2 id="common-problems-when-compiling-a-pdf">Common problems when compiling a <code class="language-plaintext highlighter-rouge">.pdf</code></h2>
 
 <ul>
-  <li>bold and italic text</li>
-  <li>lists</li>
-  <li>headers (e.g., section titles)</li>
-  <li>hyperlinks</li>
-  <li>and much more</li>
+  <li>Text is running off the page</li>
 </ul>
 
-<p>The conventions of markdown are very unobtrusive, which make Markdown
-files easy to read. The file below uses several of the most useful
-markdown conventions.</p>
+<p>Add a <code class="language-plaintext highlighter-rouge">global_options</code> argument at the start of your <code class="language-plaintext highlighter-rouge">.Rmd</code> file:</p>
 
-<pre class="r"><code>
-
-## Say Hello to markdown
-
-Markdown is an **easy to use** format for writing reports. It resembles what you naturally write every time you compose an email. In fact, you may have already used markdown *without realizing it*. These websites all rely on markdown formatting
-
-* [Github](www.github.com)
-* [StackOverflow](www.stackoverflow.com)
-* [Reddit](www.reddit.com)
-
-</code></pre>
-<p>The file demonstrates how to use markdown to indicate:</p>
-
-<ol>
-  <li><strong>headers</strong> - Place one or more hashtags at the start of a line that
-will be a header (or sub-header). For example,
-<code class="language-plaintext highlighter-rouge"># Say Hello to markdown</code>. A single hashtag creates a first level
-header. Two hashtags, <code class="language-plaintext highlighter-rouge">##</code>, creates a second level header, and so
-on.</li>
-  <li><strong>italicized and bold text</strong> - Surround italicized text with
-asterisks, like this <code class="language-plaintext highlighter-rouge">*without realizing it*</code>. Surround bold text
-with two asterisks, like this <code class="language-plaintext highlighter-rouge">**easy to use**</code>.</li>
-  <li>
-    <p><strong>lists</strong> - Group lines into bullet points that begin with
-asterisks. Leave a blank line before the first bullet, like this</p>
-
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> This is a list
-
- * item 1
- * item 2
- * item 3
-</code></pre></div>    </div>
-  </li>
-  <li><strong>hyperlinks</strong> - Surround links with brackets, and then provide the
-link target in parentheses, like this <code class="language-plaintext highlighter-rouge">[Github](www.github.com)</code>.</li>
-</ol>
-
-<p>You can learn about more of markdown’s conventions in the <em>Markdown
-Quick Reference</em> guide, which comes with the RStudio IDE.</p>
-
-<p>To access the guide, open a <em>.md</em> or <em>.Rmd</em> file in RStudio. Then click
-the question mark that appears at the top of the scripts pane. Next,
-select “Markdown Quick Reference”. RStudio will open the <em>Markdown Quick
-Reference</em> guide in the Help pane.</p>
-
-<p><img src="/u5/images/rmd-ref.png" alt="" /></p>
-
-<h4 id="rendering">Rendering</h4>
-
-<p>To transform your markdown file into an HTML, PDF, or Word document,
-click the “Knit” icon that appears above your file in the scripts
-editor. A drop down menu will let you select the type of output that you
-want.</p>
-
-<p><img src="/u5/images/rmd-dropdown.png" alt="" /></p>
-
-<p>When you click the button, <code class="language-plaintext highlighter-rouge">rmarkdown</code> will duplicate your text in the
-new file format. <code class="language-plaintext highlighter-rouge">rmarkdown</code> will use the formatting instructions that
-you provided with markdown syntax.</p>
-
-<p>Once the file is rendered, RStudio will show you a preview of the new
-output and save the output file in your working directory.</p>
-
-<p>Here is how the markdown script above would look in each output format.</p>
-
-<p><img src="/u5/images/rmd-types.png" alt="" /></p>
-
-<p><em>Note: RStudio does not build PDF and Word documents from scratch. You
-will need to have a distribution of Latex installed on your computer to
-make PDFs and Microsoft Word (or a similar program) installed to make
-Word files.</em></p>
-
-<h3 id="knitr-for-embedded-r-code">knitr for embedded R code</h3>
-
-<p>The <code class="language-plaintext highlighter-rouge">knitr</code> package extends the basic markdown syntax to include chunks
-of executable R code.</p>
-
-<p>When you render the report, <code class="language-plaintext highlighter-rouge">knitr</code> will run the code and add the
-results to the output file. You can have the output display just the
-code, just the results, or both.</p>
-
-<p>To embed a chunk of R code into your report, surround the code with two
-lines that each contain three backticks. After the first set of
-backticks, include <code class="language-plaintext highlighter-rouge">{r}</code>, which alerts <code class="language-plaintext highlighter-rouge">knitr</code> that you have included a
-chunk of R code. The result will look like this</p>
-
-<pre class="r"><code>
-Here’s some code
-
-```r
-dim(iris)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```{r global_options, include = FALSE}
+knitr::opts_chunk$set(message=FALSE, 
+tidy.opts=list(width.cutoff=60)) 
 ```
+</code></pre></div></div>
 
-```
+<p>This code chunk won’t be displayed in the final document due to the <code class="language-plaintext highlighter-rouge">include = FALSE</code> call and should be placed immediately after the YAML header to affect everything below that.</p>
 
-### [1] 150   5
-```
-</code></pre>
-<p>When you render your document, <code class="language-plaintext highlighter-rouge">knitr</code> will run the code and append the
-results to the code chunk. <code class="language-plaintext highlighter-rouge">knitr</code> will provide formatting and syntax
-highlighting to both the code and its results (where appropriate).</p>
+<p><code class="language-plaintext highlighter-rouge">tidy.opts = list(width.cutoff = 60)</code> defines the margin cutoff point and wraps text to the next line. Play with the value to get it right.</p>
 
-<p>As a result, the markdown snippet above will look like this when
-rendered (to HTML).</p>
-
-<p><img src="/u5/images/rmd-code.png" alt="" /></p>
-
-<p>To omit the <em>results</em> from your final report (and not run the code) add
-the argument <code class="language-plaintext highlighter-rouge">eval = FALSE</code> inside the brackets and after <code class="language-plaintext highlighter-rouge">r</code>. This will
-place a copy of your code into the report.</p>
-
-<p><img src="/u5/images/rmd-eval.png" alt="" /></p>
-
-<p>To omit the <em>code</em> from the final report (while including the results)
-add the argument <code class="language-plaintext highlighter-rouge">echo = FALSE</code>. This will place a copy of the results
-into your report.</p>
-
-<p><img src="/u5/images/rmd-echo.png" alt="" /></p>
-
-<p><code class="language-plaintext highlighter-rouge">echo = FALSE</code> is very handy for adding plots to a report, since you
-usually do not want to see the code that generates the plot.</p>
-
-<p><img src="/u5/images/rmd-echo2.png" alt="" /></p>
-
-<p><code class="language-plaintext highlighter-rouge">echo</code> and <code class="language-plaintext highlighter-rouge">eval</code> are not the only arguments that you can use to
-customize code chunks. You can learn more about formatting the output of
-code chunks at the
-<a href="https://bookdown.org/yihui/rmarkdown/r-code.html">rmarkdown</a> and
-<a href="http://yihui.name/knitr/options">knitr</a> websites.</p>
-
-<h4 id="inline-code">Inline code</h4>
-
-<p>To embed R code in a line of text, surround the code with a pair of
-backticks and the letter <code class="language-plaintext highlighter-rouge">r</code>, like this.</p>
-
-<pre class="r"><code>
-Two plus two equals 4.
-</code></pre>
-<p><code class="language-plaintext highlighter-rouge">knitr</code> will replace the inline code with its result in your final
-document (inline code is <em>always</em> replaced by its result). The result
-will appear as if it were part of the original text. For example, the
-snippet above will appear like this:</p>
-
-<p><img src="/u5/images/rmd-inline.png" alt="" /></p>
-
-<h3 id="yaml-for-render-parameters">YAML for render parameters</h3>
-
-<p>You can use a YAML header to control how <code class="language-plaintext highlighter-rouge">rmarkdown</code> renders your .Rmd
-file. A YAML header is a section of <code class="language-plaintext highlighter-rouge">key: value</code> pairs surrounded by
-<code class="language-plaintext highlighter-rouge">---</code> marks, like below</p>
-
-<h3 id="pre-classr">&lt;pre class="r"&gt;<code></code></h3>
-
-<p>title: “Untitled” author: “Garrett” date: “July 10, 2014” output:
-html_document —</p>
-
-<p>Some inline R code, 4. &lt;/code&gt;&lt;/pre&gt;</p>
-
-<p>The <code class="language-plaintext highlighter-rouge">output:</code> value determines what type of output to convert the file
-into when you call <code class="language-plaintext highlighter-rouge">rmarkdown::render()</code>. <em>Note: you do not need to
-specify <code class="language-plaintext highlighter-rouge">output:</code> if you render your file with the RStudio IDE knit
-button.</em></p>
-
-<p><code class="language-plaintext highlighter-rouge">output:</code> recognizes the following values:</p>
+<hr />
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">html_document</code>, which will create HTML output (default)</li>
-  <li><code class="language-plaintext highlighter-rouge">pdf_document</code>, which will create PDF output</li>
-  <li><code class="language-plaintext highlighter-rouge">word_document</code>, which will create Word output</li>
+  <li>I lose my syntax highlighting</li>
 </ul>
 
-<p>If you use the RStudio IDE knit button to render your file, the
-selection you make in the gui will override the <code class="language-plaintext highlighter-rouge">output:</code> setting.</p>
+<p>Use the <code class="language-plaintext highlighter-rouge">xelatex</code> engine to compile your <code class="language-plaintext highlighter-rouge">.pdf</code>:</p>
 
-<h4 id="slideshows">Slideshows</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- - -
+author: John Doe
+output: pdf_document 
+latex_engine: xelatex
+- - -
+</code></pre></div></div>
 
-<p>You can also use the <code class="language-plaintext highlighter-rouge">output:</code> value to render your document as a
-slideshow.</p>
+<p>By default, R markdown uses the base LaTeX engine to compile pdfs, but this may limit certain options when it comes to formatting. There are lots of other engines to play around with as well.</p>
+
+<hr />
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">output: ioslides_presentation</code> will create an ioslides (HTML5)
-slideshow</li>
-  <li><code class="language-plaintext highlighter-rouge">output: beamer_presentation</code> will create a beamer (PDF) slideshow</li>
+  <li>My page margins are too big/small</li>
 </ul>
 
-<p><em>Note: The knit button in the RStudio IDE will update to show slideshow
-options when you include one of the above output values and save your
-.Rmd file.</em></p>
+<p>Add a <code class="language-plaintext highlighter-rouge">geometry</code> argument to the YAML header</p>
 
-<p><code class="language-plaintext highlighter-rouge">rmarkdown</code> will convert your document into a slideshow by starting a
-new slide at each header or horizontal rule (e.g., <code class="language-plaintext highlighter-rouge">***</code>).</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- - - 
+title: "R Markdown Tutorial Demo"
+author: "John Godlee"
+date: "30/11/2016"
+output: pdf_document
+latex_engine: xelatex
+geometry: left = 0.5cm, right = 1cm, top = 1cm, bottom = 1cm
+- - - 
+</code></pre></div></div>
 
-<p>Visit
-<a href="https://bookdown.org/yihui/rmarkdown/html-document.html">rmakdown.rstudio.com</a>
-to learn about more YAML options that control the render process.</p>
+<p><code class="language-plaintext highlighter-rouge">geometry</code> is a LaTeX command.</p>
 
-<h3 id="recap">Recap</h3>
+<hr />
 
-<p>R Markdown documents provide quick, reproducible reporting from R. You
-write your document in markdown and embed executable R code chunks with
-the <code class="language-plaintext highlighter-rouge">knitr</code> syntax.</p>
+<ul>
+  <li>My plot/table/code is split over two pages</li>
+</ul>
 
-<p>You can update your document at any time by re-knitting the code chunks.</p>
+<p>Add a page break before the dodgy element:</p>
 
-<p>You can then convert your document into several common formats.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>\pagebreak
+```{r}
+Codey codey code code
+```
+</code></pre></div></div>
 
-<p>R Markdown documents implement Donald’s Knuth’s idea of literate
-programming and take the manual labor out of writing and maintaining
-reports. Moreover, they are quick to learn. You already know ecnough
-about markdown, knitr, and YAML to begin writing your own R Markdown
-reports.</p>
+<hr />
 
-<p>In the next article, <a href="http://shiny.rstudio.com/interactive-docs.html">Introduction to interactive
-documents</a>, you will
-learn how to add interactive Shiny components to an R Markdown report.
-This creates a quick workflow for writing light-weight Shiny apps.</p>
+<ul>
+  <li>I want to change the font</li>
+</ul>
 
-<p>To learn more about R Markdown and interactive documents, please visit
-<a href="http://rmarkdown.rstudio.com">rmarkdown.rstudio.com</a>.</p>
+<p>Add a font argument to your header section</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--- 
+title: "R Markdown Tutorial Demo"
+author: "John Godlee"
+date: "30/11/2016"
+output: pdf_document
+latex_engine: xelatex
+mainfont: Arial
+--- 
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">mainfont</code> is a LaTeX command.</p>
 
 <h2 id="reference">Reference:</h2>
 

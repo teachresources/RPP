@@ -2,12 +2,18 @@
 
 <iframe width="800" height="450" src="https://www.youtube.com/embed/DNS7i2m4sB0" frameborder="0" allowfullscreen></iframe>
 
-Interactive documents are a new way to build Shiny apps. An interactive document is an [R Markdown](http://rmarkdown.rstudio.com) file that contains Shiny widgets and outputs. You write the report in [markdown](http://daringfireball.net/projects/markdown/basics), and then launch it as an app with the click of a button.
+R Markdown allows you to create documents that serve as a neat record of your analysis. In the world of reproducible research, we want other researchers to easily understand what we did in our analysis, otherwise nobody can be certain that you analysed your data properly. You might choose to create an RMarkdown document as an appendix to a paper or project assignment that you are doing, upload it to an online repository such as Github, or simply to keep as a personal record so you can quickly look back at your code and see what you did. RMarkdown presents your code alongside its output (graphs, tables, etc.) with conventional text to explain it, a bit like a notebook.
 
-This article will show you how to write an R Markdown report.
+RMarkdown uses [Markdown syntax](https://daringfireball.net/projects/markdown/). Markdown is a very simple 'markup' language which provides methods for creating documents with headers, images, links etc. from plain text files, while keeping the original plain text file easy to read. You can convert Markdown documents to many other file types like `.html` or `.pdf` to display the headers, images etc..
 
-The companion article, [Introduction to interactive documents](http://shiny.rstudio.com/articles/interactive-docs.html), will show you how to turn an R Markdown report into an interactive document with Shiny components.
+##  Download R Markdown
 
+To get RMarkdown working in RStudio, the first thing you need is the `rmarkdown` package, which you can get from [CRAN](https://cran.r-project.org/web/packages/rmarkdown/index.html) by running the following commands in R or RStudio:
+
+``` r
+install.packages("rmarkdown")
+library(rmarkdown)
+```
 
 ## R Markdown
 
