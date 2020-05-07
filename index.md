@@ -51,18 +51,18 @@ grid_navigation:
       excerpt: Section description
       cta: Get started
       url: '/u5'
-    - title: Explore Data
+    - title: Data Manipulation
       excerpt: Section description
       cta: Get started
       url: '/u6'
     - title: Anova
       excerpt: Section description
       cta: Get started
-      url: '/u6'
+      url: '/u7'
     - title: Post Hoc Tests
       excerpt: Section description
       cta: Get started
-      url: '/u6'
+      url: '/u7'
     - title: Multivariate Statistical Analysis 
       excerpt: Section description
       cta: Get started

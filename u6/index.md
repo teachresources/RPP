@@ -1,12 +1,12 @@
 ---
 # Page settings
 layout: default
-head_title: RMarkdown
+head_title: Data Manipulation
 keywords:
 comments: false
 
 # Hero section
-title: RMarkdown
+title: Data Manipulation
 description: >
 
 # Micro navigation
@@ -15,528 +15,725 @@ micro_nav: false
 # Page navigation
 page_nav:
     prev:
-        content: Intro R
-        url: '/u4/'
+        content: RMarkdown
+        url: '/u5/'
     next:
-        content: Explore Data
+        content: Anova
         url: '/u6/'
 ---
 
-# Introduction to R Markdown 
+Find [here](https://teachresources.github.io/RPP/u6/dataManipulation.Rmd) the correspondent `*Rmd`.
+
+Data Manipulation
+=================
+
+Best Practices in Preparing Data Files for Importing into R
+-----------------------------------------------------------
+
+-   Use the first row as column headers (or column names). Generally,
+    columns represent variables.
+-   Use the first column as row names. Generally rows represent
+    observations.
+-   Each row name should be unique, so remove duplicated names.
+-   Avoid names with blank spaces. Good column names: `specie_1` or
+    `specie1`. Bad column name: `specie 1`.
+-   Avoid names with special symbols: ?, $, \*, +, \#, (, ), -, /, }, {,
+    |, &gt;, &lt; etc. Only underscore can be used.
+-   Avoid beginning variable names with a number. Use letter instead.
+    Good column names: sport\_100m or x100m. Bad column name: 100m
+-   Column names must be unique. Duplicated names are not allowed.
+-   R is case sensitive. This means that Name is different from Name or
+    NAME.
+-   Avoid blank rows in your data.
+-   Delete any comments in your file.
+-   If you have a column containing date, use the four digit format.
+    Good format: 01/01/2016. Bad format: 01/01/16
+
+R base functions for importing data
+-----------------------------------
+
+-   `read.csv()`: for reading “comma separated value” files (“.csv”).
+-   `read.csv2()`: variant used in countries that use a comma “,” as
+    decimal point and a semicolon “;” as field separators.
+-   `read.delim()`: for reading “tab-separated value” files (“.txt”). By
+    default, point (“.”) is used as decimal points.
+-   `read.delim2()`: for reading “tab-separated value” files (“.txt”).
+    By default, comma (“,”) is used as decimal points.
+
+### Arguments
+
+-   `file`: the path to the file containing the data to be imported
+    into R.
+-   `sep`: the field separator character. “ is used for tab-delimited
+    file.
+-   `header`: logical value. If TRUE, read.table() assumes that your
+    file has a header row, so row 1 is the name of each column. If
+    that’s not the case, you can add the argument header = FALSE.
+-   `dec`: the character used in the file for decimal points.
+
+<!-- -->
+
+    # Read tabular data into R
+    read.table(file, header = FALSE, sep = "", dec = ".")
+    # Read "comma separated value" files (".csv")
+    read.csv(file, header = TRUE, sep = ",", dec = ".", ...)
+    # Or use read.csv2: variant used in countries that 
+    # use a comma as decimal point and a semicolon as field separator.
+    read.csv2(file, header = TRUE, sep = ";", dec = ",", ...)
+    # Read TAB delimited files
+    read.delim(file, header = TRUE, sep = "\t", dec = ".", ...)
+    read.delim2(file, header = TRUE, sep = "\t", dec = ",", ...)
+
+### Reading data From Excel Files (xls|xlsx) into R
+
+    # Use readxl package to read xls|xlsx
+    library("readxl")
+    my_data <- read_excel("my_file.xlsx")
+    # Use xlsx package
+    library("xlsx")
+    my_data <- read.xlsx("my_file.xlsx") 
+
+Writing Data From R to txt|csv Files: R Base Functions
+------------------------------------------------------
+
+The R code below exports the built-in R mtcars data set to a
+tab-separated ( sep = “) file called mtcars.txt in the current working
+directory:
+
+    # Loading mtcars data
+    data("mtcars")
+    # Writing mtcars data
+    write.table(mtcars, file = "mtcars.txt", sep = "\t",
+                row.names = TRUE, col.names = NA)
+
+    write.table(mtcars, file = "mtcars.txt", sep = "\t",
+                row.names = FALSE)
+
+Accessing the data
+------------------
+
+-   Tibbles have nice printing method that show only the first 10 rows
+    and all the columns that fit on the screen. This is useful when you
+    work with large data sets.
+
+-   When printed, the data type of each column is specified (see below):
+    -   : for double
+    -   : for factor
+    -   : for character
+    -   : for logical
+
+<!-- -->
+
+    library(tidyverse)
+    library("tidyverse")
+    my_data <- as_tibble(iris)
+    my_data
+
+    ## # A tibble: 150 x 5
+    ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+    ##           <dbl>       <dbl>        <dbl>       <dbl> <fct>  
+    ##  1          5.1         3.5          1.4         0.2 setosa 
+    ##  2          4.9         3            1.4         0.2 setosa 
+    ##  3          4.7         3.2          1.3         0.2 setosa 
+    ##  4          4.6         3.1          1.5         0.2 setosa 
+    ##  5          5           3.6          1.4         0.2 setosa 
+    ##  6          5.4         3.9          1.7         0.4 setosa 
+    ##  7          4.6         3.4          1.4         0.3 setosa 
+    ##  8          5           3.4          1.5         0.2 setosa 
+    ##  9          4.4         2.9          1.4         0.2 setosa 
+    ## 10          4.9         3.1          1.5         0.1 setosa 
+    ## # … with 140 more rows
+
+    tibble(iris)
+
+    ## # A tibble: 150 x 5
+    ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+    ##           <dbl>       <dbl>        <dbl>       <dbl> <fct>  
+    ##  1          5.1         3.5          1.4         0.2 setosa 
+    ##  2          4.9         3            1.4         0.2 setosa 
+    ##  3          4.7         3.2          1.3         0.2 setosa 
+    ##  4          4.6         3.1          1.5         0.2 setosa 
+    ##  5          5           3.6          1.4         0.2 setosa 
+    ##  6          5.4         3.9          1.7         0.4 setosa 
+    ##  7          4.6         3.4          1.4         0.3 setosa 
+    ##  8          5           3.4          1.5         0.2 setosa 
+    ##  9          4.4         2.9          1.4         0.2 setosa 
+    ## 10          4.9         3.1          1.5         0.1 setosa 
+    ## # … with 140 more rows
+
+-   Note that, the type of data in each column is specified. Common
+    types include:
+
+    -   int: integers
+    -   dbl: double (real numbers),
+    -   chr: character vectors, strings, texts
+    -   fctr: factor,
+    -   dttm: date-times (date + time)
+    -   lgl: logical (TRUE or FALSE)
+    -   date: dates
+
+Tidyr: Crucial Step Reshaping Data with R for Easier Analyses
+=============================================================
+
+![](http://www.sthda.com/sthda/RDoc/images/tidyr.png)
+
+Reshaping data using tidyr package
+----------------------------------
+
+The tidyr package, provides four functions to help you change the layout
+of your data set:
+
+-   `gather()`: gather (collapse) columns into rows
+-   s`pread()`: spread rows into columns
+-   `separate()`: separate one column into multiple
+-   `unite()`: unite multiple columns into one
+
+### Installing and loading tidyr
+
+    # Installing
+    # install.packages("tidyr")
+    # Loading
+    library("tidyr")
+
+### Example data sets
+
+    my_data <- USArrests[c(1, 10, 20, 30), ]
+    my_data
+
+    ##            Murder Assault UrbanPop Rape
+    ## Alabama      13.2     236       58 21.2
+    ## Georgia      17.4     211       60 25.8
+    ## Maryland     11.3     300       67 27.8
+    ## New Jersey    7.4     159       89 18.8
+
+    my_data <- cbind(state = rownames(my_data), my_data)
+    my_data
+
+    ##                 state Murder Assault UrbanPop Rape
+    ## Alabama       Alabama   13.2     236       58 21.2
+    ## Georgia       Georgia   17.4     211       60 25.8
+    ## Maryland     Maryland   11.3     300       67 27.8
+    ## New Jersey New Jersey    7.4     159       89 18.8
+
+### `gather()`: collapse columns into rows
+
+![](http://www.sthda.com/sthda/RDoc/images/tidyr-gather.png)
+
+The function gather() collapses multiple columns into key-value pairs.
+It produces a “long” data format from a “wide” one. It’s an alternative
+of melt() function \[in reshape2 package\].
+
+-   `data`: A data frame
+-   `key`, `value`: Names of key and value columns to create in output
+-   `…`: Specification of columns to gather. Allowed values are:
+    -   variable names
+    -   if you want to select all variables between a and e, use a:e
+    -   if you want to exclude a column name y use -y
+    -   for more options, see: `dplyr::select()`
+
+<!-- -->
+
+    my_data2 <- gather(my_data,
+                       key = "arrest_attribute",
+                       value = "arrest_estimate",
+                       -state)
+    my_data2
+
+    ##         state arrest_attribute arrest_estimate
+    ## 1     Alabama           Murder            13.2
+    ## 2     Georgia           Murder            17.4
+    ## 3    Maryland           Murder            11.3
+    ## 4  New Jersey           Murder             7.4
+    ## 5     Alabama          Assault           236.0
+    ## 6     Georgia          Assault           211.0
+    ## 7    Maryland          Assault           300.0
+    ## 8  New Jersey          Assault           159.0
+    ## 9     Alabama         UrbanPop            58.0
+    ## 10    Georgia         UrbanPop            60.0
+    ## 11   Maryland         UrbanPop            67.0
+    ## 12 New Jersey         UrbanPop            89.0
+    ## 13    Alabama             Rape            21.2
+    ## 14    Georgia             Rape            25.8
+    ## 15   Maryland             Rape            27.8
+    ## 16 New Jersey             Rape            18.8
+
+    my_data2 <- gather(my_data,
+                       key = "arrest_attribute",
+                       value = "arrest_estimate",
+                       Murder, Assault)
+    my_data2
+
+    ##        state UrbanPop Rape arrest_attribute arrest_estimate
+    ## 1    Alabama       58 21.2           Murder            13.2
+    ## 2    Georgia       60 25.8           Murder            17.4
+    ## 3   Maryland       67 27.8           Murder            11.3
+    ## 4 New Jersey       89 18.8           Murder             7.4
+    ## 5    Alabama       58 21.2          Assault           236.0
+    ## 6    Georgia       60 25.8          Assault           211.0
+    ## 7   Maryland       67 27.8          Assault           300.0
+    ## 8 New Jersey       89 18.8          Assault           159.0
+
+### `spread()`: spread two columns into multiple columns
+
+![](http://www.sthda.com/sthda/RDoc/images/tidyr-spread.png)
+
+The function `spread()` does the reverse of `gather()`. It takes two
+columns (key and value) and spreads into multiple columns. It produces a
+“wide” data format from a “long” one. It’s an alternative of the
+function cast() \[in reshape2 package\].
+
+-   `data`: A data frame
+-   `key`: The (unquoted) name of the column whose values will be used
+    as column headings.
+-   `value`: The (unquoted) names of the column whose values will
+    populate the cells.
+
+<!-- -->
+
+    my_data3 <- spread(my_data2, 
+                       key = "arrest_attribute",
+                       value = "arrest_estimate"
+                       )
+    my_data3
+
+    ##        state UrbanPop Rape Assault Murder
+    ## 1    Alabama       58 21.2     236   13.2
+    ## 2    Georgia       60 25.8     211   17.4
+    ## 3   Maryland       67 27.8     300   11.3
+    ## 4 New Jersey       89 18.8     159    7.4
+
+### `unite()`: Unite multiple columns into one
+
+![](http://www.sthda.com/sthda/RDoc/images/tidyr-unite.png)
+
+The function `unite()` takes multiple columns and paste them together
+into one.
+
+-   `data`: A data frame
+-   `col`: The new (unquoted) name of column to add.
+-   `sep`: Separator to use between values
+
+<!-- -->
+
+    my_data4 <- unite(my_data,
+                      col = "Murder_Assault",
+                      Murder, Assault,
+                      sep = "_")
+    my_data4
+
+    ##                 state Murder_Assault UrbanPop Rape
+    ## Alabama       Alabama       13.2_236       58 21.2
+    ## Georgia       Georgia       17.4_211       60 25.8
+    ## Maryland     Maryland       11.3_300       67 27.8
+    ## New Jersey New Jersey        7.4_159       89 18.8
+
+### `separate()`: separate one column into multiple
+
+![](http://www.sthda.com/sthda/RDoc/images/tidyr-separate.png)
+
+The function `sperate()` is the reverse of unite(). It takes values
+inside a single character column and separates them into multiple
+columns.
+
+-   data: A data frame
+-   col: Unquoted column names
+-   into: Character vector specifying the names of new variables to be
+    created.
+-   sep: Separator between columns:
+    -   If character, is interpreted as a regular expression.
+    -   If numeric, interpreted as positions to split at. Positive
+        values start at 1 at the far-left of the string; negative value
+        start at -1 at the far-right of the string.
+
+<!-- -->
+
+    separate(my_data4,
+             col = "Murder_Assault",
+             into = c("Murder", "Assault"),
+             sep = "_")
+
+    ##                 state Murder Assault UrbanPop Rape
+    ## Alabama       Alabama   13.2     236       58 21.2
+    ## Georgia       Georgia   17.4     211       60 25.8
+    ## Maryland     Maryland   11.3     300       67 27.8
+    ## New Jersey New Jersey    7.4     159       89 18.8
+
+### Chaining multiple operations
+
+It’s possible to combine multiple operations using `maggrittr`
+forward-pipe operator : %&gt;%.
+
+In the following R code:
+
+-   first, my\_data is passed to gather() function
+-   next, the output of gather() is passed to unite() function
+
+<!-- -->
+
+    my_data %>% gather(key = "arrest_attribute",
+                       value = "arrest_estimate",
+                       Murder:UrbanPop) %>%
+                unite(col = "attribute_estimate",
+                      arrest_attribute, arrest_estimate)
+
+    ##         state Rape attribute_estimate
+    ## 1     Alabama 21.2        Murder_13.2
+    ## 2     Georgia 25.8        Murder_17.4
+    ## 3    Maryland 27.8        Murder_11.3
+    ## 4  New Jersey 18.8         Murder_7.4
+    ## 5     Alabama 21.2        Assault_236
+    ## 6     Georgia 25.8        Assault_211
+    ## 7    Maryland 27.8        Assault_300
+    ## 8  New Jersey 18.8        Assault_159
+    ## 9     Alabama 21.2        UrbanPop_58
+    ## 10    Georgia 25.8        UrbanPop_60
+    ## 11   Maryland 27.8        UrbanPop_67
+    ## 12 New Jersey 18.8        UrbanPop_89
+
+### Summary
+
+You should tidy your data for easier data analysis using the R package
+tidyr, which provides the following functions.
+
+-   Collapse multiple columns together into key-value pairs (long data
+    format): gather(data, key, value, …)
+-   Spread key-value pairs into multiple columns (wide data format):
+    spread(data, key, value)
+-   Unite multiple columns into one: unite(data, col, …)
+-   Separate one columns into multiple: separate(data, col, into)
+
+Managing Data Frames with the `dplyr` package
+=============================================
+
+    install.packages("dplyr")
+    library(dplyr)
+
+dplyr Grammar
+-------------
+
+There are 8 fundamental data manipulation verbs that you will use to do
+most of your data manipulations. Some of the key “verbs” provided by the
+dplyr package are:
+
+-   `select` : return a subset of the columns of a data frame, using a
+    flexible notation
+-   `filter` : extract a subset of rows from a data frame based on
+    logical conditions
+-   `arrange` : reorder rows of a data frame
+-   `rename` : rename variables in a data frame
+-   `mutate` : add new variables/columns or transform existing variables
+-   `summarise` / `summarize` : generate summary statistics of different
+    variables in the data frame, possibly within strata
+-   `distinct` : Remove duplicate rows.
+-   `%>%`: the “pipe” operator is used to connect multiple verb actions
+    together into a pipeline
+
+Select Data Frame Columns in R
+------------------------------
+
+![](https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/data-manipulation-in-r/images/select-or-subset-columns-in-r.png)
+
+In this section, you will learn how to select or subset data frame
+columns by names and position using the R function `select()` and
+`pull()` \[in `dplyr` package\]. We’ll also show how to remove columns
+from a data frame.
+
+You will learn how to use the following functions:
+
+-   `pull()`: Extract column values as a vector. The column of interest
+    can be specified either by name or by index.
+-   `select()`: Extract one or multiple columns as a data table. It can
+    be also used to remove columns from the data frame.
+
+<!-- -->
+
+    my_data <- as_tibble(iris)
+    my_data
+
+    ## # A tibble: 150 x 5
+    ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+    ##           <dbl>       <dbl>        <dbl>       <dbl> <fct>  
+    ##  1          5.1         3.5          1.4         0.2 setosa 
+    ##  2          4.9         3            1.4         0.2 setosa 
+    ##  3          4.7         3.2          1.3         0.2 setosa 
+    ##  4          4.6         3.1          1.5         0.2 setosa 
+    ##  5          5           3.6          1.4         0.2 setosa 
+    ##  6          5.4         3.9          1.7         0.4 setosa 
+    ##  7          4.6         3.4          1.4         0.3 setosa 
+    ##  8          5           3.4          1.5         0.2 setosa 
+    ##  9          4.4         2.9          1.4         0.2 setosa 
+    ## 10          4.9         3.1          1.5         0.1 setosa 
+    ## # … with 140 more rows
+
+### Extract column values as a vector
+
+    pull(iris, Species)
+
+    my_data %>% pull(Species)
+
+### Extract columns as a data table
+
+Select column by position
+
+    select(iris, 1, 2)
+    my_data %>% select(1:3)
+    my_data %>% select(1, 3)
+
+Select columns by names
+
+    my_data %>% select(Sepal.Length, Petal.Length)
+    my_data %>% select(Sepal.Length:Petal.Length)
+
+### Select column based on a condtion
+
+    my_data %>% select_if(is.numeric)
+    iris %>% select_if(is.numeric)
+
+### Remove columns
+
+    my_data %>% select(-Sepal.Length, -Petal.Length)
+    my_data %>% select(-(Sepal.Length:Petal.Length))
+    # Drop column 1
+    my_data %>% select(-1)
+
+    # Drop columns 1 to 3
+    my_data %>% select(-(1:3))
+
+    # Drop columns 1 and 3 but not 2
+    my_data %>% select(-1, -3)
+
+Subset Data Frame Rows in R
+---------------------------
+
+![](https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/data-manipulation-in-r/images/subset-data-frame-rows-in-r.png)
+
+This section describes how to subset or extract data frame rows based on
+certain criteria.
+
+In this tutorial, you will learn the following R functions from the
+`dplyr` package:
+
+-   `slice()`: Extract rows by position
+-   `filter()`: Extract rows that meet a certain logical criteria. For
+    example `iris %>% filter(Sepal.Length > 6)`.
+
+<!-- -->
+
+    my_data <- as_tibble(iris)
+    my_data
+
+### Extract rows by position
+
+Key R function: `slice()` \[`dplyr` package\]
+
+    my_data %>% slice(1:6)
+
+### Filter rows by logical criteria
+
+Key R function: `filter()` \[`dplyr` package\]. Used to filter rows that
+meet some logical criteria.
+
+Extract rows based on logical criteria
+
+    my_data %>% filter(Sepal.Length > 7)
+    my_data %>% filter(Sepal.Length > 6.7, Sepal.Width <= 3)
+    my_data %>% filter(Sepal.Length > 6.7, Species == "versicolor")
+    my_data %>% filter(
+      Sepal.Length > 6.7, 
+      Species %in% c("versicolor", "virginica" )
+      )
+
+### Remove missing values
+
+    # Create a data frame with missing data
+    friends_data <- data_frame(
+      name = c("A", "B", "C", "D"),
+      age = c(27, 25, 29, 26),
+      height = c(180, NA, NA, 169),
+      married = c("yes", "yes", "no", "no")
+    )
+    # Print
+    friends_data
 
-<iframe width="800" height="450" src="https://www.youtube.com/embed/DNS7i2m4sB0" frameborder="0" allowfullscreen></iframe>
+    friends_data %>% filter(is.na(height))
+    friends_data %>% filter(!is.na(height))
 
-R Markdown allows you to create documents that serve as a neat record of your analysis. In the world of reproducible research, we want other researchers to easily understand what we did in our analysis, otherwise nobody can be certain that you analysed your data properly. You might choose to create an RMarkdown document as an appendix to a paper or project assignment that you are doing, upload it to an online repository such as Github, or simply to keep as a personal record so you can quickly look back at your code and see what you did. RMarkdown presents your code alongside its output (graphs, tables, etc.) with conventional text to explain it, a bit like a notebook.
+Reorder Data Frame Rows in R
+----------------------------
 
-RMarkdown uses [Markdown syntax](https://daringfireball.net/projects/markdown/). Markdown is a very simple 'markup' language which provides methods for creating documents with headers, images, links etc. from plain text files, while keeping the original plain text file easy to read. You can convert Markdown documents to many other file types like `.html` or `.pdf` to display the headers, images etc..
+![](https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/data-manipulation-in-r/images/reorder-data-frame-rows-in-r.png)
 
-##  Download R Markdown
+This section describes how to reorder (i.e., sort) rows, in your data
+table, by the value of one or more columns (i.e., variables).
 
-To get RMarkdown working in RStudio, the first thing you need is the `rmarkdown` package, which you can get from [CRAN](https://cran.r-project.org/web/packages/rmarkdown/index.html) by running the following commands in R or RStudio:
+You will learn how to easily: - Sort a data frame rows in ascending
+order (from low to high) using the R function `arrange()` \[`dplyr`
+package\]
 
-``` r
-install.packages("rmarkdown")
-library(rmarkdown)
-```
+    my_data <- as_tibble(iris)
+    my_data
+
+### Arrange rows
 
-#  Create an RMarkdown file
+    my_data %>% arrange(Sepal.Length)
+    my_data %>% arrange(desc(Sepal.Length))
+    my_data %>% arrange(Sepal.Length, Sepal.Width)
+
+Rename Data Frame Columns in R
+------------------------------
+
+![](https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/data-manipulation-in-r/images/rename-columns-data-frame-r.png)
+
+n this section, you will learn how to rename the columns of a data frame
+in R. This can be done easily using the function `rename()` \[`dplyr`
+package\]. It’s also possible to use R base functions, but they require
+more typing.
+
+    my_data <- as_tibble(iris)
+    my_data
 
-To create a new RMarkdown file (`.Rmd`), select `File -> New File -> R Markdown...`_ in `RStudio`, then choose the file type you want to create. For now we will focus on a `.html` `Document`, which can be easily converted to other file types later.
+### Renaming columns with dplyr::rename()
 
-The newly created `.Rmd` file comes with basic instructions, but we want to create our own RMarkdown script, so go ahead and delete everything in the example file. 
+    my_data %>% 
+      rename(
+        sepal_length = Sepal.Length,
+        sepal_width = Sepal.Width
+        )
 
-Now save the `.Rmd` file to the repository you downloaded earlier [from Github](https://github.com/ourcodingclub/CC-2-RMarkdown).
+### Renaming columns with R base functions
 
-Now open the `RMarkdown_Tutorial.R` practice script from the repository you downloaded earlier in another tab in `RStudio` and use the instructions below to help you convert this script into a coherent RMarkdown document, bit by bit.
+    # get column names
+    colnames(my_data)
+    names(my_data)[1] <- "sepal_length"
+    names(my_data)[2] <- "sepal_width"
 
-If you have any of your own `R` scripts that you would like to make into an R Markdown document, you can also use those! 
+Compute and Add new Variables to a Data Frame in R
+--------------------------------------------------
 
-# The YAML Header
+![](https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/data-manipulation-in-r/images/compute-and-add-new-variables.png)
 
-At the top of any RMarkdown script is a `YAML` header section enclosed by `` --- ``. By default this includes a title, author, date and the file type you want to output to. Many other options are available for different functions and formatting, see [here for `.html` options](http://rmarkdown.rstudio.com/html_document_format.html) and [here for `.pdf` options](http://rmarkdown.rstudio.com/pdf_document_format.html). Rules in the header section will alter the whole document. Have a flick through quickly to familiarise yourself with the sorts of things you can alter by adding an option to the `YAML` header. 
+This section describes how to compute and add new variables to a data
+frame in R. You will learn the following R functions from the dplyr R
+package:
 
-Insert something like this at the top of your new `.Rmd` script:
+-   `mutate()`: compute and add new variables into a data table. It
+    preserves existing variables.
+-   `transmute()`: compute new columns but drop existing variables.
 
-```
----
-title: "Edinburgh Biodiversity"
-author: John Doe
-date: 22/Oct/2016
-output: html_document
----
-```
+<!-- -->
 
-By default, the `title`, `author`, `date` and `output` format are printed at the top of your `.html` document. This is the minimum you should put in your header section. 
+    my_data <- as_tibble(iris)
+    my_data
 
-Now that we have our first piece of content, we can test the `.Rmd` file by compiling it to `.html`. To compile your `.Rmd` file into a `.html` document, you should press the `Knit` button in the taskbar:
+### `mutate`: Add new variables by preserving existing ones
 
-![RStudio Knit HTML screenshot](images/Knit_HTML_Screenshot.jpg)
+    my_data %>% 
+      mutate(sepal_by_petal_l = Sepal.Length/Petal.Length)
 
-By default, RStudio opens a separate preview window to display the output of your .Rmd file. If you want the output to be displayed in the `Viewer` window in `RStudio` (the same window where you would see plotted figures / packages / file paths), select “View in Pane” from the drop down menu that appears when you click on the `Knit` button in the taskbar, or in the `Settings gear icon` drop down menu next to the `Knit` button. 
+### `transmute`: Make new variables by dropping existing ones
 
-A preview appears, and a `.html` file is also saved to the same folder where you saved your `.Rmd` file.
+    my_data %>%
+      transmute(
+        sepal_by_petal_l = Sepal.Length/Petal.Length,
+        sepal_by_petal_w = Sepal.Width/Petal.Width
+        )
 
-# Code Chunks
+Compute Summary Statistics in R
+-------------------------------
 
-Below the `YAML` header is the space where you will write your code, accompanying explanation and any outputs. Code that is included in your `.Rmd` document should be enclosed by three backwards apostrophes ```` ``` ```` (grave accents!). These are known as code chunks and look like this:
+![](https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/data-manipulation-in-r/images/compute-summary-statistics-in-r.png)
 
-````
-```{r}
-norm <- rnorm(100, mean = 0, sd = 1)
-```
-````
+This section introduces how to easily compute statistcal summaries in R
+using the dplyr package.
 
-Inside the curly brackets is a space where you can assign rules for that code chunk. The code chunk above says that the code is R code. We'll get onto some other curly brace rules later.
+You will learn, how to:
 
-__Have a go at grabbing some code from the example R script and inserting it into a code chunk in your `.Rmd` document.__
+Compute summary statistics for ungrouped data, as well as, for data that
+are grouped by one or multiple variables. R functions: `summarise()` and
+`group_by()`.
 
-You can run an individual chunk of code at any time by placing your cursor inside the code chunk and selecting `Run -> Run Current Chunk`:
+    my_data <- as_tibble(iris)
+    my_data
 
-![RStudio run current chunk screenshot](images/run_sel.png)
+### Summary statistics of ungrouped data
 
-## More on Code Chunks
+    my_data %>%
+      summarise(
+              count = n(),
+              mean_sep = mean(Sepal.Length, na.rm = TRUE),
+              mean_pet = mean(Petal.Length, na.rm = TRUE)
+              )
 
-It's important to remember when you are creating an RMarkdown file that if you want to run code that refers to an object, for example:
+### Summary statistics of grouped data
 
-````
-```{r}
-plot(dataframe)
-```
-````
+    my_data %>%
+      group_by(Species) %>%
+      summarise(
+              count = n(),
+              mean_sep = mean(Sepal.Length),
+              mean_pet = mean(Petal.Length)
+                )
 
-you must include instructions showing what `dataframe` is, just like in a normal R script. For example: 
+    ToothGrowth %>%
+    group_by(supp, dose) %>%
+      summarise(
+        n = n(),
+        mean = mean(len),
+        sd = sd(len)
+      )
 
-````
-```{r}
-A <- c("a", "a", "b", "b")
-B <- c(5, 10, 15, 20)
-dataframe <- data.frame(A, B)
-plot(dataframe)
-```
-````
-
-Or if you are loading a dataframe from a `.csv` file, you must include the code in the `.Rmd`: 
-
-````
-```{r}
-dataframe <- read.csv("~/project/data/dataframe.csv")
-```
-````
-
-Similarly, if you are using any packages in your analysis, you will have to load them in the `.Rmd` file using `library()` as in a normal `R` script. 
-
-````
-```{r}
-library(dplyr)
-```
-````
-
-## Hiding code chunks
-
-If you don't want the code of a particular code chunk to appear in the final document, but still want to show the output (e.g. a plot), then you can include `echo = FALSE` in the code chunk instructions. 
-
-
-````
-```{r, echo = FALSE}
-A <- c("a", "a", "b", "b")
-B <- c(5, 10, 15, 20)
-dataframe <- data.frame(A, B)
-plot(dataframe)
-```
-````
-
-Similarly, you might want to create an object, but not include both the code and the output in the final `.html` file. To do this you can use, `include = FALSE`. Be aware though, when making reproducible research it's often not a good idea to completely hide some part of your analysis:
-
-````
-```{r, include = FALSE}
-richness <- 
-  edidiv %>%
-    group_by(taxonGroup) %>%
-    summarise(Species_richness = n_distinct(taxonName))
-```
-````
-
-In some cases, when you load packages into RStudio, various warning messages such as "Warning: package 'dplyr' was built under R version 3.4.4" might appear. If you do not want these warning messages to appear, you can use `warning = FALSE`.
-
-````
-```{r, warning = FALSE}
-library(dplyr)
-```
-````
-
-## More Code Chunk Instructions
-
-<table>
-  <tr>
-    <th>Rule</th>
-    <th>Example<br>(default)</th>
-    <th>Function</th>
-  </tr>
-  <tr>
-    <td>eval</td>
-    <td>eval=TRUE</td>
-    <td>Is the code run and the results included in the output?</td>
-  </tr>
-  <tr>
-    <td>include</td>
-    <td>include=TRUE</td>
-    <td>Are the code and the results included in the output?</td>
-  </tr>
-  <tr>
-    <td>echo</td>
-    <td>echo=TRUE</td>
-    <td>Is the code displayed alongside the results?</td>
-  </tr>
-  <tr>
-    <td>warning</td>
-    <td>warning=TRUE</td>
-    <td>Are warning messages displayed?</td>
-  </tr>
-  <tr>
-    <td>error</td>
-    <td>error=FALSE</td>
-    <td>Are error messages displayed?</td>
-  </tr>
-  <tr>
-    <td>message</td>
-    <td>message=TRUE</td>
-    <td>Are messages displayed?</td>
-  </tr>
-  <tr>
-    <td>tidy</td>
-    <td>tidy=FALSE</td>
-    <td>Is the code reformatted to make it look “tidy”?</td>
-  </tr>
-  <tr>
-    <td>results</td>
-    <td>results="markup"</td>
-    <td><b> How are results treated? </b> <br> "hide" = no results <br>"asis" = results without formatting <br>"hold" = results only compiled at end of chunk (use if many commands act on one object)</td>
-  </tr>
-  <tr>
-    <td>cache</td>
-    <td>cache=FALSE</td>
-    <td>Are the results cached for future renders?</td>
-  </tr>
-  <tr>
-    <td>comment</td>
-    <td>comment="##"</td>
-    <td>What character are comments prefaced with?</td>
-  </tr>
-  <tr>
-    <td>fig.width, fig.height</td>
-    <td>fig.width=7</td>
-    <td>What width/height (in inches) are the plots?</td>
-  </tr>
-  <tr>
-    <td>fig.align</td>
-    <td>fig.align="left"</td>
-    <td>"left" "right" "center"</td>
-  </tr>
-</table>
-
-## Inserting Figures
-Inserting a graph into RMarkdown is easy, the more energy-demanding aspect might be adjusting the formatting.
-
-By default, RMarkdown will place graphs by maximising their height, while keeping them within the margins of the page and maintaining aspect ratio. If you have a particularly tall figure, this can mean a really huge graph. In the following example we modify the dimensions of the figure we created above. To manually set the figure dimensions, you can insert an instruction into the curly braces:
-
-````
-```{r, fig.width = 4, fig.height = 3}
-A <- c("a", "a", "b", "b")
-B <- c(5, 10, 15, 20)
-dataframe <- data.frame(A, B)
-plot(dataframe)
-```
-````
-
-# Inserting Tables
-
-### Standard R Markdown
-
-While R Markdown can print the contents of a data frame easily by enclosing the name of the data frame in a code chunk:
-
-````
-```{r}
-dataframe
-```
-````
-
-this can look a bit messy, especially with data frames with a lot of columns. Including a formal table requires more effort.
-
-### kable() function from knitr package
-
-The most aesthetically pleasing and simple table formatting function I have found is `kable()` in the `knitr` package. The first argument tells kable to make a table out of the object `dataframe` and that numbers should have two significant figures. Remember to load the `knitr` package in your `.Rmd` file as well.
-
-````
-```{r}
-library(knitr)
-kable(dataframe, digits = 2)
-```
-````
-
-### pander function from pander package
-
-If you want a bit more control over the content of your table you can use ``pander()`` in the `pander` package. Imagine I want the 3rd column to appear in italics:
-
-````
-```{r}
-library(pander)
-plant <- c("a", "b", "c")
-temperature <- c(20, 20, 20)
-growth <- c(0.65, 0.95, 0.15)
-dataframe <- data.frame(plant, temperature, growth)
-emphasize.italics.cols(3)   # Make the 3rd column italics
-pander(dataframe)           # Create the table
-```
-````
-
-Find more info on pander [here](https://cran.r-project.org/web/packages/pander/pander.pdf).
-
-### Manually creating tables using markdown syntax 
-
-You can also manually create small tables using markdown syntax.
-
-For example: 
-
-```
-| Plant | Temp. | Growth |
-|:------|:-----:|-------:|
-| A     | 20    | 0.65   |
-| B     | 20    | 0.95   |
-| C     | 20    | 0.15   |
-```
-
-will create something that looks like this:
-
-<table>
-  <tr>
-    <th>Plant</th>
-    <th>Temp.</th>
-    <th>Growth</th>
-  </tr>
-  <tr>
-    <td>A</td>
-    <td>20</td>
-    <td>0.65</td>
-  </tr>
-  <tr>
-    <td>B</td>
-    <td>20</td>
-    <td>0.95</td>
-  </tr>
-  <tr>
-    <td>C</td>
-    <td>20</td>
-    <td>0.15</td>
-  </tr>
-</table>
-
-The ``:-----:`` tells markdown that the line above should be treated as a header and the lines below should be treated as the body of the table. Text alignment of the columns is set by the position of ``:``:
-
-<table>
-  <tr>
-  <th>Syntax</th>
-  <th>Alignment</th>
-  </tr>
-  <tr>
-    <td>`:----:`</td>
-    <td>Centre</td>
-  </tr>
-  <tr>
-    <td>`:-----`</td>
-    <td>Left</td>
-  </tr>
-  <tr>
-    <td>`-----:`</td>
-    <td>Right</td>
-  </tr>
-  <tr>
-    <td>`------`</td>
-    <td>Auto</td>
-  </tr>
-</table>
-
-### Creating tables from model outputs 
-
-Using `tidy()` from the package `broom`, we are able to create tables of our model outputs, and insert these tables into our  markdown file. The example below shows a simple example linear model, where the summary output table can be saved as a new R object and then added into the markdown file. 
-
-
-````
-```{r}
-library(broom)
-A <- c(20, 15, 10)
-B <- c(1, 2, 3)
+Identify and Remove Duplicate Data in R
+---------------------------------------
 
-lm_test <- lm(A ~ B)            # Creating linear model 
-summary(lm_test)                # Obtaining linear model summary statistics
+![](https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/data-manipulation-in-r/images/remove-duplicate-data-r.png)
 
-table_obj <- tidy(lm_test)      # Using tidy() to create a new R object called table 
-pander(table_obj, digits = 3)   # Using pander() to view the created table, with 3 sig figs  
-```
-````
+This section describes how to identify and remove duplicate data in R.
 
-## Formatting Text
+You will learn how to use the following R base and dplyr functions:
 
-Markdown syntax can be used to change how text appears in your output file. Here are a few common formatting commands:
+-   `duplicated()`: for identifying duplicated elements and
+-   `unique()`: for extracting unique elements
+-   `distinct()` \[`dplyr` package\] to remove duplicate rows in a data
+    frame.
 
-`*Italic*` 
+<!-- -->
 
-*Italic*
+    my_data <- as_tibble(iris)
+    my_data
 
-<hr>
+### Find and drop duplicate elements
 
-`**Bold**`
+    x <- c(1, 1, 4, 5, 4, 6)
+    duplicated(x)
+    x[duplicated(x)] ## Extract duplicate elements
+    x[!duplicated(x)] ## remove duplicated elements
+    # Remove duplicates based on Sepal.Width columns
+    my_data[!duplicated(my_data$Sepal.Width), ]
 
-**Bold**
+### Extract unique elements
 
-<hr>
+    x <- c(1, 1, 4, 5, 4, 6)
+    unique(x)
+    unique(my_data)
 
-This is  \`code` in text 
+### Remove duplicate rows in a data frame
 
-This is `code` in text
+The function `distinct()` \[`dplyr` package\] can be used to keep only
+unique/distinct rows from a data frame. If there are duplicate rows,
+only the first row is preserved. It’s an efficient version of the R base
+function `unique()`.
 
-<hr>
+Remove duplicate rows based on all columns:
 
-`# Header 1`
+my\_data %&gt;% distinct()
 
-# Header 1
+    my_data %>% distinct() 
 
-<hr>
-
-`## Header 2`
-
-## Header 2
-
-Note that when a `#` symbol is placed inside a code chunk it acts as a normal R comment, but when placed in text it controls the header size.
-
-<hr>
-
-`* Unordered list item`
-
-<li> Unordered list item </li>
-
-<hr>
-
-`1. Ordered list item`
-
-1. Ordered list item
-
-<hr>
-
-`[Link](https://www.google.com)`
-
-[Link](https://www.google.com)
-
-<hr>
-
-`$A = \pi \times r^{2}$`
-
-The `$` symbols tells R markdown to use [LaTeX equation syntax](http://reu.dimacs.rutgers.edu/Symbols.pdf).
-
-
-# Creating `.pdf` files in Rmarkdown
-
-Creating `.pdf` documents for printing in A4 requires a bit more fiddling around. RStudio uses another document compiling system called [LaTeX](https://www.latex-project.org/) to make `.pdf` documents.
-
-If you are using Windows, go to the [MikTeX website](https://miktex.org/download) and download the appropriate "Complete MikTeX Installer" for your system, either 32-bit or 64-bit.
-
-If you are using a Mac, go to the [MacTeX website](https://tug.org/mactex/mactex-download.html) and download the "MacTeX.pkg".
-
-Running these installers will install a version of LaTeX onto your system, which R will then be able to call on to compile the `.pdf`.
-
-Becoming familiar with [LaTeX](https://tobi.oetiker.ch/lshort/lshort.pdf) will give you a lot more options to make your R Markdown `.pdf` look pretty, as LaTeX commands are mostly compatible with R Markdown, though some googling is often required.
-
-To compile a `.pdf` instead of a `.html` document, change `output:` from `html_document` to `pdf_document`. 
-
-## Common problems when compiling a `.pdf`
-
-- Text is running off the page
-
-Add a `global_options` argument at the start of your `.Rmd` file:
-
-````
-```{r global_options, include = FALSE}
-knitr::opts_chunk$set(message=FALSE, 
-tidy.opts=list(width.cutoff=60)) 
-```
-````
-
-This code chunk won't be displayed in the final document due to the `include = FALSE` call and should be placed immediately after the YAML header to affect everything below that. 
-
-`tidy.opts = list(width.cutoff = 60)` defines the margin cutoff point and wraps text to the next line. Play with the value to get it right.
-
-
-<hr> 
-
-- I lose my syntax highlighting
-
-Use the `xelatex` engine to compile your `.pdf`:
-
-````
-- - -
-author: John Doe
-output: pdf_document 
-latex_engine: xelatex
-- - -
-````
-
-By default, R markdown uses the base LaTeX engine to compile pdfs, but this may limit certain options when it comes to formatting. There are lots of other engines to play around with as well.
-
-<hr>
-
-- My page margins are too big/small
-
-Add a `geometry` argument to the YAML header
-
-````
-- - - 
-title: "R Markdown Tutorial Demo"
-author: "John Godlee"
-date: "30/11/2016"
-output: pdf_document
-latex_engine: xelatex
-geometry: left = 0.5cm, right = 1cm, top = 1cm, bottom = 1cm
-- - - 
-````
-
-`geometry` is a LaTeX command.
-
-<hr>
-
-- My plot/table/code is split over two pages
-
-Add a page break before the dodgy element:
-
-````
-\pagebreak
-```{r}
-Codey codey code code
-```
-````
-
-<hr>
-
-- I want to change the font
-
-Add a font argument to your header section
-
-```
---- 
-title: "R Markdown Tutorial Demo"
-author: "John Godlee"
-date: "30/11/2016"
-output: pdf_document
-latex_engine: xelatex
-mainfont: Arial
---- 
-```
-
-`mainfont` is a LaTeX command.
-
-
-## Reference:
+Reference:
+==========
 
 1.  [R for Data Science](https://r4ds.had.co.nz/)
-2.  [R Markdown: The Definitive
-    Guide](https://bookdown.org/yihui/rmarkdown/)
-    <a href="https://ourcodingclub.github.io/tutorials/rmarkdown/" class="uri">https://ourcodingclub.github.io/tutorials/rmarkdown/</a>
-    <a href="http://www.jacolienvanrij.com/Tutorials/tutorialMarkdown.html" class="uri">http://www.jacolienvanrij.com/Tutorials/tutorialMarkdown.html</a>
+2.  [Preparing Data
+    Files](http://www.sthda.com/english/wiki/best-practices-in-preparing-data-files-for-importing-into-r)
+3. [DATA MANIPULATION IN R](https://www.datanovia.com/en/courses/data-manipulation-in-r/)
+4. [Exploratory Data Analysis with R](http://leanpub.com/exdata)

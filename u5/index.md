@@ -18,7 +18,7 @@ page_nav:
         content: Intro R
         url: '/u4/'
     next:
-        content: Explore Data
+        content: Data Manipulation
         url: '/u6/'
 ---
 

@@ -18,7 +18,7 @@ page_nav:
         content: Homework 2.2 - Paper
         url: '/u4/paper/'
     next:
-        content: Explore Data
+        content: RMarkdown
         url: '/u5/'
 ---
 
