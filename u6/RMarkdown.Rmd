@@ -1,0 +1,125 @@
+---
+title: "Data Manipulation"
+author: "Daniela Cassol"
+output:
+  BiocStyle::html_document:
+    toc_float: true
+    code_folding: show
+---
+
+# Data Manipulation
+
+## Best Practices in Preparing Data Files for Importing into R
+
+- Use the first row as column headers (or column names). Generally, columns represent variables.
+- Use the first column as row names. Generally rows represent observations.
+- Each row name should be unique, so remove duplicated names.
+- Avoid names with blank spaces. Good column names: `specie_1` or `specie1`. Bad column name: `specie 1`.
+- Avoid names with special symbols: ?, $, *, +, #, (, ), -, /, }, {, |, >, < etc. Only underscore can be used.
+- Avoid beginning variable names with a number. Use letter instead. Good column names: sport_100m or x100m. Bad column name: 100m
+- Column names must be unique. Duplicated names are not allowed.
+- R is case sensitive. This means that Name is different from Name or NAME.
+- Avoid blank rows in your data.
+- Delete any comments in your file.
+- If you have a column containing date, use the four digit format. Good format: 01/01/2016. Bad format: 01/01/16
+
+## R base functions for importing data
+
+- read.csv(): for reading “comma separated value” files (“.csv”).
+- read.csv2(): variant used in countries that use a comma “,” as decimal point and a semicolon “;” as field separators.
+- read.delim(): for reading “tab-separated value” files (“.txt”). By default, point (“.”) is used as decimal points.
+- read.delim2(): for reading “tab-separated value” files (“.txt”). By default, comma (“,”) is used as decimal points.
+
+### Arguments
+
+- file: the path to the file containing the data to be imported into R.
+- sep: the field separator character. “\t” is used for tab-delimited file.
+- header: logical value. If TRUE, read.table() assumes that your file has a header row, so row 1 is the name of each column. If that’s not the case, you can add the argument header = FALSE.
+- dec: the character used in the file for decimal points.
+
+```{r, eval=FALSE}
+# Read tabular data into R
+read.table(file, header = FALSE, sep = "", dec = ".")
+# Read "comma separated value" files (".csv")
+read.csv(file, header = TRUE, sep = ",", dec = ".", ...)
+# Or use read.csv2: variant used in countries that 
+# use a comma as decimal point and a semicolon as field separator.
+read.csv2(file, header = TRUE, sep = ";", dec = ",", ...)
+# Read TAB delimited files
+read.delim(file, header = TRUE, sep = "\t", dec = ".", ...)
+read.delim2(file, header = TRUE, sep = "\t", dec = ",", ...)
+```
+
+### Reading data From Excel Files (xls|xlsx) into R
+
+```{r, eval=FALSE}
+# Use readxl package to read xls|xlsx
+library("readxl")
+my_data <- read_excel("my_file.xlsx")
+# Use xlsx package
+library("xlsx")
+my_data <- read.xlsx("my_file.xlsx") 
+```
+
+##  Writing Data From R to txt|csv Files: R Base Functions
+
+The R code below exports the built-in R mtcars data set to a tab-separated ( sep = “\t”) file called mtcars.txt in the current working directory:
+
+```{r, eval=FALSE}
+# Loading mtcars data
+data("mtcars")
+# Writing mtcars data
+write.table(mtcars, file = "mtcars.txt", sep = "\t",
+            row.names = TRUE, col.names = NA)
+
+write.table(mtcars, file = "mtcars.txt", sep = "\t",
+            row.names = FALSE)
+```
+
+## Accessing the data
+
+- Tibbles have nice printing method that show only the first 10 rows and all the columns that fit on the screen. This is useful when you work with large data sets.
+
+- When printed, the data type of each column is specified (see below):
+  - : for double
+  - : for factor
+  - : for character
+  - : for logical
+
+```{r}
+library(tidyverse)
+library("tidyverse")
+my_data <- as_tibble(iris)
+my_data
+tibble(iris)
+```
+
+- Note that, the type of data in each column is specified. Common types include:
+
+  - int: integers
+  - dbl: double (real numbers),
+  - chr: character vectors, strings, texts
+  - fctr: factor,
+  - dttm: date-times (date + time)
+  - lgl: logical (TRUE or FALSE)
+  - date: dates
+
+## Main data manipulation functions
+
+There are 8 fundamental data manipulation verbs that you will use to do most of your data manipulations. These functions are included in the dplyr package:
+
+- filter(): Pick rows (observations/samples) based on their values.
+- distinct(): Remove duplicate rows.
+- arrange(): Reorder the rows.
+- select(): Select columns (variables) by their names.
+- rename(): Rename columns.
+- mutate() and transmutate(): Add/create new variables.
+- summarise(): Compute statistical summaries (e.g., computing the mean or the sum)
+
+
+
+
+
+# Reference:
+1. [R for Data Science](https://r4ds.had.co.nz/)
+2. [Preparing Data Files](http://www.sthda.com/english/wiki/best-practices-in-preparing-data-files-for-importing-into-r)
