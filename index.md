@@ -10,10 +10,6 @@ permalink: /
 title: R for Plant Physiologists
 description: 
 buttons:
-    - content: Syllabus
-      url: '/evaluation'
-      external_url: false
-      # icon: home
     - content: Resources
       url: '/resources'
       external_url: false

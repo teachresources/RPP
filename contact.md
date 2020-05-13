@@ -6,7 +6,7 @@ comments: false
 
 # Hero section
 title: Contact
-description: RPP is a graduate class taughtat the Federal University of Espírito Santo, São Mateus - Brazil. 
+description: RPP is a graduate course taughtat the Federal University of Espírito Santo, São Mateus - Brazil. 
 buttons:
     - content: 'Contact'
       url: 'mailto:danicassol@gmail.com.com'
