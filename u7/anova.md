@@ -1,26 +1,4 @@
----
-# Page settings
-layout: default
-head_title: Statistics in R
-keywords:
-comments: false
-
-# Hero section
-title: Statistics in R
-description: >
-
-# Micro navigation
-micro_nav: false
-
-# Page navigation
-page_nav:
-    prev:
-        content: Data Manipulation
-        url: '/u6/'
-    next:
-        content: Graphics
-        url: '/u8/'
----
+<!-- render("anova.Rmd", md_document()) -->
 
 Find [here](https://teachresources.github.io/RPP/u7/anova.Rmd) the
 correspondent `*Rmd`.

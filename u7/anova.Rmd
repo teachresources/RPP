@@ -1,5 +1,5 @@
 ---
-title: "Data Manipulation"
+title: "Statistics in R"
 author: "Daniela Cassol"
 output:
   BiocStyle::html_document:
@@ -8,11 +8,13 @@ output:
 editor_options: 
   chunk_output_type: console
 ---
+<!-- render("anova.Rmd", md_document()) -->
+
+Find [here](https://teachresources.github.io/RPP/u7/anova.Rmd) the correspondent `*Rmd`.
 
 # Data Analysis
 
 # Descriptive Statistics and Graphics
-
 
 ## Descritive Analysis
 
@@ -30,6 +32,7 @@ read.delim(file, header = TRUE, sep = "\t", dec = ".", ...)
 
 For this tutorial, we are generating a fake data set from 5 treatment groups. 
 ```{r}
+set.seed(123)
 # create five treatments with different means 
 treatA <- rnorm(50, mean=15, sd=2)
 treatB <- rnorm(50, mean=8.5, sd=1)
@@ -110,7 +113,7 @@ hist(a_data$A[1:50])
 ```
 
 ### ggplot2
-Code from here (ggplot2)[https://www.r-graph-gallery.com/histogram_several_group.html]
+Code from here [ggplot2](https://www.r-graph-gallery.com/histogram_several_group.html)
 
 ```{r}
 p <- a_data %>%
@@ -136,7 +139,7 @@ barplot(stats$mean, main="Means", xlab="Number of Gears", names.arg=stats$treat)
 ```
 
 ### ggplot2
-Code from here (ggplot2)[https://www.r-graph-gallery.com/89-box-and-scatter-plot-with-ggplot2.html]
+Code from here [ggplot2](https://www.r-graph-gallery.com/89-box-and-scatter-plot-with-ggplot2.html)
 
 ```{r}
 p <- ggplot(stats, aes(x=treat, y=mean, fill=treat )) + 
@@ -188,7 +191,6 @@ The other parameters of `t.test` are also important:
 - If you would like to indicate that the test is a paired-samples \(t\)-test (which R does not automatically assume), you can specify `paired = TRUE`.
 - You can manually indicate the true value of the mean by specifying a custom value in `mu.` For two-sample \(t\)-tests, this will set the true difference of the two means to the specified value. The null value for `mu` is zero, i.e. the difference in the means of the two sets of data is zero.
 - Finally, `var.equal` allows you to specify whether two sets of data have equal variance or not. (Note that this is only for two-sample \(t\)-tests.) The default value is FALSE, which assumes inequal variance between datasets and uses the Welch approximation for degrees of freedom. Specifying `var.equal = TRUE` will estimate variance using pooled variance.
-
 
 ## One-sample \(t\)-test
 
@@ -371,10 +373,6 @@ head(my_data)
 ```
 
 ```{r}
-```
-
-
-```{r}
 table(my_data$supp, my_data$dose)
 ```
 
@@ -404,6 +402,9 @@ From the ANOVA table we can conclude that both supp and dose are statistically s
 res.aov3 <- aov(len ~ supp * dose, data = my_data)
 res.aov3 <- aov(len ~ supp + dose + supp:dose, data = my_data)
 summary(res.aov3)
+
+print(TukeyHSD(res.aov3,"dose"))
+print(TukeyHSD(res.aov3,"supp"))
 ```
 
 It can be seen that the two main effects (supp and dose) are statistically significant, as well as their interaction.
@@ -411,6 +412,7 @@ It can be seen that the two main effects (supp and dose) are statistically signi
 Note that, in the situation where the interaction is not significant you should use the additive model.
 
 ### Interpret the results
+
 From the ANOVA results, you can conclude the following, based on the p-values and a significance level of 0.05:
 
 - the p-value of supp is 0.000429 (significant), which indicates that the levels of supp are associated with significant different tooth length.
@@ -440,9 +442,15 @@ shapiro.test(x = aov_residuals )
 
 # Multiple comparisons with `agricolae` Package
 
+[Source](https://cran.r-project.org/web/packages/agricolae/vignettes/tutorial.pdf)
+
+> Live demo
+
 # The Tukey test with `multcompView` package
 
 In R, the `multcompView` allows to run the Tukey test thanks to the `TukeyHSD()` function. It also offers a chart that shows the mean difference for each pair of group.
+
+Code from [here](https://www.r-graph-gallery.com/84-tukey-test.html).
 
 ```{r}
 # library
@@ -487,10 +495,9 @@ p_base <- ggplot(d, aes(x=lev, y=y)) + geom_boxplot() +
 p_base
 ```
 
-
 # Reference:
 1. [ One-Way ANOVA Test in R](http://www.sthda.com/english/wiki/one-way-anova-test-in-r)
 2. [Two-Way ANOVA Test in R](http://www.sthda.com/english/wiki/two-way-anova-test-in-r)
-3. [`agricolae` Package](https://cran.r-project.org/web/packages/agricolae/vignettes/tutorial.pdf)
+3. [agricolae Package](https://cran.r-project.org/web/packages/agricolae/vignettes/tutorial.pdf)
 
 

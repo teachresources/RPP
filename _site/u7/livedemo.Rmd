@@ -1,0 +1,136 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Multiple comparisons with `agricolae` Package
+
+[Source](https://cran.r-project.org/web/packages/agricolae/vignettes/tutorial.pdf)
+
+> Live demo
+
+## Library 
+```{r}
+library(agricolae)
+```
+
+## Package Data and Anova
+
+```{r}
+data(sweetpotato)
+tibble(sweetpotato)
+model <- aov(yield~virus, data=sweetpotato)
+cv.model(model)
+
+with(sweetpotato,mean(yield))
+df <- df.residual(model)
+MSerror <- deviance(model)/df
+```
+
+## Package Tukey’s W Procedure (HSD)
+
+```{r}
+outHSD<- HSD.test(model, "virus", console=TRUE)
+```
+
+## Package The Least Significant Difference (LSD)
+
+```{r}
+LSD.test(model, "virus",console=TRUE)
+```
+In the function LSD.test, the multiple comparison was carried out. In order to obtain the probabilities
+of the comparisons, it should be indicated that groups are not required; thus:
+
+```{r}
+outLSD <-LSD.test(model, "virus", group=FALSE, console=TRUE)
+options(digits=2)
+print(outLSD)
+```
+
+## My Data and Anova
+
+```{r}
+set.seed(123)
+# create five treatments with different means 
+treatA <- rnorm(50, mean=15, sd=2)
+treatB <- rnorm(50, mean=8.5, sd=1)
+treatC <- rnorm(50, mean=2, sd=2)
+treatD <- rnorm(50, mean=0.53, sd=1)
+treatE <- rnorm(50, mean=8.5, sd=2)
+
+# make a blank data frame 
+a_data <- data.frame(treat=character(250), A=numeric(250)) 
+
+# populate the data frame
+a_data$treat <- c(rep("Control",50), rep("-0.5MPa",50), rep("-1.0MPa",50), rep("-1.5MPa",50), rep("Recover",50))
+a_data$A <- c(treatA, treatB, treatC, treatD, treatE)
+tibble::tibble(a_data)
+
+model <- aov(A~treat, data=a_data)
+cv.model(model)
+
+with(a_data, mean(A))
+df <- df.residual(model)
+MSerror <- deviance(model)/df
+```
+
+## My Tukey’s W Procedure (HSD)
+
+```{r}
+outHSD <- HSD.test(model, "treat", console=TRUE)
+```
+
+## My The Least Significant Difference (LSD)
+
+```{r}
+LSD.test(model, "treat", console=TRUE)
+```
+In the function LSD.test, the multiple comparison was carried out. In order to obtain the probabilities
+of the comparisons, it should be indicated that groups are not required; thus:
+
+```{r}
+outLSD <-LSD.test(model, "treat", group=FALSE, console=TRUE)
+options(digits=2)
+print(outLSD)
+```
+
+```{r}
+generate_label_df <- function(HSD, flev){
+ # Extract labels and factor levels from Tukey post-hoc 
+ Tukey.levels <- HSD[[flev]][,4]
+ Tukey.labels <- multcompLetters(Tukey.levels)['Letters']
+ plot.labels <- names(Tukey.labels[['Letters']])
+
+ # Get highest quantile for Tukey's 5 number summary and add a bit of space to buffer between    
+ # upper quantile and label placement
+    boxplot.df <- ddply(d, flev, function (x) max(fivenum(x$y)) + 0.2)
+
+ # Create a data frame out of the factor levels and Tukey's homogenous group letters
+  plot.levels <- data.frame(plot.labels, labels = Tukey.labels[['Letters']],
+     stringsAsFactors = FALSE)
+
+ # Merge it with the labels
+   labels.df <- merge(plot.levels, boxplot.df, by.x = 'plot.labels', by.y = flev, sort = FALSE)
+
+return(labels.df)
+}
+
+a_data_Mean <- a_data %>%
+  group_by(treat) %>%
+  summarise(
+    n = n(), ## check missing values
+    mean = mean(A))
+
+stats 
+
+p <- ggplot(a_data, aes(x=treat, y=A, fill=treat )) + 
+   geom_bar(stat="identity") +
+  theme(legend.position="none")
+p + scale_fill_grey()
+
+
+p_base <- ggplot(a_data, aes(x=lev, y=y)) + geom_boxplot() +
+  geom_text(data = generate_label_df(tHSD, 'lev'), aes(x = plot.labels, y = V1, label = labels))
+p_base
+```
+
+
