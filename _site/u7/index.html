@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0">
+<title>Data Manipulation</title>
+
+	<meta name="description" content="">
+
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
+<link rel="stylesheet" href="/assets/css/custom_styles.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="/doks-theme/assets/css/style.css">
+
+	</head>
+	<body class="green" data-spy="scroll" data-target=".js-scrollspy">
+		
+	<div class="offcanvas visible-xs">
+		<ul class="offcanvas__nav">
+			
+				<li><a href="/">Home</a></li>
+			
+				<li><a href="/schedule">Schedule</a></li>
+			
+		</ul><!-- /.offcanvas__nav -->
+	</div><!-- /.offcanvas -->
+
+
+
+	<header class="site-header">
+      <!--  <a href="https://github.com/qosf/qosf.org"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
+ -->
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					
+						<a href="/" class="site-header__logo">
+                            <img src="/assets/img/logos/qosf_colour_logo.svg">
+						</a><!-- /.site-header__logo -->
+					
+					
+						<ul class="site-header__nav hidden-xs">
+							
+								<li><a href="/">Home</a></li>
+							
+								<li><a href="/schedule">Schedule</a></li>
+							
+						</ul><!-- /.site-header__nav -->
+						<button class="offcanvas-toggle visible-xs">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button><!-- /.offcanvas-toggle -->
+					
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</header><!-- /.site-header -->
+
+
+		<div class="hero-subheader">
+            
+            
+            
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="align-container" data-mh>
+							<div class="align-inner">
+								
+									<h1 class="hero-subheader__title">Data Manipulation</h1>
+								
+								
+                                <p class="hero-subheader__desc">
+</p>
+								
+                                
+							</div><!-- /.align-inner -->
+						</div><!-- /.align-container -->
+					</div><!-- /.col -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.hero-subheader -->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="content">
+							<p>Find <a href="https://teachresources.github.io/RPP/u6/dataManipulation.Rmd">here</a> the correspondent <code class="language-plaintext highlighter-rouge">*Rmd</code>.</p>
+
+<h1 id="data-manipulation">Data Manipulation</h1>
+
+<h2 id="best-practices-in-preparing-data-files-for-importing-into-r">Best Practices in Preparing Data Files for Importing into R</h2>
+
+<ul>
+  <li>Use the first row as column headers (or column names). Generally,
+columns represent variables.</li>
+  <li>Use the first column as row names. Generally rows represent
+observations.</li>
+  <li>Each row name should be unique, so remove duplicated names.</li>
+  <li>Avoid names with blank spaces. Good column names: <code class="language-plaintext highlighter-rouge">specie_1</code> or
+<code class="language-plaintext highlighter-rouge">specie1</code>. Bad column name: <code class="language-plaintext highlighter-rouge">specie 1</code>.</li>
+  <li>Avoid names with special symbols: ?, $, *, +, #, (, ), -, /, }, {,
+|, &gt;, &lt; etc. Only underscore can be used.</li>
+  <li>Avoid beginning variable names with a number. Use letter instead.
+Good column names: sport_100m or x100m. Bad column name: 100m</li>
+  <li>Column names must be unique. Duplicated names are not allowed.</li>
+  <li>R is case sensitive. This means that Name is different from Name or
+NAME.</li>
+  <li>Avoid blank rows in your data.</li>
+  <li>Delete any comments in your file.</li>
+  <li>If you have a column containing date, use the four digit format.
+Good format: 01/01/2016. Bad format: 01/01/16</li>
+</ul>
+
+<h2 id="r-base-functions-for-importing-data">R base functions for importing data</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">read.csv()</code>: for reading “comma separated value” files (“.csv”).</li>
+  <li><code class="language-plaintext highlighter-rouge">read.csv2()</code>: variant used in countries that use a comma “,” as
+decimal point and a semicolon “;” as field separators.</li>
+  <li><code class="language-plaintext highlighter-rouge">read.delim()</code>: for reading “tab-separated value” files (“.txt”). By
+default, point (“.”) is used as decimal points.</li>
+  <li><code class="language-plaintext highlighter-rouge">read.delim2()</code>: for reading “tab-separated value” files (“.txt”).
+By default, comma (“,”) is used as decimal points.</li>
+</ul>
+
+<h3 id="arguments">Arguments</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">file</code>: the path to the file containing the data to be imported
+into R.</li>
+  <li><code class="language-plaintext highlighter-rouge">sep</code>: the field separator character. “ is used for tab-delimited
+file.</li>
+  <li><code class="language-plaintext highlighter-rouge">header</code>: logical value. If TRUE, read.table() assumes that your
+file has a header row, so row 1 is the name of each column. If
+that’s not the case, you can add the argument header = FALSE.</li>
+  <li><code class="language-plaintext highlighter-rouge">dec</code>: the character used in the file for decimal points.</li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Read tabular data into R
+read.table(file, header = FALSE, sep = "", dec = ".")
+# Read "comma separated value" files (".csv")
+read.csv(file, header = TRUE, sep = ",", dec = ".", ...)
+# Or use read.csv2: variant used in countries that 
+# use a comma as decimal point and a semicolon as field separator.
+read.csv2(file, header = TRUE, sep = ";", dec = ",", ...)
+# Read TAB delimited files
+read.delim(file, header = TRUE, sep = "\t", dec = ".", ...)
+read.delim2(file, header = TRUE, sep = "\t", dec = ",", ...)
+</code></pre></div></div>
+
+<h3 id="reading-data-from-excel-files-xlsxlsx-into-r">Reading data From Excel Files (xls|xlsx) into R</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Use readxl package to read xls|xlsx
+library("readxl")
+my_data &lt;- read_excel("my_file.xlsx")
+# Use xlsx package
+library("xlsx")
+my_data &lt;- read.xlsx("my_file.xlsx") 
+</code></pre></div></div>
+
+<h2 id="writing-data-from-r-to-txtcsv-files-r-base-functions">Writing Data From R to txt|csv Files: R Base Functions</h2>
+
+<p>The R code below exports the built-in R mtcars data set to a
+tab-separated ( sep = “) file called mtcars.txt in the current working
+directory:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Loading mtcars data
+data("mtcars")
+# Writing mtcars data
+write.table(mtcars, file = "mtcars.txt", sep = "\t",
+            row.names = TRUE, col.names = NA)
+
+write.table(mtcars, file = "mtcars.txt", sep = "\t",
+            row.names = FALSE)
+</code></pre></div></div>
+
+<h2 id="accessing-the-data">Accessing the data</h2>
+
+<ul>
+  <li>
+    <p>Tibbles have nice printing method that show only the first 10 rows
+and all the columns that fit on the screen. This is useful when you
+work with large data sets.</p>
+  </li>
+  <li>
+    <p>When printed, the data type of each column is specified (see below):</p>
+    <ul>
+      <li>: for double</li>
+      <li>: for factor</li>
+      <li>: for character</li>
+      <li>: for logical</li>
+    </ul>
+  </li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>library(tidyverse)
+library("tidyverse")
+my_data &lt;- as_tibble(iris)
+my_data
+
+## # A tibble: 150 x 5
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+##  1          5.1         3.5          1.4         0.2 setosa 
+##  2          4.9         3            1.4         0.2 setosa 
+##  3          4.7         3.2          1.3         0.2 setosa 
+##  4          4.6         3.1          1.5         0.2 setosa 
+##  5          5           3.6          1.4         0.2 setosa 
+##  6          5.4         3.9          1.7         0.4 setosa 
+##  7          4.6         3.4          1.4         0.3 setosa 
+##  8          5           3.4          1.5         0.2 setosa 
+##  9          4.4         2.9          1.4         0.2 setosa 
+## 10          4.9         3.1          1.5         0.1 setosa 
+## # … with 140 more rows
+
+tibble(iris)
+
+## # A tibble: 150 x 5
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+##  1          5.1         3.5          1.4         0.2 setosa 
+##  2          4.9         3            1.4         0.2 setosa 
+##  3          4.7         3.2          1.3         0.2 setosa 
+##  4          4.6         3.1          1.5         0.2 setosa 
+##  5          5           3.6          1.4         0.2 setosa 
+##  6          5.4         3.9          1.7         0.4 setosa 
+##  7          4.6         3.4          1.4         0.3 setosa 
+##  8          5           3.4          1.5         0.2 setosa 
+##  9          4.4         2.9          1.4         0.2 setosa 
+## 10          4.9         3.1          1.5         0.1 setosa 
+## # … with 140 more rows
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Note that, the type of data in each column is specified. Common
+types include:</p>
+
+    <ul>
+      <li>int: integers</li>
+      <li>dbl: double (real numbers),</li>
+      <li>chr: character vectors, strings, texts</li>
+      <li>fctr: factor,</li>
+      <li>dttm: date-times (date + time)</li>
+      <li>lgl: logical (TRUE or FALSE)</li>
+      <li>date: dates</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="tidyr-crucial-step-reshaping-data-with-r-for-easier-analyses">Tidyr: Crucial Step Reshaping Data with R for Easier Analyses</h1>
+
+<p><img src="http://www.sthda.com/sthda/RDoc/images/tidyr.png" alt="" /></p>
+
+<h2 id="reshaping-data-using-tidyr-package">Reshaping data using tidyr package</h2>
+
+<p>The tidyr package, provides four functions to help you change the layout
+of your data set:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">gather()</code>: gather (collapse) columns into rows</li>
+  <li>s<code class="language-plaintext highlighter-rouge">pread()</code>: spread rows into columns</li>
+  <li><code class="language-plaintext highlighter-rouge">separate()</code>: separate one column into multiple</li>
+  <li><code class="language-plaintext highlighter-rouge">unite()</code>: unite multiple columns into one</li>
+</ul>
+
+<h3 id="installing-and-loading-tidyr">Installing and loading tidyr</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Installing
+# install.packages("tidyr")
+# Loading
+library("tidyr")
+</code></pre></div></div>
+
+<h3 id="example-data-sets">Example data sets</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data &lt;- USArrests[c(1, 10, 20, 30), ]
+my_data
+
+##            Murder Assault UrbanPop Rape
+## Alabama      13.2     236       58 21.2
+## Georgia      17.4     211       60 25.8
+## Maryland     11.3     300       67 27.8
+## New Jersey    7.4     159       89 18.8
+
+my_data &lt;- cbind(state = rownames(my_data), my_data)
+my_data
+
+##                 state Murder Assault UrbanPop Rape
+## Alabama       Alabama   13.2     236       58 21.2
+## Georgia       Georgia   17.4     211       60 25.8
+## Maryland     Maryland   11.3     300       67 27.8
+## New Jersey New Jersey    7.4     159       89 18.8
+</code></pre></div></div>
+
+<h3 id="gather-collapse-columns-into-rows"><code class="language-plaintext highlighter-rouge">gather()</code>: collapse columns into rows</h3>
+
+<p><img src="http://www.sthda.com/sthda/RDoc/images/tidyr-gather.png" alt="" /></p>
+
+<p>The function gather() collapses multiple columns into key-value pairs.
+It produces a “long” data format from a “wide” one. It’s an alternative
+of melt() function [in reshape2 package].</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">data</code>: A data frame</li>
+  <li><code class="language-plaintext highlighter-rouge">key</code>, <code class="language-plaintext highlighter-rouge">value</code>: Names of key and value columns to create in output</li>
+  <li><code class="language-plaintext highlighter-rouge">…</code>: Specification of columns to gather. Allowed values are:
+    <ul>
+      <li>variable names</li>
+      <li>if you want to select all variables between a and e, use a:e</li>
+      <li>if you want to exclude a column name y use -y</li>
+      <li>for more options, see: <code class="language-plaintext highlighter-rouge">dplyr::select()</code></li>
+    </ul>
+  </li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data2 &lt;- gather(my_data,
+                   key = "arrest_attribute",
+                   value = "arrest_estimate",
+                   -state)
+my_data2
+
+##         state arrest_attribute arrest_estimate
+## 1     Alabama           Murder            13.2
+## 2     Georgia           Murder            17.4
+## 3    Maryland           Murder            11.3
+## 4  New Jersey           Murder             7.4
+## 5     Alabama          Assault           236.0
+## 6     Georgia          Assault           211.0
+## 7    Maryland          Assault           300.0
+## 8  New Jersey          Assault           159.0
+## 9     Alabama         UrbanPop            58.0
+## 10    Georgia         UrbanPop            60.0
+## 11   Maryland         UrbanPop            67.0
+## 12 New Jersey         UrbanPop            89.0
+## 13    Alabama             Rape            21.2
+## 14    Georgia             Rape            25.8
+## 15   Maryland             Rape            27.8
+## 16 New Jersey             Rape            18.8
+
+my_data2 &lt;- gather(my_data,
+                   key = "arrest_attribute",
+                   value = "arrest_estimate",
+                   Murder, Assault)
+my_data2
+
+##        state UrbanPop Rape arrest_attribute arrest_estimate
+## 1    Alabama       58 21.2           Murder            13.2
+## 2    Georgia       60 25.8           Murder            17.4
+## 3   Maryland       67 27.8           Murder            11.3
+## 4 New Jersey       89 18.8           Murder             7.4
+## 5    Alabama       58 21.2          Assault           236.0
+## 6    Georgia       60 25.8          Assault           211.0
+## 7   Maryland       67 27.8          Assault           300.0
+## 8 New Jersey       89 18.8          Assault           159.0
+</code></pre></div></div>
+
+<h3 id="spread-spread-two-columns-into-multiple-columns"><code class="language-plaintext highlighter-rouge">spread()</code>: spread two columns into multiple columns</h3>
+
+<p><img src="http://www.sthda.com/sthda/RDoc/images/tidyr-spread.png" alt="" /></p>
+
+<p>The function <code class="language-plaintext highlighter-rouge">spread()</code> does the reverse of <code class="language-plaintext highlighter-rouge">gather()</code>. It takes two
+columns (key and value) and spreads into multiple columns. It produces a
+“wide” data format from a “long” one. It’s an alternative of the
+function cast() [in reshape2 package].</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">data</code>: A data frame</li>
+  <li><code class="language-plaintext highlighter-rouge">key</code>: The (unquoted) name of the column whose values will be used
+as column headings.</li>
+  <li><code class="language-plaintext highlighter-rouge">value</code>: The (unquoted) names of the column whose values will
+populate the cells.</li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data3 &lt;- spread(my_data2, 
+                   key = "arrest_attribute",
+                   value = "arrest_estimate"
+                   )
+my_data3
+
+##        state UrbanPop Rape Assault Murder
+## 1    Alabama       58 21.2     236   13.2
+## 2    Georgia       60 25.8     211   17.4
+## 3   Maryland       67 27.8     300   11.3
+## 4 New Jersey       89 18.8     159    7.4
+</code></pre></div></div>
+
+<h3 id="unite-unite-multiple-columns-into-one"><code class="language-plaintext highlighter-rouge">unite()</code>: Unite multiple columns into one</h3>
+
+<p><img src="http://www.sthda.com/sthda/RDoc/images/tidyr-unite.png" alt="" /></p>
+
+<p>The function <code class="language-plaintext highlighter-rouge">unite()</code> takes multiple columns and paste them together
+into one.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">data</code>: A data frame</li>
+  <li><code class="language-plaintext highlighter-rouge">col</code>: The new (unquoted) name of column to add.</li>
+  <li><code class="language-plaintext highlighter-rouge">sep</code>: Separator to use between values</li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data4 &lt;- unite(my_data,
+                  col = "Murder_Assault",
+                  Murder, Assault,
+                  sep = "_")
+my_data4
+
+##                 state Murder_Assault UrbanPop Rape
+## Alabama       Alabama       13.2_236       58 21.2
+## Georgia       Georgia       17.4_211       60 25.8
+## Maryland     Maryland       11.3_300       67 27.8
+## New Jersey New Jersey        7.4_159       89 18.8
+</code></pre></div></div>
+
+<h3 id="separate-separate-one-column-into-multiple"><code class="language-plaintext highlighter-rouge">separate()</code>: separate one column into multiple</h3>
+
+<p><img src="http://www.sthda.com/sthda/RDoc/images/tidyr-separate.png" alt="" /></p>
+
+<p>The function <code class="language-plaintext highlighter-rouge">sperate()</code> is the reverse of unite(). It takes values
+inside a single character column and separates them into multiple
+columns.</p>
+
+<ul>
+  <li>data: A data frame</li>
+  <li>col: Unquoted column names</li>
+  <li>into: Character vector specifying the names of new variables to be
+created.</li>
+  <li>sep: Separator between columns:
+    <ul>
+      <li>If character, is interpreted as a regular expression.</li>
+      <li>If numeric, interpreted as positions to split at. Positive
+values start at 1 at the far-left of the string; negative value
+start at -1 at the far-right of the string.</li>
+    </ul>
+  </li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>separate(my_data4,
+         col = "Murder_Assault",
+         into = c("Murder", "Assault"),
+         sep = "_")
+
+##                 state Murder Assault UrbanPop Rape
+## Alabama       Alabama   13.2     236       58 21.2
+## Georgia       Georgia   17.4     211       60 25.8
+## Maryland     Maryland   11.3     300       67 27.8
+## New Jersey New Jersey    7.4     159       89 18.8
+</code></pre></div></div>
+
+<h3 id="chaining-multiple-operations">Chaining multiple operations</h3>
+
+<p>It’s possible to combine multiple operations using <code class="language-plaintext highlighter-rouge">maggrittr</code>
+forward-pipe operator : %&gt;%.</p>
+
+<p>In the following R code:</p>
+
+<ul>
+  <li>first, my_data is passed to gather() function</li>
+  <li>next, the output of gather() is passed to unite() function</li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data %&gt;% gather(key = "arrest_attribute",
+                   value = "arrest_estimate",
+                   Murder:UrbanPop) %&gt;%
+            unite(col = "attribute_estimate",
+                  arrest_attribute, arrest_estimate)
+
+##         state Rape attribute_estimate
+## 1     Alabama 21.2        Murder_13.2
+## 2     Georgia 25.8        Murder_17.4
+## 3    Maryland 27.8        Murder_11.3
+## 4  New Jersey 18.8         Murder_7.4
+## 5     Alabama 21.2        Assault_236
+## 6     Georgia 25.8        Assault_211
+## 7    Maryland 27.8        Assault_300
+## 8  New Jersey 18.8        Assault_159
+## 9     Alabama 21.2        UrbanPop_58
+## 10    Georgia 25.8        UrbanPop_60
+## 11   Maryland 27.8        UrbanPop_67
+## 12 New Jersey 18.8        UrbanPop_89
+</code></pre></div></div>
+
+<h3 id="summary">Summary</h3>
+
+<p>You should tidy your data for easier data analysis using the R package
+tidyr, which provides the following functions.</p>
+
+<ul>
+  <li>Collapse multiple columns together into key-value pairs (long data
+format): gather(data, key, value, …)</li>
+  <li>Spread key-value pairs into multiple columns (wide data format):
+spread(data, key, value)</li>
+  <li>Unite multiple columns into one: unite(data, col, …)</li>
+  <li>Separate one columns into multiple: separate(data, col, into)</li>
+</ul>
+
+<h1 id="managing-data-frames-with-the-dplyr-package">Managing Data Frames with the <code class="language-plaintext highlighter-rouge">dplyr</code> package</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>install.packages("dplyr")
+library(dplyr)
+</code></pre></div></div>
+
+<h2 id="dplyr-grammar">dplyr Grammar</h2>
+
+<p>There are 8 fundamental data manipulation verbs that you will use to do
+most of your data manipulations. Some of the key “verbs” provided by the
+dplyr package are:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">select</code> : return a subset of the columns of a data frame, using a
+flexible notation</li>
+  <li><code class="language-plaintext highlighter-rouge">filter</code> : extract a subset of rows from a data frame based on
+logical conditions</li>
+  <li><code class="language-plaintext highlighter-rouge">arrange</code> : reorder rows of a data frame</li>
+  <li><code class="language-plaintext highlighter-rouge">rename</code> : rename variables in a data frame</li>
+  <li><code class="language-plaintext highlighter-rouge">mutate</code> : add new variables/columns or transform existing variables</li>
+  <li><code class="language-plaintext highlighter-rouge">summarise</code> / <code class="language-plaintext highlighter-rouge">summarize</code> : generate summary statistics of different
+variables in the data frame, possibly within strata</li>
+  <li><code class="language-plaintext highlighter-rouge">distinct</code> : Remove duplicate rows.</li>
+  <li><code class="language-plaintext highlighter-rouge">%&gt;%</code>: the “pipe” operator is used to connect multiple verb actions
+together into a pipeline</li>
+</ul>
+
+<h2 id="select-data-frame-columns-in-r">Select Data Frame Columns in R</h2>
+
+<p><img src="https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/data-manipulation-in-r/images/select-or-subset-columns-in-r.png" alt="" /></p>
+
+<p>In this section, you will learn how to select or subset data frame
+columns by names and position using the R function <code class="language-plaintext highlighter-rouge">select()</code> and
+<code class="language-plaintext highlighter-rouge">pull()</code> [in <code class="language-plaintext highlighter-rouge">dplyr</code> package]. We’ll also show how to remove columns
+from a data frame.</p>
+
+<p>You will learn how to use the following functions:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">pull()</code>: Extract column values as a vector. The column of interest
+can be specified either by name or by index.</li>
+  <li><code class="language-plaintext highlighter-rouge">select()</code>: Extract one or multiple columns as a data table. It can
+be also used to remove columns from the data frame.</li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data &lt;- as_tibble(iris)
+my_data
+
+## # A tibble: 150 x 5
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+##  1          5.1         3.5          1.4         0.2 setosa 
+##  2          4.9         3            1.4         0.2 setosa 
+##  3          4.7         3.2          1.3         0.2 setosa 
+##  4          4.6         3.1          1.5         0.2 setosa 
+##  5          5           3.6          1.4         0.2 setosa 
+##  6          5.4         3.9          1.7         0.4 setosa 
+##  7          4.6         3.4          1.4         0.3 setosa 
+##  8          5           3.4          1.5         0.2 setosa 
+##  9          4.4         2.9          1.4         0.2 setosa 
+## 10          4.9         3.1          1.5         0.1 setosa 
+## # … with 140 more rows
+</code></pre></div></div>
+
+<h3 id="extract-column-values-as-a-vector">Extract column values as a vector</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pull(iris, Species)
+
+my_data %&gt;% pull(Species)
+</code></pre></div></div>
+
+<h3 id="extract-columns-as-a-data-table">Extract columns as a data table</h3>
+
+<p>Select column by position</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select(iris, 1, 2)
+my_data %&gt;% select(1:3)
+my_data %&gt;% select(1, 3)
+</code></pre></div></div>
+
+<p>Select columns by names</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data %&gt;% select(Sepal.Length, Petal.Length)
+my_data %&gt;% select(Sepal.Length:Petal.Length)
+</code></pre></div></div>
+
+<h3 id="select-column-based-on-a-condtion">Select column based on a condtion</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data %&gt;% select_if(is.numeric)
+iris %&gt;% select_if(is.numeric)
+</code></pre></div></div>
+
+<h3 id="remove-columns">Remove columns</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data %&gt;% select(-Sepal.Length, -Petal.Length)
+my_data %&gt;% select(-(Sepal.Length:Petal.Length))
+# Drop column 1
+my_data %&gt;% select(-1)
+
+# Drop columns 1 to 3
+my_data %&gt;% select(-(1:3))
+
+# Drop columns 1 and 3 but not 2
+my_data %&gt;% select(-1, -3)
+</code></pre></div></div>
+
+<h2 id="subset-data-frame-rows-in-r">Subset Data Frame Rows in R</h2>
+
+<p><img src="https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/data-manipulation-in-r/images/subset-data-frame-rows-in-r.png" alt="" /></p>
+
+<p>This section describes how to subset or extract data frame rows based on
+certain criteria.</p>
+
+<p>In this tutorial, you will learn the following R functions from the
+<code class="language-plaintext highlighter-rouge">dplyr</code> package:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">slice()</code>: Extract rows by position</li>
+  <li><code class="language-plaintext highlighter-rouge">filter()</code>: Extract rows that meet a certain logical criteria. For
+example <code class="language-plaintext highlighter-rouge">iris %&gt;% filter(Sepal.Length &gt; 6)</code>.</li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data &lt;- as_tibble(iris)
+my_data
+</code></pre></div></div>
+
+<h3 id="extract-rows-by-position">Extract rows by position</h3>
+
+<p>Key R function: <code class="language-plaintext highlighter-rouge">slice()</code> [<code class="language-plaintext highlighter-rouge">dplyr</code> package]</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data %&gt;% slice(1:6)
+</code></pre></div></div>
+
+<h3 id="filter-rows-by-logical-criteria">Filter rows by logical criteria</h3>
+
+<p>Key R function: <code class="language-plaintext highlighter-rouge">filter()</code> [<code class="language-plaintext highlighter-rouge">dplyr</code> package]. Used to filter rows that
+meet some logical criteria.</p>
+
+<p>Extract rows based on logical criteria</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data %&gt;% filter(Sepal.Length &gt; 7)
+my_data %&gt;% filter(Sepal.Length &gt; 6.7, Sepal.Width &lt;= 3)
+my_data %&gt;% filter(Sepal.Length &gt; 6.7, Species == "versicolor")
+my_data %&gt;% filter(
+  Sepal.Length &gt; 6.7, 
+  Species %in% c("versicolor", "virginica" )
+  )
+</code></pre></div></div>
+
+<h3 id="remove-missing-values">Remove missing values</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Create a data frame with missing data
+friends_data &lt;- data_frame(
+  name = c("A", "B", "C", "D"),
+  age = c(27, 25, 29, 26),
+  height = c(180, NA, NA, 169),
+  married = c("yes", "yes", "no", "no")
+)
+# Print
+friends_data
+
+friends_data %&gt;% filter(is.na(height))
+friends_data %&gt;% filter(!is.na(height))
+</code></pre></div></div>
+
+<h2 id="reorder-data-frame-rows-in-r">Reorder Data Frame Rows in R</h2>
+
+<p><img src="https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/data-manipulation-in-r/images/reorder-data-frame-rows-in-r.png" alt="" /></p>
+
+<p>This section describes how to reorder (i.e., sort) rows, in your data
+table, by the value of one or more columns (i.e., variables).</p>
+
+<p>You will learn how to easily: - Sort a data frame rows in ascending
+order (from low to high) using the R function <code class="language-plaintext highlighter-rouge">arrange()</code> [<code class="language-plaintext highlighter-rouge">dplyr</code>
+package]</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data &lt;- as_tibble(iris)
+my_data
+</code></pre></div></div>
+
+<h3 id="arrange-rows">Arrange rows</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data %&gt;% arrange(Sepal.Length)
+my_data %&gt;% arrange(desc(Sepal.Length))
+my_data %&gt;% arrange(Sepal.Length, Sepal.Width)
+</code></pre></div></div>
+
+<h2 id="rename-data-frame-columns-in-r">Rename Data Frame Columns in R</h2>
+
+<p><img src="https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/data-manipulation-in-r/images/rename-columns-data-frame-r.png" alt="" /></p>
+
+<p>n this section, you will learn how to rename the columns of a data frame
+in R. This can be done easily using the function <code class="language-plaintext highlighter-rouge">rename()</code> [<code class="language-plaintext highlighter-rouge">dplyr</code>
+package]. It’s also possible to use R base functions, but they require
+more typing.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data &lt;- as_tibble(iris)
+my_data
+</code></pre></div></div>
+
+<h3 id="renaming-columns-with-dplyrrename">Renaming columns with dplyr::rename()</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data %&gt;% 
+  rename(
+    sepal_length = Sepal.Length,
+    sepal_width = Sepal.Width
+    )
+</code></pre></div></div>
+
+<h3 id="renaming-columns-with-r-base-functions">Renaming columns with R base functions</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># get column names
+colnames(my_data)
+names(my_data)[1] &lt;- "sepal_length"
+names(my_data)[2] &lt;- "sepal_width"
+</code></pre></div></div>
+
+<h2 id="compute-and-add-new-variables-to-a-data-frame-in-r">Compute and Add new Variables to a Data Frame in R</h2>
+
+<p><img src="https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/data-manipulation-in-r/images/compute-and-add-new-variables.png" alt="" /></p>
+
+<p>This section describes how to compute and add new variables to a data
+frame in R. You will learn the following R functions from the dplyr R
+package:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">mutate()</code>: compute and add new variables into a data table. It
+preserves existing variables.</li>
+  <li><code class="language-plaintext highlighter-rouge">transmute()</code>: compute new columns but drop existing variables.</li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data &lt;- as_tibble(iris)
+my_data
+</code></pre></div></div>
+
+<h3 id="mutate-add-new-variables-by-preserving-existing-ones"><code class="language-plaintext highlighter-rouge">mutate</code>: Add new variables by preserving existing ones</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data %&gt;% 
+  mutate(sepal_by_petal_l = Sepal.Length/Petal.Length)
+</code></pre></div></div>
+
+<h3 id="transmute-make-new-variables-by-dropping-existing-ones"><code class="language-plaintext highlighter-rouge">transmute</code>: Make new variables by dropping existing ones</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data %&gt;%
+  transmute(
+    sepal_by_petal_l = Sepal.Length/Petal.Length,
+    sepal_by_petal_w = Sepal.Width/Petal.Width
+    )
+</code></pre></div></div>
+
+<h2 id="compute-summary-statistics-in-r">Compute Summary Statistics in R</h2>
+
+<p><img src="https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/data-manipulation-in-r/images/compute-summary-statistics-in-r.png" alt="" /></p>
+
+<p>This section introduces how to easily compute statistcal summaries in R
+using the dplyr package.</p>
+
+<p>You will learn, how to:</p>
+
+<p>Compute summary statistics for ungrouped data, as well as, for data that
+are grouped by one or multiple variables. R functions: <code class="language-plaintext highlighter-rouge">summarise()</code> and
+<code class="language-plaintext highlighter-rouge">group_by()</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data &lt;- as_tibble(iris)
+my_data
+</code></pre></div></div>
+
+<h3 id="summary-statistics-of-ungrouped-data">Summary statistics of ungrouped data</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data %&gt;%
+  summarise(
+          count = n(),
+          mean_sep = mean(Sepal.Length, na.rm = TRUE),
+          mean_pet = mean(Petal.Length, na.rm = TRUE)
+          )
+</code></pre></div></div>
+
+<h3 id="summary-statistics-of-grouped-data">Summary statistics of grouped data</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data %&gt;%
+  group_by(Species) %&gt;%
+  summarise(
+          count = n(),
+          mean_sep = mean(Sepal.Length),
+          mean_pet = mean(Petal.Length)
+            )
+
+ToothGrowth %&gt;%
+group_by(supp, dose) %&gt;%
+  summarise(
+    n = n(),
+    mean = mean(len),
+    sd = sd(len)
+  )
+</code></pre></div></div>
+
+<h2 id="identify-and-remove-duplicate-data-in-r">Identify and Remove Duplicate Data in R</h2>
+
+<p><img src="https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/data-manipulation-in-r/images/remove-duplicate-data-r.png" alt="" /></p>
+
+<p>This section describes how to identify and remove duplicate data in R.</p>
+
+<p>You will learn how to use the following R base and dplyr functions:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">duplicated()</code>: for identifying duplicated elements and</li>
+  <li><code class="language-plaintext highlighter-rouge">unique()</code>: for extracting unique elements</li>
+  <li><code class="language-plaintext highlighter-rouge">distinct()</code> [<code class="language-plaintext highlighter-rouge">dplyr</code> package] to remove duplicate rows in a data
+frame.</li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data &lt;- as_tibble(iris)
+my_data
+</code></pre></div></div>
+
+<h3 id="find-and-drop-duplicate-elements">Find and drop duplicate elements</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x &lt;- c(1, 1, 4, 5, 4, 6)
+duplicated(x)
+x[duplicated(x)] ## Extract duplicate elements
+x[!duplicated(x)] ## remove duplicated elements
+# Remove duplicates based on Sepal.Width columns
+my_data[!duplicated(my_data$Sepal.Width), ]
+</code></pre></div></div>
+
+<h3 id="extract-unique-elements">Extract unique elements</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x &lt;- c(1, 1, 4, 5, 4, 6)
+unique(x)
+unique(my_data)
+</code></pre></div></div>
+
+<h3 id="remove-duplicate-rows-in-a-data-frame">Remove duplicate rows in a data frame</h3>
+
+<p>The function <code class="language-plaintext highlighter-rouge">distinct()</code> [<code class="language-plaintext highlighter-rouge">dplyr</code> package] can be used to keep only
+unique/distinct rows from a data frame. If there are duplicate rows,
+only the first row is preserved. It’s an efficient version of the R base
+function <code class="language-plaintext highlighter-rouge">unique()</code>.</p>
+
+<p>Remove duplicate rows based on all columns:</p>
+
+<p>my_data %&gt;% distinct()</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my_data %&gt;% distinct() 
+</code></pre></div></div>
+
+<h1 id="reference">Reference:</h1>
+
+<ol>
+  <li><a href="https://r4ds.had.co.nz/">R for Data Science</a></li>
+  <li><a href="http://www.sthda.com/english/wiki/best-practices-in-preparing-data-files-for-importing-into-r">Preparing Data
+Files</a></li>
+  <li><a href="https://www.datanovia.com/en/courses/data-manipulation-in-r/">DATA MANIPULATION IN R</a></li>
+  <li><a href="http://leanpub.com/exdata">Exploratory Data Analysis with R</a></li>
+</ol>
+
+						</div><!-- /.content -->
+					</div><!-- /.col -->
+					<div class="col-md-4 col-md-offset-1">
+						<div class="sections-list-wrapper">
+							<div class="sections-list js-sections js-affix js-scrollspy hidden-xs hidden-sm"></div><!-- /.sections-list -->
+						</div>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.section -->
+		
+		<div class="js-footer-area">
+			
+				<nav class="page-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12">
+								
+									<a href="/u5/" class="page-nav__item page-nav__item--prev">
+										<i class="icon icon--arrow-left"></i>
+										RMarkdown
+									</a><!-- /.page-nav__item -->
+								
+								
+									<a href="/u6/" class="page-nav__item page-nav__item--next">
+										Anova
+										<i class="icon icon--arrow-right"></i>
+									</a><!-- /.page-nav__item -->
+								
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</nav><!-- /.page-nav -->
+			
+			
+			
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					
+						<a href="/" class="site-footer__logo">R for Plant Physiologists</a>
+					
+					
+						<hr>
+						<p class="site-footer__copyright">Contact: <a href="mailto:danicassol@gmail.com">danicassol@gmail.com</a> </br> ©2020 Daniela Cassol. All rights reserved.</p>
+					
+				</div><!-- /.col -->
+				
+					<div class="col-sm-6 align-right">
+						<ul class="social-list">
+							
+								<li>
+									<a href="https://www.github.com/dcassol" target="_blank" class="social-list__item social-list__item--github">
+										<i class="icon icon--github"></i>
+									</a>
+								</li>
+							
+						</ul><!-- /.social-list -->
+					</div><!-- /.col -->
+				
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</footer><!-- /.site-footer -->
+
+
+<script src="/doks-theme/assets/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/affix.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/bootstrap/scrollspy.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/vendor/matchHeight.min.js"></script>
+<script type="text/javascript" src="/doks-theme/assets/js/scripts.min.js"></script>
+
+
+
+
+		</div><!-- /.js-footer-area -->
+	</body>
+</html>

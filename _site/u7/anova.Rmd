@@ -1,0 +1,7 @@
+# Data Manipulation
+
+# Reference:
+1. [R for Data Science](https://r4ds.had.co.nz/)
+2. [Preparing Data Files](http://www.sthda.com/english/wiki/best-practices-in-preparing-data-files-for-importing-into-r)
+3. [](http://leanpub.com/exdata)
+
