@@ -1,7 +1,296 @@
-# Data Manipulation
+# Data Analysis
+
+# Descriptive Statistics and Graphics
+
+
+## Descritive Analysis
+
+Descriptive statistics give you a meaningful, quantitative overview over your sample and helps you summarizing an overwhelming amount of data into something somehow more comprehensible. It is generally a first step into statistical analysis, even though it only reflects what your data are made of.
+
+## Import the data into R
+
+Prepare your data and import it into R with one of the following examples or others functions as you desire. 
+
+```{r, eval=FALSE}
+read.table(file, header = FALSE, sep = "", dec = ".")
+read.csv(file, header = TRUE, sep = ",", dec = ".", ...)
+read.delim(file, header = TRUE, sep = "\t", dec = ".", ...)
+```
+
+For this tutorial, we are generating a fake data set from 5 treatment groups. 
+```{r}
+# create five treatments with different means 
+treatA <- rnorm(50, mean=15, sd=2)
+treatB <- rnorm(50, mean=8.5, sd=1)
+treatC <- rnorm(50, mean=2, sd=2)
+treatD <- rnorm(50, mean=0.53, sd=1)
+treatE <- rnorm(50, mean=8.5, sd=2)
+
+# make a blank data frame 
+a_data <- data.frame(treat=character(250), A=numeric(250)) 
+
+# populate the data frame
+a_data$treat <- c(rep("Control",50), rep("-0.5MPa",50), rep("-1.0MPa",50), rep("-1.5MPa",50), rep("Recover",50))
+a_data$A <- c(treatA, treatB, treatC, treatD, treatE)
+tibble::tibble(a_data)
+```
+
+## Check your data
+```{r}
+tibble::tibble(a_data)
+head(a_data)
+```
+
+## Load libraries
+```{r, message=FALSE}
+library(viridis)
+library(tidyverse)
+library(hrbrthemes)
+library(ggsn)
+library(extrafont)
+```
+
+## Functions in R
+
+Some R functions for computing descriptive statistics:
+
+| Description                           | R function |
+|---------------------------------------|------------|
+| Mean                                  | mean()     |
+| Standard deviation                    | sd()       |
+| Variance                              | var()      |
+| Minimum                               | min()      |
+| Maximum                               | max()      |
+| Median                                | median()   |
+| Sample quantiles                      | quantile() |
+| Generic function                      | summary()  |
+
+
+```{r summary}
+stats <- a_data %>%
+  group_by(treat) %>%
+  summarise(
+    n = n(), ## check missing values
+    mean = mean(A),
+    sd = sd(A), ## Standard deviation
+    se = sd/sqrt(n), ## Standard error (sd(x)/sqrt(length(x)))
+    var= var(A), 
+    min = min(A), 
+    max = max(A), 
+    median= median(A))
+
+stats 
+```
+
+```{r}
+quantile(a_data$A)
+
+summary(a_data)
+```
+
+# Visualization
+
+## Histogram
+
+```{r}
+hist(a_data$A)
+hist(a_data$A[1:50])
+```
+
+### ggplot2
+Code from here (ggplot2)[https://www.r-graph-gallery.com/histogram_several_group.html]
+
+```{r}
+p <- a_data %>%
+  mutate(treat = fct_reorder(treat, A)) %>%
+  ggplot( aes(x=A, color=treat, fill=treat)) +
+    geom_histogram(alpha=0.6, binwidth = 5) +
+    scale_fill_viridis(discrete=TRUE) +
+    scale_color_viridis(discrete=TRUE) +
+    theme_ipsum() +
+    theme(
+      legend.position="none",
+      panel.spacing = unit(0.1, "lines")) +
+    xlab("") +
+    ylab("Treatment") +
+    facet_wrap(~treat)
+print(p)
+```
+
+## Barplot
+
+```{r}
+barplot(stats$mean, main="Means", xlab="Number of Gears", names.arg=stats$treat)
+```
+
+### ggplot2
+Code from here (ggplot2)[https://www.r-graph-gallery.com/89-box-and-scatter-plot-with-ggplot2.html]
+
+```{r}
+p <- ggplot(stats, aes(x=treat, y=mean, fill=treat )) + 
+   geom_bar(stat="identity") +
+  theme(legend.position="none")
+p + scale_fill_grey()
+```
+
+## Box plots
+
+```{r}
+boxplot(a_data$A[1:50])
+```
+
+```{r}
+p <- a_data %>%
+   ggplot( aes(x=treat, y=A, fill=treat)) +
+    geom_boxplot() +
+    scale_fill_viridis(discrete = TRUE, alpha=0.6) +
+    geom_jitter(color="black", size=0.4, alpha=0.9) +
+    theme_ipsum() +
+    theme(
+      legend.position="none",
+      plot.title = element_text(size=11)
+    ) +
+    ggtitle("Treatments") +
+    xlab("")
+print(p)
+```
+
+# \(t\)-tests: One and Two-sample
+
+## Overview
+
+\(t\)-tests in R are relatively simple to use and only require one or two vectors of numerical data (depending on if it is a one or two-sample t-test) in order for the analysis to run. Below is an example of the R t-test code:
+
+```{r, eval=FALSE}
+# Dummy t-test code
+t.test(x, y = NULL, alternative = c("two.sided", "less", "greater"), mu = 0, paired =
+FALSE, var.equal = FALSE, conf.level = 0.95)
+```
+
+The parameters of the \(t\)-test are simple to set. `x` is a numeric vector of data while `y` is an additional numeric vector of data that you want to compare to `x`, although it is not required for the test. When running `t.test`, the default value for `y` is `NULL.` If you only specify x, it will run a one-sample \(t\)-test. Specifying `y` will override the default value and run a two-sample \(t\)-test.
+
+The other parameters of `t.test` are also important:
+
+- By default, R will run each \(t\)-test as a two-tailed test, as indicated by “two.sided” in the alternative parameter. You can override this by specifying “less” or “greater”, which will run the analysis as a one-tailed \(t\)-test with the criterion being located at the lower or upper regions of the distribution, respectively.
+- R also defaults to a 95% confidence level (alpha = .05). Specifying a custom value in `conf.level` will set a new confidence level in the \(t\)-test.
+- If you would like to indicate that the test is a paired-samples \(t\)-test (which R does not automatically assume), you can specify `paired = TRUE`.
+- You can manually indicate the true value of the mean by specifying a custom value in `mu.` For two-sample \(t\)-tests, this will set the true difference of the two means to the specified value. The null value for `mu` is zero, i.e. the difference in the means of the two sets of data is zero.
+- Finally, `var.equal` allows you to specify whether two sets of data have equal variance or not. (Note that this is only for two-sample \(t\)-tests.) The default value is FALSE, which assumes inequal variance between datasets and uses the Welch approximation for degrees of freedom. Specifying `var.equal = TRUE` will estimate variance using pooled variance.
+
+
+## One-sample \(t\)-test
+
+One-sample \(t\)-test is used to compare the mean of one sample to a known standard (or theoretical/hypothetical) mean (μ).
+
+- *Note that, one-sample t-test can be used only, when the data are normally distributed.*
+
+### Research questions and statistical hypotheses
+
+Typical research questions are:
+
+- whether the mean (`m`) of the sample is equal to the theoretical mean (`μ`)?
+- whether the mean (`m`) of the sample is less than the theoretical mean (`μ`)?
+- whether the mean (`m`) of the sample is greater than the theoretical mean (`μ`)?
+
+In statistics, we can define the corresponding null *hypothesis* (`H0`) as follow:
+
+- `H0: m = μ`
+- `H0: m ≤ μ`
+- `H0: m ≥ μ`
+
+The corresponding alternative hypotheses (H$\alpha$) are as follow:
+
+- H$\alpha$: `m ≠ μ` (different)
+- H$\alpha$: `m > μ` (greater)
+- H$\alpha$: `m < μ` (less)
+
+Note that:
+
+- Hypotheses 1) are called `two-tailed` tests
+- Hypotheses 2) and 3) are called `one-tailed` tests
+
+### Formula of one-sample t-test
+
+The \(t\)-statistic can be calculated as follow:
+
+$t = \frac{m − μ}{s / \sqrt{n}}$
+
+where,
+
+- `m` is the sample mean
+- `n` is the sample size
+- `s` is the sample standard deviation with `n−1` degrees of freedom
+- `μ` is the theoretical value
+
+We can compute the `p-value` corresponding to the absolute value of the `t-test` statistics (|t|) for the degrees of freedom `(df): df=n−1`.
+
+How to interpret the results?
+
+If the `p-value` is inferior or equal to the significance level` 0.05`, we can reject the null hypothesis and accept the alternative hypothesis. In other words, we conclude that the sample mean is significantly different from the theoretical mean.
+
+### \(t\)-test
+
+```{r}
+t.test(x=a_data$A[1:50])
+```
+
+## Two-sample \(t\)-test for independent samples
+
+```{r}
+a_data
+a_test <- a_data[1:100,]
+```
+
+```{r}
+t.test(A ~ treat, alternative="less", paired=TRUE, data=a_test)
+```
+
+
+Two-sample \(t\)-test for dependent samples
+-------------------------
+
+### Test
+
+```{r}
+N      <- 20
+DVpre  <- rnorm(N, mean=90,  sd=15)
+DVpost <- rnorm(N, mean=100, sd=15)
+tDepDf <- data.frame(DV=c(DVpre, DVpost),
+                     IV=factor(rep(0:1, each=N), labels=c("pre", "post")))
+```
+
+```{r}
+t.test(DV ~ IV, alternative="less", paired=TRUE, data=tDepDf)
+```
+
+```{r results='hide'}
+DVdiff <- DVpre - DVpost
+t.test(DVdiff, alternative="less")
+```
+
+### Effect size estimate (Cohen's \(d\))
+
+```{r}
+(d <- mean(DVdiff) / sd(DVdiff))
+```
+
+
+
+
+
+
+
+# One Samplae t-test
+
+# Two sample
+post Hoc test
+
 
 # Reference:
 1. [R for Data Science](https://r4ds.had.co.nz/)
 2. [Preparing Data Files](http://www.sthda.com/english/wiki/best-practices-in-preparing-data-files-for-importing-into-r)
 3. [](http://leanpub.com/exdata)
+
+
+
 

@@ -18,8 +18,8 @@ page_nav:
         content: RMarkdown
         url: '/u5/'
     next:
-        content: Anova
-        url: '/u6/'
+        content: Statistics in R
+        url: '/u7/'
 ---
 
 Find [here](https://teachresources.github.io/RPP/u6/dataManipulation.Rmd) the correspondent `*Rmd`.

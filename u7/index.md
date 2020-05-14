@@ -19,7 +19,7 @@ page_nav:
         url: '/u6/'
     next:
         content: Graphics
-        url: '/u7/'
+        url: '/u8/'
 ---
 
 

@@ -51,15 +51,7 @@ grid_navigation:
       excerpt: Section description
       cta: Get started
       url: '/u6'
-    - title: Anova
-      excerpt: Section description
-      cta: Get started
-      url: '/u7'
-    - title: Post Hoc Tests
-      excerpt: Section description
-      cta: Get started
-      url: '/u7'
-    - title: Multivariate Statistical Analysis 
+    - title: Statistics in R
       excerpt: Section description
       cta: Get started
       url: '/u7'
@@ -67,8 +59,12 @@ grid_navigation:
       excerpt: Section description
       cta: Get started
       url: '/u8'
+    - title: Multivariate Statistical Analysis 
+      excerpt: Section description
+      cta: Get started
+      url: '/u9'
     - title: Project
       excerpt: Section description
       cta: Get started
-      url: '/project'
+      url: '/projects'
 ---
