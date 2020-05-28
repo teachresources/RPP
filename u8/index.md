@@ -65,6 +65,7 @@ Amazing resources
     official](https://exts.ggplot2.tidyverse.org/gallery/)
 -   [ggplot2 -
     Essentials](http://www.sthda.com/english/wiki/ggplot2-essentials)
+-   [Top 50 ggplot2 Visualizations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)
 
 Grammar of Graphics
 -------------------
