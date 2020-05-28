@@ -1,0 +1,585 @@
+---
+title: "PCA"
+author: "Daniela Cassol"
+output:
+  BiocStyle::html_document:
+    toc_float: true
+    code_folding: show
+editor_options: 
+  chunk_output_type: console
+---
+<!-- render("pca.Rmd", md_document()) -->
+
+Find [here](https://teachresources.github.io/RPP/u9/pca.Rmd) the correspondent `*Rmd`.
+This tutorial is from [here](http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/112-pca-principal-component-analysis-essentials/).
+
+# Principal Component Methods in R
+
+Principal component methods are used to summarize and visualize the information contained in a large multivariate data sets. Here, we provide practical examples and course videos to compute and interpret principal component methods (PCA, CA, MCA, MFA, etc) using R software.
+
+The following figure illustrates the type of analysis to be performed depending on the type of variables contained in the data set.
+
+![](multivariate-analysis-factoextra.png)
+
+# Principal component analysis
+
+Principal component analysis (PCA) allows us to summarize and to visualize the information in a data set containing individuals/observations described by multiple inter-correlated quantitative variables. Each variable could be considered as a different dimension. If you have more than 3 variables in your data sets, it could be very difficult to visualize a multi-dimensional hyperspace.
+
+Principal component analysis is used to extract the important information from a multivariate data table and to express this information as a set of few new variables called principal components. These new variables correspond to a linear combination of the originals. The number of principal components is less than or equal to the number of original variables.
+
+The information in a given data set corresponds to the total variation it contains. The goal of PCA is to identify directions (or principal components) along which the variation in the data is maximal.
+
+In other words, PCA reduces the dimensionality of a multivariate data to two or three principal components, that can be visualized graphically, with minimal loss of information.
+
+## Basics
+
+Understanding the details of PCA requires knowledge of linear algebra. Here, we’ll explain only the basics with simple graphical representation of the data.
+
+In the Plot 1A below, the data are represented in the X-Y coordinate system. The dimension reduction is achieved by identifying the principal directions, called principal components, in which the data varies.
+
+PCA assumes that the directions with the largest variances are the most “important” (i.e, the most principal).
+
+In the figure below, the `PC1 axis` is the `first principal direction` along which the samples show the largest variation. The `PC2 axis` is the `second most important direction` and it is `orthogonal` to the PC1 axis.
+
+The dimensionality of our two-dimensional data can be reduced to a single dimension by projecting each sample onto the first principal component (Plot 1B)
+
+![](./pca1.png)
+![](./pca2.png)
+Technically speaking, the amount of variance retained by each principal component is measured by the so-called **eigenvalue**.
+
+Note that, the PCA method is particularly useful when the variables within the data set are highly correlated. Correlation indicates that there is redundancy in the data. Due to this redundancy, PCA can be used to reduce the original variables into a smaller number of new variables ( = **principal components**) explaining most of the variance in the original variables.
+
+![](./pca3.png)
+![](./pca4.png)
+
+Taken together, the main purpose of principal component analysis is to:
+
+- identify hidden pattern in a data set,
+- reduce the dimensionnality of the data by removing the noise and redundancy in the data,
+- identify correlated variables
+
+## R Packages
+
+```{r}
+library("FactoMineR")
+library("factoextra")
+```
+
+## Data for the tutorial 
+
+We’ll use the demo data sets decathlon2 from the factoextra package:
+
+```{r}
+data(decathlon2)
+head(decathlon2)
+```
+Note that, only some of these individuals and variables will be used to perform the principal component analysis. The coordinates of the remaining individuals and variables on the factor map will be predicted after the PCA.
+
+The data used here describes athletes’ performance during two sporting events (Desctar and OlympicG). It contains 27 individuals (athletes) described by 13 variables.
+
+In PCA terminology, our data contains:
+
+- Active individuals (in light blue, rows 1:23) : Individuals that are used during the principal component analysis.
+- Supplementary individuals (in dark blue, rows 24:27) : The coordinates of these individuals will be predicted using the PCA information and parameters obtained with active individuals/variables
+- Active variables (in pink, columns 1:10) : Variables that are used for the principal component analysis.
+- Supplementary variables: As supplementary individuals, the coordinates of these variables will be predicted also. These can be:
+  + Supplementary continuous variables (red): Columns 11 and 12 corresponding respectively to the rank and the points of athletes.
+  + Supplementary qualitative variables (green): Column 13 corresponding to the two athlete-tic meetings (2004 Olympic Game or 2004 Decastar). This is a categorical (or factor) variable factor. It can be used to color individuals by groups.
+
+We start by subsetting active individuals and active variables for the principal component analysis:
+
+```{r}
+decathlon2.active <- decathlon2[1:23, 1:10]
+head(decathlon2.active[, 1:6], 4)
+```
+
+## Data standardization
+
+In principal component analysis, variables are often scaled (i.e. standardized). This is particularly recommended when variables are measured in different scales (e.g: kilograms, kilometers, centimeters, …); otherwise, the PCA outputs obtained will be severely affected.
+
+The goal is to make the variables comparable. Generally variables are scaled to have i) standard deviation one and ii) mean zero.
+
+The standardization of data is an approach widely used in the context of gene expression data analysis before PCA and clustering analysis. We might also want to scale the data when the mean and/or the standard deviation of variables are largely different.
+
+When scaling variables, the data can be transformed as follow:
+
+$\frac{x_i - mean(x)}{sd(x)}$
+
+Where `mean(x)` is the mean of `x` values, and `sd(x)` is the standard deviation (SD).
+
+The R base function `scale()` can be used to standardize the data. It takes a numeric matrix as an input and performs the scaling on the columns.
+
+> Note that, by default, the function `PCA()` [in `FactoMineR`], standardizes the data automatically during the PCA; so you don’t need do this transformation before the PCA.
+
+## Analysis
+
+The function `PCA()` [`FactoMineR` package] can be used. A simplified format is:
+
+```{r, eval=FALSE}
+PCA(X, scale.unit = TRUE, ncp = 5, graph = TRUE)
+```
+
+- `X`: a data frame. Rows are individuals and columns are numeric variables
+- `scale.unit`: a logical value. If TRUE, the data are scaled to unit variance before the analysis. This standardization to the same scale avoids some variables to become dominant just because of their large measurement units. It makes variable comparable.
+- `ncp`: number of dimensions kept in the final results.
+- `graph`: a logical value. If TRUE a graph is displayed.
+
+The R code below, computes principal component analysis on the active individuals/variables:
+
+```{r}
+library("FactoMineR")
+decathlon.active <- decathlon2[1:23, 1:10]
+res.pca <- PCA(decathlon2.active, graph = TRUE, scale.unit = TRUE)
+```
+
+The output of the function PCA() is a list, including the following components:
+
+```{r}
+print(res.pca)
+```
+
+## Visualization and Interpretation
+
+We’ll use the `factoextra` R package to help in the interpretation of PCA. No matter what function you decide to use `[stats::prcomp()`, `FactoMiner::PCA()`, `ade4::dudi.pca()`, `ExPosition::epPCA()`], you can easily extract and visualize the results of PCA using R functions provided in the `factoextra` R package.
+
+These functions include:
+
+- `get_eigenvalue(res.pca)`: Extract the eigenvalues/variances of principal components
+- `fviz_eig(res.pca)`: Visualize the eigenvalues
+- `get_pca_ind(res.pca)`, `get_pca_var(res.pca)`: Extract the results for individuals and variables, respectively.
+- `fviz_pca_ind(res.pca)`, `fviz_pca_var(res.pca)`: Visualize the results individuals and variables, respectively.
+- `fviz_pca_biplot(res.pca)`: Make a biplot of individuals and variables.
+
+In the next sections, we’ll illustrate each of these functions.
+
+## `Eigenvalues` / `Variances`
+
+As described in previous sections, the `eigenvalues` measure the amount of variation retained by each principal component. `Eigenvalues` are large for the first PCs and small for the subsequent PCs. That is, the first PCs corresponds to the directions with the maximum amount of variation in the data set.
+
+We examine the `eigenvalues` to determine the number of principal components to be considered. The eigenvalues and the proportion of variances (i.e., information) retained by the principal components (PCs) can be extracted using the function `get_eigenvalue()` [`factoextra` package].
+
+```{r}
+library("factoextra")
+eig.val <- get_eigenvalue(res.pca)
+eig.val
+```
+
+The sum of all the eigenvalues give a total variance of 10.
+
+The proportion of variation explained by each eigenvalue is given in the second column. For example, 4.124 divided by 10 equals 0.4124, or, about 41.24% of the variation is explained by this first eigenvalue. The cumulative percentage explained is obtained by adding the successive proportions of variation explained to obtain the running total. For instance, 41.242% plus 18.385% equals 59.627%, and so forth. Therefore, about 59.627% of the variation is explained by the first two eigenvalues together.
+
+Eigenvalues can be used to determine the number of principal components to retain after PCA (Kaiser 1961):
+
+- An eigenvalue > 1 indicates that PCs account for more variance than accounted by one of the original variables in standardized data. This is commonly used as a cutoff point for which PCs are retained. This holds true only when the data are standardized.
+
+- You can also limit the number of component to that number that accounts for a certain fraction of the total variance. For example, if you are satisfied with 70% of the total variance explained then use the number of components to achieve that.
+
+Unfortunately, there is no well-accepted objective way to decide how many principal components are enough. This will depend on the specific field of application and the specific data set. In practice, we tend to look at the first few principal components in order to find interesting patterns in the data.
+
+In our analysis, the first three principal components explain 72% of the variation. This is an acceptably large percentage.
+
+An alternative method to determine the number of principal components is to look at a Scree Plot, which is the plot of eigenvalues ordered from largest to the smallest. The number of component is determined at the point, beyond which the remaining eigenvalues are all relatively small and of comparable size.
+
+The scree plot can be produced using the function `fviz_eig()` or `fviz_screeplot()` [`factoextra` package].
+
+```{r}
+fviz_eig(res.pca, addlabels = TRUE, ylim = c(0, 50))
+```
+
+> From the plot above, we might want to stop at the fifth principal component. 87% of the information (variances) contained in the data are retained by the first five principal components.
+
+## Graph of variables
+
+### Results
+
+A simple method to extract the results, for variables, from a PCA output is to use the function` get_pca_var()` [`factoextra` package]. This function provides a list of matrices containing all the results for the active variables (coordinates, correlation between variables and axes, squared cosine and contributions).
+
+```{r}
+var <- get_pca_var(res.pca)
+var
+```
+
+The components of the `get_pca_var()` can be used in the plot of variables as follow:
+
+- `var$coord`: coordinates of variables to create a scatter plot
+- `var$cos2`: represents the quality of representation for variables on the factor map. It’s calculated as the squared coordinates: var.cos2 = var.coord * var.coord.
+- v`ar$contrib`: contains the contributions (in percentage) of the variables to the principal components. The contribution of a variable (var) to a given principal component is (in percentage) : (var.cos2 * 100) / (total cos2 of the component).
+
+> Note that, it’s possible to plot variables and to color them according to either i) their quality on the factor map (cos2) or ii) their contribution values to the principal components (contrib).
+
+The different components can be accessed as follow:
+
+```{r}
+# Coordinates
+head(var$coord)
+# Cos2: quality on the factore map
+head(var$cos2)
+# Contributions to the principal components
+head(var$contrib)
+```
+
+In this section, we describe how to visualize variables and draw conclusions about their correlations. Next, we highlight variables according to either i) their quality of representation on the factor map or ii) their contributions to the principal components.
+
+## Correlation circle
+
+The correlation between a variable and a principal component (PC) is used as the coordinates of the variable on the PC. The representation of variables differs from the plot of the observations: The observations are represented by their projections, but the variables are represented by their correlations (Abdi and Williams 2010).
+
+```{r}
+# Coordinates of variables
+head(var$coord, 4)
+```
+
+To plot variables, type this:
+
+```{r}
+fviz_pca_var(res.pca, col.var = "black")
+```
+
+The plot above is also known as variable correlation plots. It shows the relationships between all variables. It can be interpreted as follow:
+
+- Positively correlated variables are grouped together.
+- Negatively correlated variables are positioned on opposite sides of the plot origin (opposed quadrants).
+- The distance between variables and the origin measures the quality of the variables on the factor map. Variables that are away from the origin are well represented on the factor map.
+
+## Quality of representation
+
+The quality of representation of the variables on factor map is called cos2 (square cosine, squared coordinates) . You can access to the cos2 as follow:
+
+```{r}
+head(var$cos2, 4)
+```
+
+You can visualize the cos2 of variables on all the dimensions using the corrplot package:
+
+```{r}
+library("corrplot")
+corrplot(var$cos2, is.corr=FALSE)
+```
+
+It’s also possible to create a bar plot of variables cos2 using the function `fviz_cos2()` [in `factoextra`]:
+
+```{r}
+# Total cos2 of variables on Dim.1 and Dim.2
+fviz_cos2(res.pca, choice = "var", axes = 1:2)
+```
+
+Note that,
+
+- A high cos2 indicates a good representation of the variable on the principal component. In this case the variable is positioned close to the circumference of the correlation circle.
+
+- A low cos2 indicates that the variable is not perfectly represented by the PCs. In this case the variable is close to the center of the circle.
+
+For a given variable, the sum of the cos2 on all the principal components is equal to one.
+
+If a variable is perfectly represented by only two principal components (Dim.1 & Dim.2), the sum of the cos2 on these two PCs is equal to one. In this case the variables will be positioned on the circle of correlations.
+
+For some of the variables, more than 2 components might be required to perfectly represent the data. In this case the variables are positioned inside the circle of correlations.
+
+In summary:
+
+- The cos2 values are used to estimate the quality of the representation
+- The closer a variable is to the circle of correlations, the better its representation on the factor map (and the more important it is to interpret these components)
+- Variables that are closed to the center of the plot are less important for the first components.
+
+It’s possible to color variables by their cos2 values using the argument col.var = "cos2". This produces a gradient colors. In this case, the argument gradient.cols can be used to provide a custom color. For instance, gradient.cols = c("white", "blue", "red") means that:
+
+- variables with low cos2 values will be colored in “white”
+- variables with mid cos2 values will be colored in “blue”
+- variables with high cos2 values will be colored in red
+
+```{r}
+# Color by cos2 values: quality on the factor map
+fviz_pca_var(res.pca, col.var = "cos2",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+             repel = TRUE # Avoid text overlapping
+             )
+```
+
+Note that, it’s also possible to change the transparency of the variables according to their cos2 values using the option alpha.var = "cos2". For example, type this:
+
+```{r}
+# Change the transparency by cos2 values
+fviz_pca_var(res.pca, alpha.var = "cos2")
+```
+
+## Contributions of variables to PCs
+
+The contributions of variables in accounting for the variability in a given principal component are expressed in percentage.
+
+- Variables that are correlated with PC1 (i.e., Dim.1) and PC2 (i.e., Dim.2) are the most important in explaining the variability in the data set.
+- Variables that do not correlated with any PC or correlated with the last dimensions are variables with low contribution and might be removed to simplify the overall analysis.
+
+The contribution of variables can be extracted as follow:
+
+```{r}
+head(var$contrib, 4)
+```
+
+> The larger the value of the contribution, the more the variable contributes to the component.
+
+It’s possible to use the function corrplot() [corrplot package] to highlight the most contributing variables for each dimension:
+
+```{r}
+library("corrplot")
+corrplot(var$contrib, is.corr=FALSE)   
+```
+
+The function `fviz_contrib()` [`factoextra` package] can be used to draw a bar plot of variable contributions. If your data contains many variables, you can decide to show only the top contributing variables. The R code below shows the top 10 variables contributing to the principal components:
+
+```{r}
+# Contributions of variables to PC1
+fviz_contrib(res.pca, choice = "var", axes = 1, top = 10)
+# Contributions of variables to PC2
+fviz_contrib(res.pca, choice = "var", axes = 2, top = 10)
+```
+
+The total contribution to PC1 and PC2 is obtained with the following R code:
+
+```{r}
+fviz_contrib(res.pca, choice = "var", axes = 1:2, top = 10)
+```
+
+The red dashed line on the graph above indicates the expected average contribution. If the contribution of the variables were uniform, the expected value would be 1/length(variables) = 1/10 = 10%. For a given component, a variable with a contribution larger than this cutoff could be considered as important in contributing to the component.
+
+Note that, the total contribution of a given variable, on explaining the variations retained by two principal components, say PC1 and PC2, is calculated as `contrib = [(C1 * Eig1) + (C2 * Eig2)]/(Eig1 + Eig2)`, where
+
+- C1 and C2 are the contributions of the variable on PC1 and PC2, respectively
+- Eig1 and Eig2 are the eigenvalues of PC1 and PC2, respectively. Recall that eigenvalues measure the amount of variation retained by each PC.
+
+In this case, the expected average contribution (cutoff) is calculated as follow: As mentioned above, if the contributions of the 10 variables were uniform, the expected average contribution on a given PC would be 1/10 = 10%. The expected average contribution of a variable for PC1 and PC2 is : `[(10* Eig1) + (10 * Eig2)]/(Eig1 + Eig2)`.
+
+> It can be seen that the variables - X100m, Long.jump and Pole.vault - contribute the most to the dimensions 1 and 2.
+
+The most important (or, contributing) variables can be highlighted on the correlation plot as follow:
+
+```{r}
+fviz_pca_var(res.pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
+```
+
+Note that, it’s also possible to change the transparency of variables according to their contrib values using the option alpha.var = "contrib". For example, type this:
+
+```{r}
+# Change the transparency by contrib values
+fviz_pca_var(res.pca, alpha.var = "contrib")
+```
+
+## Color by a custom continuous variable
+
+In the previous sections, we showed how to color variables by their contributions and their cos2. Note that, it’s possible to color variables by any custom continuous variable. The coloring variable should have the same length as the number of active variables in the PCA (here n = 10).
+
+For example, type this:
+
+```{r}
+# Create a random continuous variable of length 10
+set.seed(123)
+my.cont.var <- rnorm(10)
+# Color variables by the continuous variable
+fviz_pca_var(res.pca, col.var = my.cont.var,
+             gradient.cols = c("blue", "yellow", "red"),
+             legend.title = "Cont.Var")
+```
+
+## Color by groups
+
+It’s also possible to change the color of variables by groups defined by a qualitative/categorical variable, also called factor in R terminology.
+
+As we don’t have any grouping variable in our data sets for classifying variables, we’ll create it.
+
+In the following demo example, we start by classifying the variables into 3 groups using the kmeans clustering algorithm. Next, we use the clusters returned by the kmeans algorithm to color variables.
+
+```{r}
+# Create a grouping variable using kmeans
+# Create 3 groups of variables (centers = 3)
+set.seed(123)
+res.km <- kmeans(var$coord, centers = 3, nstart = 25)
+grp <- as.factor(res.km$cluster)
+# Color variables by groups
+fviz_pca_var(res.pca, col.var = grp, 
+             palette = c("#0073C2FF", "#EFC000FF", "#868686FF"),
+             legend.title = "Cluster")
+```
+
+## Dimension description
+
+In the section PCA variable contributions, we described how to highlight variables according to their contributions to the principal components.
+
+Note also that, the function `dimdesc()` [in `FactoMineR`], for dimension description, can be used to identify the most significantly associated variables with a given principal component. It can be used as follow:
+
+```{r}
+res.desc <- dimdesc(res.pca, axes = c(1,2), proba = 0.05)
+# Description of dimension 1
+res.desc$Dim.1
+res.desc$Dim.2
+```
+
+In the output above, `$quanti` means results for quantitative variables. Note that, variables are sorted by the `p-value` of the correlation.
+
+## Graph of individuals
+
+The results, for individuals can be extracted using the function `get_pca_ind()` [`factoextra` package]. Similarly to the `get_pca_var()`, the function `get_pca_ind()` provides a list of matrices containing all the results for the individuals (coordinates, correlation between individuals and axes, squared cosine and contributions).
+
+```{r}
+ind <- get_pca_ind(res.pca)
+ind
+# Coordinates of individuals
+head(ind$coord)
+# Quality of individuals
+head(ind$cos2)
+# Contributions of individuals
+head(ind$contrib)
+```
+
+## Plots: quality and contribution
+The `fviz_pca_ind()` is used to produce the graph of individuals. To create a simple plot, type this:
+
+```{r}
+ind <- fviz_pca_ind(res.pca, geom = "point", col.ind = rownames(decathlon2.active))
+```
+
+```{r}
+fviz_pca_ind(res.pca, col.ind = "cos2", 
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE) # Avoid text overlapping (slow if many points)
+
+fviz_pca_ind(res.pca, pointsize = "cos2", 
+             pointshape = 21, fill = "#E7B800",
+             repel = TRUE) # Avoid text overlapping (slow if many points)
+
+fviz_pca_ind(res.pca, col.ind = "cos2", pointsize = "cos2",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE) # Avoid text overlapping (slow if many points)
+```
+
+`ggplot2` plot
+
+```{r}
+plot <- ggplot(ind$data, aes(x=x, y=y, color=decathlon2$Competition[1:23], shape=decathlon2$Competition[1:23])) + 
+  geom_point(size=3) +
+  xlab(paste0("Eixo 1: ", round(res.pca$eig[1,2:2], 1), "% ")) + 
+  ylab(paste0("Eixo 2: ", round(res.pca$eig[2,2:2], 1), "% ")) + 
+  ##ggtitle("PCA All data") +
+  labs(color="Competition", shape="Competition") +  geom_vline(xintercept=0, linetype="dashed") +
+  geom_hline( yintercept=0, linetype="dashed")
+
+plot
+
+plot +
+  theme_minimal() +
+  theme(panel.grid = element_blank(), panel.border = element_rect(fill= "transparent"))
+```
+
+To create a bar plot of the quality of representation (cos2) of individuals on the factor map, you can use the function fviz_cos2() as previously described for variables:
+
+```{r}
+fviz_cos2(res.pca, choice = "ind")
+```
+
+To visualize the contribution of individuals to the first two principal components, type this:
+
+```{r}
+# Total contribution on PC1 and PC2
+fviz_contrib(res.pca, choice = "ind", axes = 1:2)
+```
+
+## Color by groups
+
+Here, we describe how to color individuals by group. Additionally, we show how to add concentration `ellipses` and `confidence ellipses` by groups. For this, we’ll use the iris data as demo data sets.
+
+The column “Species” will be used as grouping variable. We start by computing principal component analysis as follow:
+
+```{r}
+# The variable Species (index = 5) is removed
+# before PCA analysis
+iris.pca <- PCA(iris[,-5], graph = FALSE)
+```
+
+In the R code below: the argument habillage or col.ind can be used to specify the factor variable for coloring the individuals by groups.
+
+To add a concentration ellipse around each group, specify the argument `addEllipses = TRUE.` The argument palette can be used to change group colors.
+
+```{r}
+fviz_pca_ind(iris.pca,
+             geom.ind = "point", # show points only (nbut not "text")
+             col.ind = iris$Species, # color by groups
+             palette = c("#00AFBB", "#E7B800", "#FC4E07"),
+             addEllipses = TRUE, # Concentration ellipses
+             legend.title = "Groups"
+             )
+
+# Add confidence ellipses
+fviz_pca_ind(iris.pca, geom.ind = "point", col.ind = iris$Species, 
+             palette = c("#00AFBB", "#E7B800", "#FC4E07"),
+             addEllipses = TRUE, ellipse.type = "confidence",
+             legend.title = "Groups"
+             )
+
+fviz_pca_ind(iris.pca,
+             label = "none", # hide individual labels
+             habillage = iris$Species, # color by groups
+             addEllipses = TRUE, # Concentration ellipses
+             palette = "jco"
+             )
+```
+
+## Graphical parameters
+
+To change easily the graphical of any ggplots, you can use the function ggpar() [ggpubr package]
+
+The graphical parameters that can be changed using ggpar() include:
+
+- Main titles, axis labels and legend titles
+- Legend position. Possible values: “top”, “bottom”, “left”, “right”, “none”.
+- Color palette.
+- Themes. Allowed values include: `theme_gray(`), `theme_bw()`, `theme_minimal()`, `theme_classic()`, `theme_void()`.
+
+```{r}
+ind.p <- fviz_pca_ind(iris.pca, geom = "point", col.ind = iris$Species)
+ggpubr::ggpar(ind.p,
+              title = "Principal Component Analysis",
+              subtitle = "Iris data set",
+              caption = "Source: factoextra",
+              xlab = "PC1", ylab = "PC2",
+              legend.title = "Species", legend.position = "top",
+              ggtheme = theme_gray(), palette = "jco")
+
+## Biplot
+fviz_pca_biplot(res.pca, repel = TRUE,
+                col.var = "#2E9FDF", # Variables color
+                col.ind = "#696969") # Individuals color
+          
+fviz_pca_biplot(iris.pca, 
+                col.ind = iris$Species, palette = "jco", 
+                addEllipses = TRUE, label = "var",
+                col.var = "black", repel = TRUE,
+                legend.title = "Species")
+
+fviz_pca_biplot(iris.pca, 
+                # Fill individuals by groups
+                geom.ind = "point",
+                pointshape = 21,
+                pointsize = 2.5,
+                fill.ind = iris$Species,
+                col.ind = "black",
+                # Color variable by groups
+                col.var = factor(c("sepal", "sepal", "petal", "petal")),
+                legend.title = list(fill = "Species", color = "Clusters"),
+                repel = TRUE) +       # Avoid label overplotting
+  ggpubr::fill_palette("jco") +      # Indiviual fill color
+  ggpubr::color_palette("npg")      # Variable colors
+
+fviz_pca_biplot(iris.pca, 
+                # Individuals
+                geom.ind = "point",
+                fill.ind = iris$Species, col.ind = "black",
+                pointshape = 21, pointsize = 2,
+                palette = "jco",
+                addEllipses = TRUE,
+                # Variables
+                alpha.var ="contrib", col.var = "contrib",
+                gradient.cols = "RdYlBu", 
+                legend.title = list(fill = "Species", color = "Contrib", alpha = "Contrib"))
+```
+
+# Reference:
+- [Plotting PCA/clustering results using ggplot2 and ggfortify](https://rpubs.com/sinhrks/plot_pca)

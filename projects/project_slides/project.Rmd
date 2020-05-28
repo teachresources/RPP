@@ -1,0 +1,78 @@
+---
+title: Title
+author: <small>FirstName LastName Cassol (myemail@gmail.com)</small>
+date: "11 June, 2020" 
+## bibliography: config/bibtex.bib
+output: 
+  revealjs::revealjs_presentation:
+    theme: sky
+    highlight: pygments
+    center: true
+    css: config/slides-style.css
+    reveal_options:
+     ## slideNumber: true
+    template: config/default.html
+---
+
+# Tutorials
+
+## Tutorials
+
+  - [Presentations](https://bookdown.org/yihui/rmarkdown/presentations.html)
+  - [reveal.js](https://bookdown.org/yihui/rmarkdown/revealjs.html)
+
+# Outline
+
+## Outline
+- Introduction
+  - Motivation
+- Methods
+  - Analysis
+- Results and Discussion
+- Conclusions
+- References
+
+# Introduction
+
+## Motivation
+
+- First
+- Second
+
+# Methods
+
+## Experimental Methods
+
+Describe all the Methods
+
+## Analysis
+
+Describe the packages and analysis
+
+# Results and Discussion
+
+## Results
+
+Plot the results
+
+```{r}
+boxplot(iris[,1:4])
+```
+
+## Images
+
+Insert images
+
+<br><center><img src="./images/logo.png" align="botton" alt="Drawing" style="width: 300px;"/><center>
+
+## Images option
+
+Insert images
+
+![](./images/logo.png)
+
+
+# Conclusions
+
+
+# References 

@@ -90,7 +90,723 @@
 				<div class="row">
 					<div class="col-md-7">
 						<div class="content">
-							
+							<p>Find <a href="https://teachresources.github.io/RPP/u8/ggplot2.Rmd">here</a> the
+correspondent <code class="language-plaintext highlighter-rouge">*Rmd</code>. Find
+<a href="https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">here</a>
+the <code class="language-plaintext highlighter-rouge">ggplot2 Cheatsheet</code>.</p>
+
+<h1 id="ggplot2"><em><code class="language-plaintext highlighter-rouge">ggplot2</code></em></h1>
+
+<h2 id="introduction">Introduction</h2>
+
+<p><code class="language-plaintext highlighter-rouge">ggplot2</code> is a powerful and a flexible R package, implemented by Hadley
+Wickham, for producing elegant graphics.</p>
+
+<p>The concept behind ggplot2 divides plot into three different fundamental
+parts: Plot = <code class="language-plaintext highlighter-rouge">data</code> + <code class="language-plaintext highlighter-rouge">Aesthetics</code> + <code class="language-plaintext highlighter-rouge">Geometry.</code></p>
+
+<p>The principal components of every plot can be defined as follow:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">data</code> is a data frame</li>
+  <li><code class="language-plaintext highlighter-rouge">Aesthetics</code> is used to indicate x and y variables. It can also be
+used to control the color, the size or the shape of points, the
+height of bars, etc…..</li>
+  <li><code class="language-plaintext highlighter-rouge">Geometry</code> defines the type of graphics (histogram, box plot, line
+plot, density plot, dot plot, ….)</li>
+</ul>
+
+<p>There are two major functions in <code class="language-plaintext highlighter-rouge">ggplot2</code> package: <code class="language-plaintext highlighter-rouge">qplot()</code> and
+<code class="language-plaintext highlighter-rouge">ggplot()</code> functions:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">qplot()</code> stands for quick plot, which can be used to produce easily
+simple plots.</li>
+  <li><code class="language-plaintext highlighter-rouge">ggplot()</code> function is more flexible and robust than qplot for
+building a plot piece by piece.</li>
+</ul>
+
+<h2 id="amazing-resources">Amazing resources</h2>
+
+<ul>
+  <li><a href="https://www.r-graph-gallery.com/all-graphs.html">ggplot2 gallery</a></li>
+  <li><a href="https://ggplot2.tidyverse.org/reference/">ggplot2 manual</a></li>
+  <li><a href="https://exts.ggplot2.tidyverse.org/gallery/">ggplot2 gallery -
+official</a></li>
+  <li><a href="http://www.sthda.com/english/wiki/ggplot2-essentials">ggplot2 -
+Essentials</a></li>
+  <li><a href="http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html">Top 50 ggplot2 Visualizations</a></li>
+</ul>
+
+<h2 id="grammar-of-graphics">Grammar of Graphics</h2>
+
+<p>Just as the grammar of language helps us construct meaningful sentences
+out of words, the <em>Grammar of Graphics</em> helps us to construct graphical
+figures out of different visual elements. This grammar gives us a way to
+talk about parts of a plot: all the circles, lines, arrows, and words
+that are combined into a diagram for visualizing data. Originally
+developed by Leland Wilkinson, the Grammar of Graphics was adapted by
+Hadley Wickham to describe the components of a plot, including</p>
+
+<ul>
+  <li><strong>Data</strong>: Always start with the data, identify the dimensions you
+want to visualize.</li>
+  <li><strong>Aesthetics</strong>: Confirm the axes based on the data dimensions,
+positions of various data points in the plot. Also check if any form
+of encoding is needed including size, shape, color and so on which
+are useful for plotting multiple data dimensions.</li>
+  <li><strong>Scale</strong>: Do we need to scale the potential values, use a specific
+scale to represent multiple values or a range? Geometric objects:
+These are popularly known as ‘geoms’. This would cover the way we
+would depict the data points on the visualization. Should it be
+points, bars, lines and so on?</li>
+  <li><strong>Statistics</strong>: Do we need to show some statistical measures in the
+visualization like measures of central tendency, spread, confidence
+intervals?</li>
+  <li><strong>Facets</strong>: Do we need to create subplots based on specific data
+dimensions?</li>
+  <li><strong>Coordinate system</strong>: What kind of a coordinate system should the
+visualization be based on — should it be cartesian or polar?</li>
+</ul>
+
+<p><img src="/u8/ggplot.png" alt="Grammar of Graphics" /> *
+<a href="https://www.google.com/imgres?imgurl=https%3A%2F%2Fblog.gtwang.org%2Fwp-content%2Fuploads%2F2016%2F07%2Fggplot-grammar-of-graphics-stack-1.png&amp;imgrefurl=http%3A%2F%2Fbloggotype.blogspot.com%2F2016%2F08%2Fholiday-notes2-grammar-of-graphics.html&amp;tbnid=ojkzfa9VdM9L3M&amp;vet=12ahUKEwjz-ZqTltXpAhVyI30KHYEfCvMQMygBegUIARDmAQ..i&amp;docid=TvXMfSWvpc8D6M&amp;w=1921&amp;h=1431&amp;q=ggplot2%20grammar&amp;ved=2ahUKEwjz-ZqTltXpAhVyI30KHYEfCvMQMygBegUIARDmAQ">Immage</a>
+reference. ## Install and Load Library</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## install &amp; load ggplot library
+#install.package("ggplot2")
+library("ggplot2")
+library(tidyverse)
+</code></pre></div></div>
+
+<h2 id="data">Data</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>head(mtcars)
+
+##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+</code></pre></div></div>
+
+<h2 id="the-basics-dataaestheticsgeometries">The Basics (Data/Aesthetics/Geometries)</h2>
+
+<p>In order to create a plot, you:</p>
+
+<ul>
+  <li>Call the <code class="language-plaintext highlighter-rouge">ggplot()</code> function which creates a blank canvas</li>
+  <li>Specify aesthetic mappings, which specifies how you want to map
+variables to visual aspects. In this case we are simply mapping the
+displ and hwy variables to the x- and y-axes.</li>
+  <li>You then add new layers that are geometric objects which will show
+up on the plot. In this case we add geom_point to add a layer with
+points (dot) elements as the geometric shapes to represent the data.</li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># create canvas
+ggplot(mtcars)
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-3-1.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># variables of interest mapped
+ggplot(mtcars, aes(x = cyl, y = mpg))
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-3-2.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># data plotted
+ggplot(mtcars, aes(x = cyl, y = mpg)) +
+  geom_point()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-3-3.png" alt="" /></p>
+
+<p>Note that when you added the geom layer you used the addition (<code class="language-plaintext highlighter-rouge">+</code>)
+operator. As you add new layers you will always use + to add onto your
+visualization.</p>
+
+<h2 id="aesthetic-mappings">Aesthetic Mappings</h2>
+
+<p>The aesthetic mappings take properties of the data and use them to
+influence visual characteristics, such as position, color, size, shape,
+or transparency. Each visual characteristic can thus encode an aspect of
+the data and be used to convey information.</p>
+
+<p>All aesthetics for a plot are specified in the <code class="language-plaintext highlighter-rouge">aes()</code> function call
+(later in this tutorial you will see that each <code class="language-plaintext highlighter-rouge">geom</code> layer can have its
+own <code class="language-plaintext highlighter-rouge">aes</code> specification). For example, we can add a mapping from the
+class of the cars to a color characteristic:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(x = cyl, y = mpg, color = gear)) +
+  geom_point()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-4-1.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class(mtcars$cyl)
+
+## [1] "numeric"
+
+color &lt;- as.character(mtcars$cyl)
+
+ggplot(mtcars, aes(x = cyl, y = mpg, color = color)) +
+  geom_point()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-4-2.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(x = cyl, y = mpg, color = factor(gear))) +
+  geom_point()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-4-3.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(x = cyl, y = mpg)) +
+  geom_point(color = "blue")
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-4-4.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(cyl, mpg, color = factor(gear), size = hp)) + #hp = horsepower
+  geom_point()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-4-5.png" alt="" /></p>
+
+<h2 id="specifying-geometric-shapes">Specifying Geometric Shapes</h2>
+
+<p>Building on these basics, <code class="language-plaintext highlighter-rouge">ggplot2</code> can be used to build almost any kind
+of plot you may want. These plots are declared using functions that
+follow from the Grammar of Graphics.</p>
+
+<p>The most obvious distinction between plots is what geometric objects
+(geoms) they include. ggplot2 supports a number of different types of
+geoms, including:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">geom_point</code> for drawing individual points (e.g., a scatter plot)</li>
+  <li><code class="language-plaintext highlighter-rouge">geom_line</code> for drawing lines (e.g., for a line charts)</li>
+  <li><code class="language-plaintext highlighter-rouge">geom_smooth</code> for drawing smoothed lines (e.g., for simple trends or
+approximations)</li>
+  <li><code class="language-plaintext highlighter-rouge">geom_bar</code> for drawing bars (e.g., for bar charts)</li>
+  <li><code class="language-plaintext highlighter-rouge">geom_histogram</code> for drawing binned values (e.g. a histogram)</li>
+  <li><code class="language-plaintext highlighter-rouge">geom_polygon</code> for drawing arbitrary shapes</li>
+  <li><code class="language-plaintext highlighter-rouge">geom_map</code> for drawing polygons in the shape of a map! (You can
+access the data to use for these maps by using the map_data()
+function).</li>
+</ul>
+
+<!-- -->
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Left column: x and y mapping needed!
+ggplot(mtcars, aes(x = cyl, y = mpg)) +
+  geom_point()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-1.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(x = cyl, y = mpg)) +
+  geom_line()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-2.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># plot with both points and smoothed line
+ggplot(mtcars, aes(x = cyl, y = mpg)) +
+    geom_point() +
+    geom_smooth(method = "lm")
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-3.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(x = cyl, y = mpg)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", color = "red")
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-4.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># color aesthetic passed to each geom layer
+ggplot(mtcars, aes(x = cyl, y = mpg, color = cyl)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-5.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># color aesthetic specified for only the geom_point layer
+ggplot(mtcars, aes(x = cyl, y = mpg)) +
+  geom_point(aes(color = factor(cyl))) +
+  geom_smooth(method = "lm", se = FALSE)
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-6.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Right column: no y mapping needed!
+ggplot(data = mtcars, aes(x = gear)) +
+  geom_bar()  
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-7.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(data = mtcars, aes(x = gear)) +
+  geom_histogram() 
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-8.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(data = iris, aes(x = Sepal.Length)) +
+  geom_histogram() 
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-9.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(factor(gear), mpg)) + geom_violin()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-10.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(factor(gear), mpg))  + 
+  geom_violin() +
+  geom_point(shape = 1, position = "jitter")
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-11.png" alt="" /></p>
+
+<h2 id="statistical-transformations">Statistical Transformations</h2>
+
+<p>If you look at the below bar chart, you’ll notice that the the y axis
+was defined for us as the count of elements that have the particular
+type. This count isn’t part of the data set (it’s not a column in mpg),
+but is instead a <strong>statistical transformation</strong> that the <code class="language-plaintext highlighter-rouge">geom_bar</code>
+automatically applies to the data. In particular, it applies the
+<code class="language-plaintext highlighter-rouge">stat_count</code> transformation.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(x = gear)) +
+  geom_bar()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-6-1.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class_count &lt;- dplyr::count(mpg, class)
+class_count
+
+## # A tibble: 7 x 2
+##   class          n
+##   &lt;chr&gt;      &lt;int&gt;
+## 1 2seater        5
+## 2 compact       47
+## 3 midsize       41
+## 4 minivan       11
+## 5 pickup        33
+## 6 subcompact    35
+## 7 suv           62
+
+ggplot(class_count, aes(x = class, y = n)) +
+  geom_bar(stat = "identity")
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-6-2.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(class_count, aes(x = class, y = n, fill=class)) +
+  geom_bar(stat = "identity")
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-6-3.png" alt="" /></p>
+
+<p>We can also call <code class="language-plaintext highlighter-rouge">stat_</code> functions directly to add additional layers.
+For example, here we create a scatter plot of highway miles for each
+displacement value and then use <code class="language-plaintext highlighter-rouge">stat_summary</code> to plot the mean highway
+miles at each displacement value.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mpg, aes(displ, hwy)) + 
+  geom_point(color = "grey") + 
+  stat_summary(fun = "mean", geom = "line", size = 1, linetype = "dashed")
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-7-1.png" alt="" /></p>
+
+<h2 id="position-adjustments">Position Adjustments</h2>
+
+<p>In addition to a default statistical transformation, each geom also has
+a default <code class="language-plaintext highlighter-rouge">position adjustment</code> which specifies a set of “rules” as to
+how different components should be positioned relative to each other.
+This position is noticeable in a <code class="language-plaintext highlighter-rouge">geom_bar</code> if you map a different
+variable to the color visual characteristic:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># bar chart of class, colored by drive (front, rear, 4-wheel)
+ggplot(ToothGrowth, aes(x = supp, y=len,  fill = dose)) + 
+    geom_bar(stat = "identity")
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-8-1.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(ToothGrowth, aes(x = supp, y=len,  fill = factor(dose))) + 
+    geom_bar(stat = "identity")
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-8-2.png" alt="" /></p>
+
+<p>The <code class="language-plaintext highlighter-rouge">geom_bar</code> by default uses a position adjustment of “<code class="language-plaintext highlighter-rouge">stack</code>”, which
+makes each rectangle’s height proprotional to its value and stacks them
+on top of each other. We can use the <code class="language-plaintext highlighter-rouge">position</code> argument to specify what
+position adjustment rules to follow:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># position = "dodge": values next to each other
+ggplot(mpg, aes(x = class, fill = drv)) + 
+  geom_bar(position = "dodge")
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-9-1.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># position = "fill": percentage chart
+ggplot(mpg, aes(x = class, fill = drv)) + 
+  geom_bar(position = "fill")
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-9-2.png" alt="" /></p>
+
+<h2 id="managing-scales">Managing Scales</h2>
+
+<p>Whenever you specify an aesthetic mapping, ggplot uses a particular
+scale to determine the range of values that the data should map to. Thus
+when you specify</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># color the data by engine type
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-10-1.png" alt="" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">ggplot</code> automatically adds a scale for each mapping to the plot:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># same as above, with explicit scales
+ggplot(economics, aes(date, unemploy)) +
+  geom_point() +
+  scale_y_continuous() +
+  scale_colour_discrete()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-11-1.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(economics, aes(date, unemploy)) + 
+  geom_line() +
+  scale_y_continuous(limits = c(0, max(economics$unemploy)))
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-11-2.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(economics, aes(date, unemploy)) + 
+  geom_line() +
+  scale_y_continuous(limits = c(0, max(economics$unemploy))) +
+  scale_x_date(limits = c(as.Date("2000-01-01"), as.Date(Sys.time())))
+
+## Warning: Removed 390 row(s) containing missing values (geom_path).
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-11-3.png" alt="" /></p>
+
+<p>Each scale can be represented by a function with the following name:
+<code class="language-plaintext highlighter-rouge">scale_</code>, followed by the name of the aesthetic property, followed by an
+_ and the name of the scale. A <code class="language-plaintext highlighter-rouge">continuous</code> scale will handle things
+like numeric data (where there is a continuous set of numbers), whereas
+a <code class="language-plaintext highlighter-rouge">discrete</code> scale will handle things like colors (since there is a
+small list of distinct colors).</p>
+
+<p>While the default scales will work fine, it is possible to explicitly
+add different scales to replace the defaults. For example, you can use a
+scale to change the direction of an axis:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># milage relationship, ordered in reverse
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point() +
+  scale_x_reverse() +
+  scale_y_reverse()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-12-1.png" alt="" /></p>
+
+<p>A common parameter to change is which set of colors to use in a plot.
+While you can use the default coloring, a more common option is to
+leverage the pre-defined palettes from <code class="language-plaintext highlighter-rouge">colorbrewer.org</code>. These color
+sets have been carefully designed to look good and to be viewable to
+people with certain forms of color blindness. We can leverage color
+brewer palletes by specifying the <code class="language-plaintext highlighter-rouge">scale_color_brewer()</code> function,
+passing the pallete as an argument.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># default color brewer
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point() +
+  scale_color_brewer()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-13-1.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># specifying color palette
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point() +
+  scale_color_brewer(palette = "Set3")
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-13-2.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mpg, aes(displ, hwy, color = class)) +
+  geom_point() + 
+  scale_color_hue(h = c(270, 360)) # blue to red
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-13-3.png" alt="" /></p>
+
+<p>[colorbrewer.org]](<a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3" class="uri">https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3</a>)</p>
+
+<h3 id="scales">Scales</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(midwest, aes(area, poptotal)) + 
+  geom_point() + 
+  scale_y_log10()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-14-1.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpg %&gt;%
+  group_by(class) %&gt;% 
+  summarize(maxhwy = max(hwy)) %&gt;% 
+  ggplot(aes(class, maxhwy)) +
+    geom_col() +
+    scale_x_discrete(labels = toupper(sort(unique(mpg$manufacturer))))
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-14-2.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(ToothGrowth, aes(x=dose, y=len)) + 
+  geom_boxplot()
+
+## Warning: Continuous x aesthetic -- did you forget aes(group=...)?
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-14-3.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(ToothGrowth, aes(x=factor(dose), y=len)) + 
+  geom_boxplot()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-14-4.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(ToothGrowth, aes(x=factor(dose), y=len)) + 
+  geom_boxplot() +
+  scale_x_discrete(name ="Dose (mg)",limits=c("2","1","0.5"))
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-14-5.png" alt="" /></p>
+
+<h2 id="facets">Facets</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Facets</code> are ways of grouping a data plot into multiple different pieces
+(subplots). This allows you to view a separate plot for each value in a
+categorical variable. You can construct a plot with multiple facets by
+using the facet_wrap() function. This will produce a “row” of subplots,
+one for each categorical variable (the number of rows can be specified
+with an additional argument):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  facet_wrap(~ year)
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-15-1.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  facet_wrap(~ manufacturer)
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-15-2.png" alt="" /></p>
+
+<p>You can also facet_grid to facet your data by more than one categorical
+variable. Note that we use a tilde (~) in our facet functions. With
+facet_grid the variable to the left of the tilde will be represented in
+the rows and the variable to the right will be represented across the
+columns.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  facet_grid(year ~ cyl)
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-16-1.png" alt="" /></p>
+
+<h2 id="labels--annotations">Labels &amp; Annotations</h2>
+
+<p>Textual labels and annotations (on the plot, axes, geometry, and legend)
+are an important part of making a plot understandable and communicating
+information. Although not an explicit part of the Grammar of Graphics
+(the would be considered a form of geometry), <code class="language-plaintext highlighter-rouge">ggplot</code> makes it easy to
+add such annotations.</p>
+
+<p>You can add titles and axis labels to a chart using the<code class="language-plaintext highlighter-rouge">labs()</code> function
+(not labels, which is a different R function!):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point() +
+  labs(title = "Fuel Efficiency by Engine Power",
+       subtitle = "Fuel economy data from 1999 and 2008 for 38 popular models of cars",
+       x = "Engine power (litres displacement)",
+       y = "Fuel Efficiency (miles per gallon)",
+       color = "Car Type")
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-17-1.png" alt="" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">ggplot2</code> offers us a very highly level of customizability in the
+<code class="language-plaintext highlighter-rouge">theme</code> function and pre-set themes.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mpg, aes(displ, hwy, color = class)) + 
+  geom_point() +
+  theme_classic()
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-18-1.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mpg, aes(displ, hwy, color = class)) + 
+  geom_point() +
+  theme_classic() +
+  theme(legend.position = "bottom",
+        legend.background = element_rect(fill = "#EEEEEE", color = "black"),
+        legend.title = element_blank(),
+        axis.title = element_text(size = 16))
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-18-2.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mpg, aes(displ, hwy, color = class)) + 
+  geom_point() +
+  theme_classic() +
+  theme(legend.position = c(1, 1),
+        legend.justification = c(1,1),
+        legend.direction = "horizontal",
+        legend.title = element_blank()) +
+  xlab("Engine Displacement") +
+  ylab("Highway Fuel Economy (miles / gallon") +
+  ggtitle("Highway fuel economy versus engine displacement",
+          "or why do you need that big truck again? ")
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-18-3.png" alt="" /></p>
+
+<p>It is also possible to add labels into the plot itself (e.g., to label
+each point or line) by adding a new geom_text or geom_label to the
+plot; effectively, you’re plotting an extra set of data which happen to
+be the variable names:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># a data table of each car that has best efficiency of its type
+best_in_class &lt;- mpg %&gt;%
+  group_by(class) %&gt;%
+  filter(row_number(desc(hwy)) == 1)
+
+ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_point(aes(color = class)) +
+  geom_label(data = best_in_class, aes(label = model), alpha = 0.5)
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-19-1.png" alt="" /></p>
+
+<p>However, note that two labels overlap one-another in the top left part
+of the plot. We can use the geom_text_repel function from the ggrepel
+package to help position labels.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>library(ggrepel)
+
+ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_point(aes(color = class)) +
+  geom_text_repel(data = best_in_class, aes(label = model))
+</code></pre></div></div>
+
+<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-20-1.png" alt="" /></p>
+
+<h2 id="saving-plots">Saving plots</h2>
+
+<p>Let’s save that great plot we just made. Saving plots in ggplot is done
+with the <code class="language-plaintext highlighter-rouge">ggsave()</code> function:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggsave("hwy_vs_displ.png")
+ggsave("hwy_vs_displ.png", width = 6, height = 6)
+</code></pre></div></div>
+
+<h2 id="animation">Animation</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Get data
+library(gapminder)
+ 
+# Charge libraries
+library(ggplot2)
+library(gganimate)
+ 
+# Make a ggplot, but add frame=year: one image per year
+ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, color = continent)) +
+  geom_point() +
+  scale_x_log10() +
+  theme_bw() +
+  # gganimate specific bits
+  labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'life expectancy') +
+  transition_time(year) +
+  ease_aes('linear')
+
+# Save at gif
+anim_save("271-ggplot2-animated-gif-chart-with-gganimate1.gif")
+</code></pre></div></div>
+
+<p><img src="/u8/271-ggplot2-animated-gif-chart-with-gganimate1.gif" alt="" /></p>
+
+<h2 id="maps">Maps</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Load the library
+library(leaflet)
+
+# Note: if you do not already installed it, install it with:
+# install.packages("leaflet")
+
+# Background 1: NASA
+m &lt;- leaflet() %&gt;% 
+   addTiles() %&gt;% 
+   setView( lng = 2.34, lat = 48.85, zoom = 5 ) %&gt;% 
+   addProviderTiles("NASAGIBS.ViirsEarthAtNight2012")
+m
+ 
+# Background 2: World Imagery
+m &lt;- leaflet() %&gt;% 
+   addTiles() %&gt;% 
+   setView( lng = 2.34, lat = 48.85, zoom = 3 ) %&gt;% 
+   addProviderTiles("Esri.WorldImagery")
+m
+
+# save the widget in a html file if needed.
+library(htmlwidgets)
+saveWidget(m, file="backgroundMapTile.html")
+</code></pre></div></div>
+
+<p><a href="https://duvancho321.github.io/Tidyuesday/Folder/2020/2020-01-07/">Tidyuesday</a></p>
+
+<h1 id="reference">Reference:</h1>
+
+<ol>
+  <li><a href="http://www.sthda.com/english/wiki/ggplot2-essentials">ggplot2
+essentials</a></li>
+  <li><a href="https://ggplot2-book.org/">ggplot2: Elegant Graphics for Data
+Analysis</a></li>
+  <li><a href="https://uc-r.github.io/ggplot_intro">UC Business Analytics R Programming
+Guide</a></li>
+  <li><a href="https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html">R graphics with ggplot2
+workshop</a></li>
+  <li><a href="http://joeystanley.com/downloads/180216-ggplot2-part1">Visualizations I: Intro to
+ggplot2</a></li>
+</ol>
 
 						</div><!-- /.content -->
 					</div><!-- /.col -->
