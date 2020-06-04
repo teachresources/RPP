@@ -86,6 +86,9 @@ ggplot(mtcars, aes(x = cyl, y = mpg))
 # data plotted
 ggplot(mtcars, aes(x = cyl, y = mpg)) +
   geom_point()
+plot <- ggplot(mtcars, aes(x = cyl, y = mpg))
+plot + geom_point()
+plot +  geom_line()
 ```
 
 Note that when you added the geom layer you used the addition (`+`) operator. As you add new layers you will always use + to add onto your visualization.
@@ -101,7 +104,7 @@ ggplot(mtcars, aes(x = cyl, y = mpg, color = gear)) +
   geom_point()
 
 class(mtcars$cyl)
-color <- as.character(mtcars$cyl)
+color <- as.character(mtcars$gear)
 
 ggplot(mtcars, aes(x = cyl, y = mpg, color = color)) +
   geom_point()
@@ -143,8 +146,8 @@ ggplot(mtcars, aes(x = cyl, y = mpg)) +
     geom_point() +
     geom_smooth(method = "lm")
 
-ggplot(mtcars, aes(x = cyl, y = mpg)) +
-  geom_point(color = "blue") +
+ggplot(mtcars, aes(x = cyl, y = mpg, color=factor(gear))) +
+  geom_point() +
   geom_smooth(method = "lm", color = "red")
 
 # color aesthetic passed to each geom layer
@@ -167,7 +170,12 @@ ggplot(data = mtcars, aes(x = gear)) +
 ggplot(data = iris, aes(x = Sepal.Length)) +
   geom_histogram() 
 
-ggplot(mtcars, aes(factor(gear), mpg)) + geom_violin()
+ggplot(mtcars, aes(factor(gear), mpg)) +
+  geom_violin()
+
+ggplot(mtcars, aes(factor(gear), mpg)) +
+  geom_boxplot() +
+    geom_point() 
 
 ggplot(mtcars, aes(factor(gear), mpg))  + 
   geom_violin() +
@@ -184,6 +192,9 @@ ggplot(mtcars, aes(x = gear)) +
 
 class_count <- dplyr::count(mpg, class)
 class_count
+
+ggplot(mpg, aes(x = hwy)) +
+  geom_bar()
 
 ggplot(class_count, aes(x = class, y = n)) +
   geom_bar(stat = "identity")
@@ -246,7 +257,7 @@ ggplot(economics, aes(date, unemploy)) +
 
 ggplot(economics, aes(date, unemploy)) + 
   geom_line() +
-  scale_y_continuous(limits = c(0, max(economics$unemploy)))
+  scale_y_continuous(limits = c(5000, max(economics$unemploy)))
 
 ggplot(economics, aes(date, unemploy)) + 
   geom_line() +
@@ -308,7 +319,7 @@ ggplot(ToothGrowth, aes(x=factor(dose), y=len)) +
 
 ggplot(ToothGrowth, aes(x=factor(dose), y=len)) + 
   geom_boxplot() +
-  scale_x_discrete(name ="Dose (mg)",limits=c("2","1","0.5"))
+  scale_x_discrete(name ="Dose (mg)", limits=c("1","2","0.5"))
 ```
 
 ## Facets
@@ -330,7 +341,10 @@ You can also facet_grid to facet your data by more than one categorical variable
 ```{r, message=FALSE}
 ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_point() +
-  facet_grid(year ~ cyl)
+  theme(axis.title.y = element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
 ```
 
 ## Labels & Annotations

@@ -30,9 +30,7 @@ Principal Component Methods in R
 ================================
 
 Principal component methods are used to summarize and visualize the
-information contained in a large multivariate data sets. Here, we
-provide practical examples and course videos to compute and interpret
-principal component methods (PCA, CA, MCA, MFA, etc) using R software.
+information contained in a large multivariate data sets.
 
 The following figure illustrates the type of analysis to be performed
 depending on the type of variables contained in the data set.
@@ -87,9 +85,11 @@ The dimensionality of our two-dimensional data can be reduced to a
 single dimension by projecting each sample onto the first principal
 component (Plot 1B)
 
-![](./pca1.png) ![](./pca2.png) Technically speaking, the amount of
-variance retained by each principal component is measured by the
-so-called **eigenvalue**.
+![](./pca1.png)
+![](./pca2.png) 
+
+Technically speaking, the amount of variance retained by each principal 
+component is measured by the so-called **eigenvalue**.
 
 Note that, the PCA method is particularly useful when the variables
 within the data set are highly correlated. Correlation indicates that

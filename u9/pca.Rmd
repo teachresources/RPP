@@ -15,8 +15,7 @@ This tutorial is from [here](http://www.sthda.com/english/articles/31-principal-
 
 # Principal Component Methods in R
 
-Principal component methods are used to summarize and visualize the information contained in a large multivariate data sets. Here, we provide practical examples and course videos to compute and interpret principal component methods (PCA, CA, MCA, MFA, etc) using R software.
-
+Principal component methods are used to summarize and visualize the information contained in a large multivariate data sets. 
 The following figure illustrates the type of analysis to be performed depending on the type of variables contained in the data set.
 
 ![](multivariate-analysis-factoextra.png)
@@ -63,6 +62,9 @@ Taken together, the main purpose of principal component analysis is to:
 ```{r}
 library("FactoMineR")
 library("factoextra")
+library("ggpubr")
+library("corrplot")
+library("ggplot2")
 ```
 
 ## Data for the tutorial 
@@ -129,7 +131,7 @@ The R code below, computes principal component analysis on the active individual
 ```{r}
 library("FactoMineR")
 decathlon.active <- decathlon2[1:23, 1:10]
-res.pca <- PCA(decathlon2.active, graph = TRUE, scale.unit = TRUE)
+res.pca <- PCA(decathlon.active, graph = TRUE, scale.unit = TRUE)
 ```
 
 The output of the function PCA() is a list, including the following components:
@@ -508,9 +510,12 @@ fviz_pca_ind(iris.pca,
              )
 
 # Add confidence ellipses
-fviz_pca_ind(iris.pca, geom.ind = "point", col.ind = iris$Species, 
+fviz_pca_ind(iris.pca, 
+             geom.ind = "point",
+             col.ind = iris$Species, 
              palette = c("#00AFBB", "#E7B800", "#FC4E07"),
-             addEllipses = TRUE, ellipse.type = "confidence",
+             addEllipses = TRUE, 
+             ellipse.type = "confidence",
              legend.title = "Groups"
              )
 
@@ -544,10 +549,13 @@ ggpubr::ggpar(ind.p,
               ggtheme = theme_gray(), palette = "jco")
 
 ## Biplot
+fviz_pca_biplot(iris.pca, repel = TRUE,
+                col.var = "#2E9FDF", # Variables color
+                col.ind = "#696969") # Individuals color
 fviz_pca_biplot(res.pca, repel = TRUE,
                 col.var = "#2E9FDF", # Variables color
                 col.ind = "#696969") # Individuals color
-          
+
 fviz_pca_biplot(iris.pca, 
                 col.ind = iris$Species, palette = "jco", 
                 addEllipses = TRUE, label = "var",
