@@ -90,7 +90,9 @@
 				<div class="row">
 					<div class="col-md-7">
 						<div class="content">
-							<p>Find <a href="https://teachresources.github.io/RPP/u8/ggplot2.Rmd">here</a> the
+							<!-- render("ggplot2.Rmd", md_document()) -->
+
+<p>Find <a href="https://teachresources.github.io/RPP/u8/ggplot2.Rmd">here</a> the
 correspondent <code class="language-plaintext highlighter-rouge">*Rmd</code>. Find
 <a href="https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">here</a>
 the <code class="language-plaintext highlighter-rouge">ggplot2 Cheatsheet</code>.</p>
@@ -135,7 +137,6 @@ building a plot piece by piece.</li>
 official</a></li>
   <li><a href="http://www.sthda.com/english/wiki/ggplot2-essentials">ggplot2 -
 Essentials</a></li>
-  <li><a href="http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html">Top 50 ggplot2 Visualizations</a></li>
 </ul>
 
 <h2 id="grammar-of-graphics">Grammar of Graphics</h2>
@@ -212,20 +213,31 @@ points (dot) elements as the geometric shapes to represent the data.</li>
 ggplot(mtcars)
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-3-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-3-1.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># variables of interest mapped
 ggplot(mtcars, aes(x = cyl, y = mpg))
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-3-2.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-3-2.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># data plotted
 ggplot(mtcars, aes(x = cyl, y = mpg)) +
   geom_point()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-3-3.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-3-3.svg" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plot &lt;- ggplot(mtcars, aes(x = cyl, y = mpg))
+plot + geom_point()
+</code></pre></div></div>
+
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-3-4.svg" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plot +  geom_line()
+</code></pre></div></div>
+
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-3-5.svg" alt="" /></p>
 
 <p>Note that when you added the geom layer you used the addition (<code class="language-plaintext highlighter-rouge">+</code>)
 operator. As you add new layers you will always use + to add onto your
@@ -247,37 +259,37 @@ class of the cars to a color characteristic:</p>
   geom_point()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-4-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-4-1.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class(mtcars$cyl)
 
 ## [1] "numeric"
 
-color &lt;- as.character(mtcars$cyl)
+color &lt;- as.character(mtcars$gear)
 
 ggplot(mtcars, aes(x = cyl, y = mpg, color = color)) +
   geom_point()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-4-2.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-4-2.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(x = cyl, y = mpg, color = factor(gear))) +
   geom_point()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-4-3.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-4-3.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(x = cyl, y = mpg)) +
   geom_point(color = "blue")
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-4-4.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-4-4.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(cyl, mpg, color = factor(gear), size = hp)) + #hp = horsepower
   geom_point()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-4-5.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-4-5.svg" alt="" /></p>
 
 <h2 id="specifying-geometric-shapes">Specifying Geometric Shapes</h2>
 
@@ -309,13 +321,13 @@ ggplot(mtcars, aes(x = cyl, y = mpg)) +
   geom_point()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-5-1.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(x = cyl, y = mpg)) +
   geom_line()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-2.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-5-2.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># plot with both points and smoothed line
 ggplot(mtcars, aes(x = cyl, y = mpg)) +
@@ -323,14 +335,14 @@ ggplot(mtcars, aes(x = cyl, y = mpg)) +
     geom_smooth(method = "lm")
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-3.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-5-3.svg" alt="" /></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(x = cyl, y = mpg)) +
-  geom_point(color = "blue") +
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(x = cyl, y = mpg, color=factor(gear))) +
+  geom_point() +
   geom_smooth(method = "lm", color = "red")
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-4.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-5-4.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># color aesthetic passed to each geom layer
 ggplot(mtcars, aes(x = cyl, y = mpg, color = cyl)) +
@@ -338,7 +350,7 @@ ggplot(mtcars, aes(x = cyl, y = mpg, color = cyl)) +
   geom_smooth(method = "lm", se = FALSE)
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-5.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-5-5.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># color aesthetic specified for only the geom_point layer
 ggplot(mtcars, aes(x = cyl, y = mpg)) +
@@ -346,38 +358,46 @@ ggplot(mtcars, aes(x = cyl, y = mpg)) +
   geom_smooth(method = "lm", se = FALSE)
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-6.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-5-6.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Right column: no y mapping needed!
 ggplot(data = mtcars, aes(x = gear)) +
   geom_bar()  
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-7.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-5-7.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(data = mtcars, aes(x = gear)) +
   geom_histogram() 
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-8.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-5-8.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(data = iris, aes(x = Sepal.Length)) +
   geom_histogram() 
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-9.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-5-9.svg" alt="" /></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(factor(gear), mpg)) + geom_violin()
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(factor(gear), mpg)) +
+  geom_violin()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-10.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-5-10.svg" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(factor(gear), mpg)) +
+  geom_boxplot() +
+    geom_point() 
+</code></pre></div></div>
+
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-5-11.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mtcars, aes(factor(gear), mpg))  + 
   geom_violin() +
   geom_point(shape = 1, position = "jitter")
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-5-11.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-5-12.svg" alt="" /></p>
 
 <h2 id="statistical-transformations">Statistical Transformations</h2>
 
@@ -392,7 +412,7 @@ automatically applies to the data. In particular, it applies the
   geom_bar()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-6-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-6-1.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class_count &lt;- dplyr::count(mpg, class)
 class_count
@@ -408,17 +428,23 @@ class_count
 ## 6 subcompact    35
 ## 7 suv           62
 
-ggplot(class_count, aes(x = class, y = n)) +
+ggplot(mpg, aes(x = hwy)) +
+  geom_bar()
+</code></pre></div></div>
+
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-6-2.svg" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(class_count, aes(x = class, y = n)) +
   geom_bar(stat = "identity")
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-6-2.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-6-3.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(class_count, aes(x = class, y = n, fill=class)) +
   geom_bar(stat = "identity")
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-6-3.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-6-4.svg" alt="" /></p>
 
 <p>We can also call <code class="language-plaintext highlighter-rouge">stat_</code> functions directly to add additional layers.
 For example, here we create a scatter plot of highway miles for each
@@ -430,7 +456,7 @@ miles at each displacement value.</p>
   stat_summary(fun = "mean", geom = "line", size = 1, linetype = "dashed")
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-7-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-7-1.svg" alt="" /></p>
 
 <h2 id="position-adjustments">Position Adjustments</h2>
 
@@ -445,13 +471,13 @@ ggplot(ToothGrowth, aes(x = supp, y=len,  fill = dose)) +
     geom_bar(stat = "identity")
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-8-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-8-1.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(ToothGrowth, aes(x = supp, y=len,  fill = factor(dose))) + 
     geom_bar(stat = "identity")
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-8-2.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-8-2.svg" alt="" /></p>
 
 <p>The <code class="language-plaintext highlighter-rouge">geom_bar</code> by default uses a position adjustment of “<code class="language-plaintext highlighter-rouge">stack</code>”, which
 makes each rectangle’s height proprotional to its value and stacks them
@@ -463,14 +489,14 @@ ggplot(mpg, aes(x = class, fill = drv)) +
   geom_bar(position = "dodge")
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-9-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-9-1.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># position = "fill": percentage chart
 ggplot(mpg, aes(x = class, fill = drv)) + 
   geom_bar(position = "fill")
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-9-2.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-9-2.svg" alt="" /></p>
 
 <h2 id="managing-scales">Managing Scales</h2>
 
@@ -483,7 +509,7 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
   geom_point()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-10-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-10-1.svg" alt="" /></p>
 
 <p><code class="language-plaintext highlighter-rouge">ggplot</code> automatically adds a scale for each mapping to the plot:</p>
 
@@ -494,14 +520,16 @@ ggplot(economics, aes(date, unemploy)) +
   scale_colour_discrete()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-11-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-11-1.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(economics, aes(date, unemploy)) + 
   geom_line() +
-  scale_y_continuous(limits = c(0, max(economics$unemploy)))
+  scale_y_continuous(limits = c(5000, max(economics$unemploy)))
+
+## Warning: Removed 41 row(s) containing missing values (geom_path).
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-11-2.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-11-2.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(economics, aes(date, unemploy)) + 
   geom_line() +
@@ -511,7 +539,7 @@ ggplot(economics, aes(date, unemploy)) +
 ## Warning: Removed 390 row(s) containing missing values (geom_path).
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-11-3.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-11-3.svg" alt="" /></p>
 
 <p>Each scale can be represented by a function with the following name:
 <code class="language-plaintext highlighter-rouge">scale_</code>, followed by the name of the aesthetic property, followed by an
@@ -531,7 +559,7 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
   scale_y_reverse()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-12-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-12-1.svg" alt="" /></p>
 
 <p>A common parameter to change is which set of colors to use in a plot.
 While you can use the default coloring, a more common option is to
@@ -547,7 +575,7 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
   scale_color_brewer()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-13-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-13-1.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># specifying color palette
 ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
@@ -555,14 +583,14 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
   scale_color_brewer(palette = "Set3")
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-13-2.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-13-2.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mpg, aes(displ, hwy, color = class)) +
   geom_point() + 
   scale_color_hue(h = c(270, 360)) # blue to red
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-13-3.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-13-3.svg" alt="" /></p>
 
 <p>[colorbrewer.org]](<a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3" class="uri">https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3</a>)</p>
 
@@ -573,7 +601,7 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
   scale_y_log10()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-14-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-14-1.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpg %&gt;%
   group_by(class) %&gt;% 
@@ -583,7 +611,7 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
     scale_x_discrete(labels = toupper(sort(unique(mpg$manufacturer))))
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-14-2.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-14-2.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(ToothGrowth, aes(x=dose, y=len)) + 
   geom_boxplot()
@@ -591,20 +619,20 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
 ## Warning: Continuous x aesthetic -- did you forget aes(group=...)?
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-14-3.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-14-3.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(ToothGrowth, aes(x=factor(dose), y=len)) + 
   geom_boxplot()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-14-4.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-14-4.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(ToothGrowth, aes(x=factor(dose), y=len)) + 
   geom_boxplot() +
-  scale_x_discrete(name ="Dose (mg)",limits=c("2","1","0.5"))
+  scale_x_discrete(name ="Dose (mg)", limits=c("1","2","0.5"))
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-14-5.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-14-5.svg" alt="" /></p>
 
 <h2 id="facets">Facets</h2>
 
@@ -620,14 +648,14 @@ with an additional argument):</p>
   facet_wrap(~ year)
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-15-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-15-1.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mpg, aes(displ, hwy)) +
   geom_point() +
   facet_wrap(~ manufacturer)
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-15-2.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-15-2.svg" alt="" /></p>
 
 <p>You can also facet_grid to facet your data by more than one categorical
 variable. Note that we use a tilde (~) in our facet functions. With
@@ -637,10 +665,12 @@ columns.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_point() +
-  facet_grid(year ~ cyl)
+  theme(axis.title.y = element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-16-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-16-1.svg" alt="" /></p>
 
 <h2 id="labels--annotations">Labels &amp; Annotations</h2>
 
@@ -662,7 +692,7 @@ add such annotations.</p>
        color = "Car Type")
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-17-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-17-1.svg" alt="" /></p>
 
 <p><code class="language-plaintext highlighter-rouge">ggplot2</code> offers us a very highly level of customizability in the
 <code class="language-plaintext highlighter-rouge">theme</code> function and pre-set themes.</p>
@@ -672,7 +702,7 @@ add such annotations.</p>
   theme_classic()
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-18-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-18-1.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mpg, aes(displ, hwy, color = class)) + 
   geom_point() +
@@ -683,7 +713,7 @@ add such annotations.</p>
         axis.title = element_text(size = 16))
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-18-2.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-18-2.svg" alt="" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggplot(mpg, aes(displ, hwy, color = class)) + 
   geom_point() +
@@ -698,7 +728,7 @@ add such annotations.</p>
           "or why do you need that big truck again? ")
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-18-3.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-18-3.svg" alt="" /></p>
 
 <p>It is also possible to add labels into the plot itself (e.g., to label
 each point or line) by adding a new geom_text or geom_label to the
@@ -715,7 +745,7 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_label(data = best_in_class, aes(label = model), alpha = 0.5)
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-19-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-19-1.svg" alt="" /></p>
 
 <p>However, note that two labels overlap one-another in the top left part
 of the plot. We can use the geom_text_repel function from the ggrepel
@@ -728,7 +758,7 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_text_repel(data = best_in_class, aes(label = model))
 </code></pre></div></div>
 
-<p><img src="ggplot2_files/figure-markdown_strict/unnamed-chunk-20-1.png" alt="" /></p>
+<p><img src="/u8/ggplot2_files/figure-markdown_strict/unnamed-chunk-20-1.svg" alt="" /></p>
 
 <h2 id="saving-plots">Saving plots</h2>
 

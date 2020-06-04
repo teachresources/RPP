@@ -8,7 +8,7 @@ output:
 editor_options: 
   chunk_output_type: console
 ---
-<!-- render("anova.Rmd", md_document()) -->
+<!-- render("ggplot2.Rmd", md_document()) -->
 
 Find [here](https://teachresources.github.io/RPP/u8/ggplot2.Rmd) the correspondent `*Rmd`.
 Find [here](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf) the `ggplot2 Cheatsheet`.
@@ -416,7 +416,7 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 
 ## Saving plots
 Let’s save that great plot we just made. Saving plots in ggplot is done with the `ggsave()` function:
-```{r, message=FALSE}
+```{r, eval=FALSE, message=FALSE}
 ggsave("hwy_vs_displ.png")
 ggsave("hwy_vs_displ.png", width = 6, height = 6)
 ```

@@ -21,6 +21,7 @@ page_nav:
         content: Multivariate Statistical Analysis 
         url: '/u9/'
 ---
+<!-- render("ggplot2.Rmd", md_document()) -->
 
 Find [here](https://teachresources.github.io/RPP/u8/ggplot2.Rmd) the
 correspondent `*Rmd`. Find
@@ -65,7 +66,6 @@ Amazing resources
     official](https://exts.ggplot2.tidyverse.org/gallery/)
 -   [ggplot2 -
     Essentials](http://www.sthda.com/english/wiki/ggplot2-essentials)
--   [Top 50 ggplot2 Visualizations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)
 
 Grammar of Graphics
 -------------------
@@ -137,18 +137,27 @@ In order to create a plot, you:
     # create canvas
     ggplot(mtcars)
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-3-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-3-1.svg)
 
     # variables of interest mapped
     ggplot(mtcars, aes(x = cyl, y = mpg))
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-3-2.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-3-2.svg)
 
     # data plotted
     ggplot(mtcars, aes(x = cyl, y = mpg)) +
       geom_point()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-3-3.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-3-3.svg)
+
+    plot <- ggplot(mtcars, aes(x = cyl, y = mpg))
+    plot + geom_point()
+
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-3-4.svg)
+
+    plot +  geom_line()
+
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-3-5.svg)
 
 Note that when you added the geom layer you used the addition (`+`)
 operator. As you add new layers you will always use + to add onto your
@@ -170,33 +179,33 @@ class of the cars to a color characteristic:
     ggplot(mtcars, aes(x = cyl, y = mpg, color = gear)) +
       geom_point()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-4-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-4-1.svg)
 
     class(mtcars$cyl)
 
     ## [1] "numeric"
 
-    color <- as.character(mtcars$cyl)
+    color <- as.character(mtcars$gear)
 
     ggplot(mtcars, aes(x = cyl, y = mpg, color = color)) +
       geom_point()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-4-2.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-4-2.svg)
 
     ggplot(mtcars, aes(x = cyl, y = mpg, color = factor(gear))) +
       geom_point()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-4-3.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-4-3.svg)
 
     ggplot(mtcars, aes(x = cyl, y = mpg)) +
       geom_point(color = "blue")
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-4-4.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-4-4.svg)
 
     ggplot(mtcars, aes(cyl, mpg, color = factor(gear), size = hp)) + #hp = horsepower
       geom_point()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-4-5.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-4-5.svg)
 
 Specifying Geometric Shapes
 ---------------------------
@@ -226,65 +235,72 @@ geoms, including:
     ggplot(mtcars, aes(x = cyl, y = mpg)) +
       geom_point()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-1.svg)
 
     ggplot(mtcars, aes(x = cyl, y = mpg)) +
       geom_line()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-2.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-2.svg)
 
     # plot with both points and smoothed line
     ggplot(mtcars, aes(x = cyl, y = mpg)) +
         geom_point() +
         geom_smooth(method = "lm")
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-3.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-3.svg)
 
-    ggplot(mtcars, aes(x = cyl, y = mpg)) +
-      geom_point(color = "blue") +
+    ggplot(mtcars, aes(x = cyl, y = mpg, color=factor(gear))) +
+      geom_point() +
       geom_smooth(method = "lm", color = "red")
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-4.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-4.svg)
 
     # color aesthetic passed to each geom layer
     ggplot(mtcars, aes(x = cyl, y = mpg, color = cyl)) +
       geom_point() +
       geom_smooth(method = "lm", se = FALSE)
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-5.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-5.svg)
 
     # color aesthetic specified for only the geom_point layer
     ggplot(mtcars, aes(x = cyl, y = mpg)) +
       geom_point(aes(color = factor(cyl))) +
       geom_smooth(method = "lm", se = FALSE)
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-6.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-6.svg)
 
     # Right column: no y mapping needed!
     ggplot(data = mtcars, aes(x = gear)) +
       geom_bar()  
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-7.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-7.svg)
 
     ggplot(data = mtcars, aes(x = gear)) +
       geom_histogram() 
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-8.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-8.svg)
 
     ggplot(data = iris, aes(x = Sepal.Length)) +
       geom_histogram() 
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-9.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-9.svg)
 
-    ggplot(mtcars, aes(factor(gear), mpg)) + geom_violin()
+    ggplot(mtcars, aes(factor(gear), mpg)) +
+      geom_violin()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-10.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-10.svg)
+
+    ggplot(mtcars, aes(factor(gear), mpg)) +
+      geom_boxplot() +
+        geom_point() 
+
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-11.svg)
 
     ggplot(mtcars, aes(factor(gear), mpg))  + 
       geom_violin() +
       geom_point(shape = 1, position = "jitter")
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-11.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-5-12.svg)
 
 Statistical Transformations
 ---------------------------
@@ -299,7 +315,7 @@ automatically applies to the data. In particular, it applies the
     ggplot(mtcars, aes(x = gear)) +
       geom_bar()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-6-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-6-1.svg)
 
     class_count <- dplyr::count(mpg, class)
     class_count
@@ -315,15 +331,20 @@ automatically applies to the data. In particular, it applies the
     ## 6 subcompact    35
     ## 7 suv           62
 
+    ggplot(mpg, aes(x = hwy)) +
+      geom_bar()
+
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-6-2.svg)
+
     ggplot(class_count, aes(x = class, y = n)) +
       geom_bar(stat = "identity")
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-6-2.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-6-3.svg)
 
     ggplot(class_count, aes(x = class, y = n, fill=class)) +
       geom_bar(stat = "identity")
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-6-3.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-6-4.svg)
 
 We can also call `stat_` functions directly to add additional layers.
 For example, here we create a scatter plot of highway miles for each
@@ -334,7 +355,7 @@ miles at each displacement value.
       geom_point(color = "grey") + 
       stat_summary(fun = "mean", geom = "line", size = 1, linetype = "dashed")
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-7-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-7-1.svg)
 
 Position Adjustments
 --------------------
@@ -349,12 +370,12 @@ variable to the color visual characteristic:
     ggplot(ToothGrowth, aes(x = supp, y=len,  fill = dose)) + 
         geom_bar(stat = "identity")
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-8-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-8-1.svg)
 
     ggplot(ToothGrowth, aes(x = supp, y=len,  fill = factor(dose))) + 
         geom_bar(stat = "identity")
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-8-2.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-8-2.svg)
 
 The `geom_bar` by default uses a position adjustment of “`stack`”, which
 makes each rectangle’s height proprotional to its value and stacks them
@@ -365,13 +386,13 @@ position adjustment rules to follow:
     ggplot(mpg, aes(x = class, fill = drv)) + 
       geom_bar(position = "dodge")
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-9-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-9-1.svg)
 
     # position = "fill": percentage chart
     ggplot(mpg, aes(x = class, fill = drv)) + 
       geom_bar(position = "fill")
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-9-2.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-9-2.svg)
 
 Managing Scales
 ---------------
@@ -384,7 +405,7 @@ when you specify
     ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
       geom_point()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-10-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-10-1.svg)
 
 `ggplot` automatically adds a scale for each mapping to the plot:
 
@@ -394,13 +415,15 @@ when you specify
       scale_y_continuous() +
       scale_colour_discrete()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-11-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-11-1.svg)
 
     ggplot(economics, aes(date, unemploy)) + 
       geom_line() +
-      scale_y_continuous(limits = c(0, max(economics$unemploy)))
+      scale_y_continuous(limits = c(5000, max(economics$unemploy)))
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-11-2.png)
+    ## Warning: Removed 41 row(s) containing missing values (geom_path).
+
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-11-2.svg)
 
     ggplot(economics, aes(date, unemploy)) + 
       geom_line() +
@@ -409,7 +432,7 @@ when you specify
 
     ## Warning: Removed 390 row(s) containing missing values (geom_path).
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-11-3.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-11-3.svg)
 
 Each scale can be represented by a function with the following name:
 `scale_`, followed by the name of the aesthetic property, followed by an
@@ -428,7 +451,7 @@ scale to change the direction of an axis:
       scale_x_reverse() +
       scale_y_reverse()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-12-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-12-1.svg)
 
 A common parameter to change is which set of colors to use in a plot.
 While you can use the default coloring, a more common option is to
@@ -443,20 +466,20 @@ passing the pallete as an argument.
       geom_point() +
       scale_color_brewer()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-13-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-13-1.svg)
 
     # specifying color palette
     ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
       geom_point() +
       scale_color_brewer(palette = "Set3")
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-13-2.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-13-2.svg)
 
     ggplot(mpg, aes(displ, hwy, color = class)) +
       geom_point() + 
       scale_color_hue(h = c(270, 360)) # blue to red
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-13-3.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-13-3.svg)
 
 \[colorbrewer.org\]\](<a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3" class="uri">https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3</a>)
 
@@ -466,7 +489,7 @@ passing the pallete as an argument.
       geom_point() + 
       scale_y_log10()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-14-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-14-1.svg)
 
     mpg %>%
       group_by(class) %>% 
@@ -475,25 +498,25 @@ passing the pallete as an argument.
         geom_col() +
         scale_x_discrete(labels = toupper(sort(unique(mpg$manufacturer))))
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-14-2.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-14-2.svg)
 
     ggplot(ToothGrowth, aes(x=dose, y=len)) + 
       geom_boxplot()
 
     ## Warning: Continuous x aesthetic -- did you forget aes(group=...)?
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-14-3.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-14-3.svg)
 
     ggplot(ToothGrowth, aes(x=factor(dose), y=len)) + 
       geom_boxplot()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-14-4.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-14-4.svg)
 
     ggplot(ToothGrowth, aes(x=factor(dose), y=len)) + 
       geom_boxplot() +
-      scale_x_discrete(name ="Dose (mg)",limits=c("2","1","0.5"))
+      scale_x_discrete(name ="Dose (mg)", limits=c("1","2","0.5"))
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-14-5.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-14-5.svg)
 
 Facets
 ------
@@ -509,13 +532,13 @@ with an additional argument):
       geom_point() +
       facet_wrap(~ year)
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-15-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-15-1.svg)
 
     ggplot(mpg, aes(displ, hwy)) +
       geom_point() +
       facet_wrap(~ manufacturer)
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-15-2.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-15-2.svg)
 
 You can also facet\_grid to facet your data by more than one categorical
 variable. Note that we use a tilde (~) in our facet functions. With
@@ -525,9 +548,11 @@ columns.
 
     ggplot(mpg, aes(x = displ, y = hwy)) +
       geom_point() +
-      facet_grid(year ~ cyl)
+      theme(axis.title.y = element_blank(),
+            axis.text.y=element_blank(),
+            axis.ticks.y=element_blank())
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-16-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-16-1.svg)
 
 Labels & Annotations
 --------------------
@@ -549,7 +574,7 @@ You can add titles and axis labels to a chart using the`labs()` function
            y = "Fuel Efficiency (miles per gallon)",
            color = "Car Type")
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-17-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-17-1.svg)
 
 `ggplot2` offers us a very highly level of customizability in the
 `theme` function and pre-set themes.
@@ -558,7 +583,7 @@ You can add titles and axis labels to a chart using the`labs()` function
       geom_point() +
       theme_classic()
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-18-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-18-1.svg)
 
     ggplot(mpg, aes(displ, hwy, color = class)) + 
       geom_point() +
@@ -568,7 +593,7 @@ You can add titles and axis labels to a chart using the`labs()` function
             legend.title = element_blank(),
             axis.title = element_text(size = 16))
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-18-2.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-18-2.svg)
 
     ggplot(mpg, aes(displ, hwy, color = class)) + 
       geom_point() +
@@ -582,7 +607,7 @@ You can add titles and axis labels to a chart using the`labs()` function
       ggtitle("Highway fuel economy versus engine displacement",
               "or why do you need that big truck again? ")
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-18-3.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-18-3.svg)
 
 It is also possible to add labels into the plot itself (e.g., to label
 each point or line) by adding a new geom\_text or geom\_label to the
@@ -598,7 +623,7 @@ be the variable names:
       geom_point(aes(color = class)) +
       geom_label(data = best_in_class, aes(label = model), alpha = 0.5)
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-19-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-19-1.svg)
 
 However, note that two labels overlap one-another in the top left part
 of the plot. We can use the geom\_text\_repel function from the ggrepel
@@ -610,7 +635,7 @@ package to help position labels.
       geom_point(aes(color = class)) +
       geom_text_repel(data = best_in_class, aes(label = model))
 
-![](ggplot2_files/figure-markdown_strict/unnamed-chunk-20-1.png)
+![](ggplot2_files/figure-markdown_strict/unnamed-chunk-20-1.svg)
 
 Saving plots
 ------------
