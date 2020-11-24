@@ -63,7 +63,11 @@ boxplot(iris[,1:4])
 
 Insert images
 
-<br><center><img src="./images/logo.png" align="botton" alt="Drawing" style="width: 300px;"/><center>
+<br><center><img src="./images/logo.png" align="botton" alt="Drawing" style="width: 600px;"/><center>
+
+## New image
+
+<br><left><img src="./images/Print_0006.jpg" align="botton" alt="Drawing" style="width: 600px;"/><left>
 
 ## Images option
 
